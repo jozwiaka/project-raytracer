@@ -1,0 +1,4 @@
+/mnt/c/Dev/project-raytracer/src/build/CMakeFiles/exe.dir
+/mnt/c/Dev/project-raytracer/src/build/CMakeFiles/test.dir
+/mnt/c/Dev/project-raytracer/src/build/CMakeFiles/edit_cache.dir
+/mnt/c/Dev/project-raytracer/src/build/CMakeFiles/rebuild_cache.dir
