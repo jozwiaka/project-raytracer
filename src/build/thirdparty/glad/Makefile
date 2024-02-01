@@ -97,14 +97,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Dev/project-raytracer/src/build/CMakeFiles /mnt/c/Dev/project-raytracer/src/build//CMakeFiles/progress.marks
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
+	cd /mnt/c/Dev/project-raytracer/src/build && $(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Dev/project-raytracer/src/build/CMakeFiles /mnt/c/Dev/project-raytracer/src/build/thirdparty/glad//CMakeFiles/progress.marks
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdparty/glad/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Dev/project-raytracer/src/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 clean
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdparty/glad/clean
 .PHONY : clean
 
 # The main clean target
@@ -113,68 +113,56 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdparty/glad/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 preinstall
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdparty/glad/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /mnt/c/Dev/project-raytracer/src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-#=============================================================================
-# Target rules for targets named exe
+# Convenience name for target.
+thirdparty/glad/CMakeFiles/glad.dir/rule:
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 thirdparty/glad/CMakeFiles/glad.dir/rule
+.PHONY : thirdparty/glad/CMakeFiles/glad.dir/rule
 
-# Build rule for target.
-exe: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 exe
-.PHONY : exe
-
-# fast build rule for target.
-exe/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exe.dir/build.make CMakeFiles/exe.dir/build
-.PHONY : exe/fast
-
-#=============================================================================
-# Target rules for targets named glad
-
-# Build rule for target.
-glad: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 glad
+# Convenience name for target.
+glad: thirdparty/glad/CMakeFiles/glad.dir/rule
 .PHONY : glad
 
 # fast build rule for target.
 glad/fast:
-	$(MAKE) $(MAKESILENT) -f thirdparty/glad/CMakeFiles/glad.dir/build.make thirdparty/glad/CMakeFiles/glad.dir/build
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f thirdparty/glad/CMakeFiles/glad.dir/build.make thirdparty/glad/CMakeFiles/glad.dir/build
 .PHONY : glad/fast
 
-main.o: main.cpp.o
-.PHONY : main.o
+glad.o: glad.cpp.o
+.PHONY : glad.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exe.dir/build.make CMakeFiles/exe.dir/main.cpp.o
-.PHONY : main.cpp.o
+glad.cpp.o:
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f thirdparty/glad/CMakeFiles/glad.dir/build.make thirdparty/glad/CMakeFiles/glad.dir/glad.cpp.o
+.PHONY : glad.cpp.o
 
-main.i: main.cpp.i
-.PHONY : main.i
+glad.i: glad.cpp.i
+.PHONY : glad.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exe.dir/build.make CMakeFiles/exe.dir/main.cpp.i
-.PHONY : main.cpp.i
+glad.cpp.i:
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f thirdparty/glad/CMakeFiles/glad.dir/build.make thirdparty/glad/CMakeFiles/glad.dir/glad.cpp.i
+.PHONY : glad.cpp.i
 
-main.s: main.cpp.s
-.PHONY : main.s
+glad.s: glad.cpp.s
+.PHONY : glad.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/exe.dir/build.make CMakeFiles/exe.dir/main.cpp.s
-.PHONY : main.cpp.s
+glad.cpp.s:
+	cd /mnt/c/Dev/project-raytracer/src/build && $(MAKE) $(MAKESILENT) -f thirdparty/glad/CMakeFiles/glad.dir/build.make thirdparty/glad/CMakeFiles/glad.dir/glad.cpp.s
+.PHONY : glad.cpp.s
 
 # Help Target
 help:
@@ -185,11 +173,10 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... exe"
 	@echo "... glad"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... glad.o"
+	@echo "... glad.i"
+	@echo "... glad.s"
 .PHONY : help
 
 
@@ -201,6 +188,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /mnt/c/Dev/project-raytracer/src/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

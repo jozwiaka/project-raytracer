@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <GLFW/glfw3.h>
-#include <glad/glad.h>
+#include <glad.h>
 
 const int WIDTH = 800;
 const int HEIGHT = 600;

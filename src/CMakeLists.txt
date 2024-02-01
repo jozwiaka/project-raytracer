@@ -12,6 +12,9 @@ target_link_libraries(exe PRIVATE pthread)
 target_include_directories(exe PRIVATE ${OPENGL_INCLUDE_DIRS})
 target_link_libraries(exe PRIVATE glfw ${OPENGL_LIBRARIES})
 
+add_subdirectory(thirdparty)
+target_link_libraries(exe PRIVATE glad)
+
 enable_testing()
 
 # include(CTest)

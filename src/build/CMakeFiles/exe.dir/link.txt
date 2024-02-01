@@ -1,1 +1,1 @@
-/usr/bin/c++  -g -g CMakeFiles/exe.dir/main.cpp.o -o exe  -lpthread -lglfw /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so 
+/usr/bin/c++  -g -g CMakeFiles/exe.dir/main.cpp.o -o exe  -lpthread -lglfw /usr/lib/x86_64-linux-gnu/libOpenGL.so /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libGLU.so thirdparty/glad/libglad.a 
