@@ -14,6 +14,7 @@ target_compile_options(exe_flags INTERFACE
 
 # packages
 find_package(OpenGL REQUIRED)
+find_package(GLUT REQUIRED)
 
 # subdirs
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
