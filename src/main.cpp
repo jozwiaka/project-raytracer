@@ -22,6 +22,10 @@ public:
         return Vec3(x * scalar, y * scalar, z * scalar);
     }
 
+    Vec3 operator*(const Vec3& other) const {
+        return Vec3(x * other.x, y * other.y, z * other.z);
+    }
+
     Vec3 operator/(float scalar) const {
         return Vec3(x / scalar, y / scalar, z / scalar);
     }
@@ -54,15 +58,40 @@ public:
     Ray(const Vec3& origin, const Vec3& direction) : origin(origin), direction(direction.normalize()) {}
 };
 
-class Sphere {
+class Material {
 public:
-    Vec3 center;
+    Vec3 color;
+    Material() = default;
+    Material(const Vec3& color) : color(color) {}
+};
+
+class Light {
+public:
+    Vec3 position;
+    Vec3 color;
+
+    Light(const Vec3& position, const Vec3& color) : position(position), color(color) {}
+};
+
+class Object {
+public:
+    Vec3 position;
+    Material material;
+
+    Object(const Vec3& position, const Material& material) : position(position), material(material) {}
+
+    virtual bool intersect(const Ray& ray, float& t, Vec3& hitPoint, Vec3& normal) const = 0;
+};
+
+class Sphere : public Object {
+public:
     float radius;
 
-    Sphere(const Vec3& center, float radius) : center(center), radius(radius) {}
+    Sphere(const Vec3& position, float radius, const Material& material)
+        : Object(position, material), radius(radius) {}
 
-    bool intersect(const Ray& ray, float& t) const {
-        Vec3 oc = ray.origin - center;
+    bool intersect(const Ray& ray, float& t, Vec3& hitPoint, Vec3& normal) const override {
+        Vec3 oc = ray.origin - position;
         float a = ray.direction.dot(ray.direction);
         float b = 2.0f * oc.dot(ray.direction);
         float c = oc.dot(oc) - radius * radius;
@@ -72,10 +101,49 @@ public:
             float t1 = (-b - std::sqrt(discriminant)) / (2.0f * a);
             float t2 = (-b + std::sqrt(discriminant)) / (2.0f * a);
             t = (t1 < t2) ? t1 : t2;
+
+            hitPoint = ray.origin + ray.direction * t;
+            normal = (hitPoint - position).normalize();
+
             return true;
         }
 
         return false;
+    }
+};
+
+class Scene {
+public:
+    std::vector<Object*> objects;
+    std::vector<Light> lights;
+
+    void addObject(Object* object) {
+        objects.push_back(object);
+    }
+
+    void addLight(const Light& light) {
+        lights.push_back(light);
+    }
+
+    bool intersect(const Ray& ray, Vec3& hitPoint, Vec3& normal, Material& material) const {
+        float tClosest = std::numeric_limits<float>::infinity();
+        bool hit = false;
+
+        for (const auto& object : objects) {
+            float t;
+            Vec3 objectHitPoint, objectNormal;
+
+            if (object->intersect(ray, t, objectHitPoint, objectNormal) && t < tClosest) {
+                tClosest = t;
+                hit = true;
+
+                hitPoint = objectHitPoint;
+                normal = objectNormal;
+                material = object->material;
+            }
+        }
+
+        return hit;
     }
 };
 
@@ -97,30 +165,17 @@ public:
     }
 };
 
-class Scene {
+class Image {
 public:
-    std::vector<Sphere> spheres;
+    std::vector<Vec3> pixels;
+    int width, height;
 
-    void addSphere(const Sphere& sphere) {
-        spheres.push_back(sphere);
-    }
+    Image(int width, int height) : width(width), height(height), pixels(width * height) {}
 
-    bool intersect(const Ray& ray, Vec3& hitPoint, Vec3& normal) const {
-        float tClosest = std::numeric_limits<float>::infinity();
-        bool hit = false;
-
-        for (const auto& sphere : spheres) {
-            float t;
-            if (sphere.intersect(ray, t) && t < tClosest) {
-                tClosest = t;
-                hit = true;
-
-                hitPoint = ray.origin + ray.direction * t;
-                normal = (hitPoint - sphere.center).normalize();
-            }
+    void setPixel(int x, int y, const Vec3& color) {
+        if (x >= 0 && x < width && y >= 0 && y < height) {
+            pixels[y * width + x] = color;
         }
-
-        return hit;
     }
 };
 
@@ -133,9 +188,19 @@ public:
         glClear(GL_COLOR_BUFFER_BIT);
 
         Scene scene;
-        scene.addSphere(Sphere(Vec3(0, 0, -5), 1.0));
+
+        Material redMaterial(Vec3(1, 0, 0));
+        Material blueMaterial(Vec3(0, 0, 1));
+
+        scene.addObject(new Sphere(Vec3(0, 0, -5), 1.0, redMaterial));
+        scene.addObject(new Sphere(Vec3(2, 0, -7), 2.0, blueMaterial));
+
+        Light light(Vec3(0, 5, -5), Vec3(1, 1, 1));
+        scene.addLight(light);
 
         Camera camera(Vec3(0, 0, 0), Vec3(0, 0, -1), Vec3(0, 1, 0));
+
+        Image image(width, height);
 
         glBegin(GL_POINTS);
 
@@ -147,13 +212,20 @@ public:
                 Ray ray = camera.generateRay(px, py);
 
                 Vec3 hitPoint, normal;
-                if (scene.intersect(ray, hitPoint, normal)) {
-                    glColor3f(1, 1, 1);
+                Material material;
+                if (scene.intersect(ray, hitPoint, normal, material)) {
+                    // Lambertian reflection model
+                    Vec3 lightDirection = (light.position - hitPoint).normalize();
+                    float diffuseIntensity = std::max(0.0f, normal.dot(lightDirection));
+                    Vec3 finalColor = material.color * diffuseIntensity * light.color;
+
+                    glColor3f(finalColor.x, finalColor.y, finalColor.z);
                 } else {
                     glColor3f(0, 0, 0);
                 }
 
                 glVertex2f(px, py);
+                image.setPixel(x, y, material.color);
             }
         }
 
