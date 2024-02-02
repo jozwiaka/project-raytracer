@@ -2,6 +2,7 @@
 #include <vector>
 #include <cmath>
 #include <GL/glut.h>
+#include <memory>
 
 class Vec3 {
 public:
@@ -114,11 +115,11 @@ public:
 
 class Scene {
 public:
-    std::vector<Object*> objects;
+    std::vector<std::unique_ptr<Object>> objects;
     std::vector<Light> lights;
 
-    void addObject(Object* object) {
-        objects.push_back(object);
+    void addObject(std::unique_ptr<Object> object) {
+        objects.push_back(std::move(object));
     }
 
     void addLight(const Light& light) {
@@ -192,8 +193,8 @@ public:
         Material redMaterial(Vec3(1, 0, 0));
         Material blueMaterial(Vec3(0, 0, 1));
 
-        scene.addObject(new Sphere(Vec3(0, 0, -5), 1.0, redMaterial));
-        scene.addObject(new Sphere(Vec3(2, 0, -7), 2.0, blueMaterial));
+        scene.addObject(std::make_unique<Sphere>(Vec3(0, 0, -5), 1.0, redMaterial));
+        scene.addObject(std::make_unique<Sphere>(Vec3(2, 0, -7), 2.0, blueMaterial));
 
         Light light(Vec3(0, 5, -5), Vec3(1, 1, 1));
         scene.addLight(light);
