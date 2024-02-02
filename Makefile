@@ -10,7 +10,7 @@ build: configure
 test: build
 	# cd build && make test
 run:
-	cd build && ./exe
+	cd build && ./src/exe
 callgrind:
 	cd build && valgrind --tool=callgrind ./exe && kcachegrin callgrind.out.*
 all: prepare configure build test run
