@@ -3,132 +3,180 @@
 #include <cmath>
 #include <GL/glut.h>
 
-const int width = 800;
-const int height = 600;
-
-struct Vec3 {
+class Vec3 {
+public:
     float x, y, z;
+
     Vec3() : x(0), y(0), z(0) {}
     Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
-        // Addition operator
+
     Vec3 operator+(const Vec3& other) const {
         return Vec3(x + other.x, y + other.y, z + other.z);
     }
 
-    // Subtraction operator
     Vec3 operator-(const Vec3& other) const {
         return Vec3(x - other.x, y - other.y, z - other.z);
     }
 
-    // Scalar multiplication operator
     Vec3 operator*(float scalar) const {
         return Vec3(x * scalar, y * scalar, z * scalar);
     }
+
+    Vec3 operator/(float scalar) const {
+        return Vec3(x / scalar, y / scalar, z / scalar);
+    }
+
+    float dot(const Vec3& other) const {
+        return x * other.x + y * other.y + z * other.z;
+    }
+
+    Vec3 cross(const Vec3& other) const {
+        return Vec3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x);
+    }
+
+    float length() const {
+        return std::sqrt(x * x + y * y + z * z);
+    }
+
+    Vec3 normalize() const {
+        float len = length();
+        if (len > 0) {
+            return *this / len;
+        }
+        return *this;
+    }
 };
 
-struct Ray {
+class Ray {
+public:
     Vec3 origin, direction;
-    Ray(const Vec3& origin, const Vec3& direction) : origin(origin), direction(direction) {}
+
+    Ray(const Vec3& origin, const Vec3& direction) : origin(origin), direction(direction.normalize()) {}
 };
 
-struct Sphere {
+class Sphere {
+public:
     Vec3 center;
     float radius;
+
     Sphere(const Vec3& center, float radius) : center(center), radius(radius) {}
+
+    bool intersect(const Ray& ray, float& t) const {
+        Vec3 oc = ray.origin - center;
+        float a = ray.direction.dot(ray.direction);
+        float b = 2.0f * oc.dot(ray.direction);
+        float c = oc.dot(oc) - radius * radius;
+        float discriminant = b * b - 4 * a * c;
+
+        if (discriminant > 0) {
+            float t1 = (-b - std::sqrt(discriminant)) / (2.0f * a);
+            float t2 = (-b + std::sqrt(discriminant)) / (2.0f * a);
+            t = (t1 < t2) ? t1 : t2;
+            return true;
+        }
+
+        return false;
+    }
 };
 
-std::vector<Sphere> spheres;
+class Camera {
+public:
+    Vec3 position;
+    Vec3 forward, right, up;
 
-Vec3 normalize(const Vec3& v) {
-    float length = std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-    return Vec3(v.x / length, v.y / length, v.z / length);
-}
-
-bool intersect(const Ray& ray, const Sphere& sphere, float& t) {
-    Vec3 oc = ray.origin - sphere.center;
-    float a = ray.direction.x * ray.direction.x + ray.direction.y * ray.direction.y + ray.direction.z * ray.direction.z;
-    float b = 2.0f * (oc.x * ray.direction.x + oc.y * ray.direction.y + oc.z * ray.direction.z);
-    float c = oc.x * oc.x + oc.y * oc.y + oc.z * oc.z - sphere.radius * sphere.radius;
-    float discriminant = b * b - 4 * a * c;
-
-    if (discriminant < 0) {
-        return false;  // No intersection
+    Camera(const Vec3& position, const Vec3& target, const Vec3& upVector) {
+        this->position = position;
+        forward = (target - position).normalize();
+        right = forward.cross(upVector).normalize();
+        up = right.cross(forward).normalize();
     }
 
-    float t1 = (-b + std::sqrt(discriminant)) / (2.0f * a);
-    float t2 = (-b - std::sqrt(discriminant)) / (2.0f * a);
+    Ray generateRay(float x, float y) const {
+        Vec3 direction = forward + right * x + up * y;
+        return Ray(position, direction);
+    }
+};
 
-    t = std::min(t1, t2);
-    return true;
-}
+class Scene {
+public:
+    std::vector<Sphere> spheres;
 
-Vec3 trace(const Ray& ray, int depth) {
-    if (depth == 0) {
-        return Vec3(0,0,0);  // Black for simplicity
+    void addSphere(const Sphere& sphere) {
+        spheres.push_back(sphere);
     }
 
-    float t;
-    int hitIndex = -1;
+    bool intersect(const Ray& ray, Vec3& hitPoint, Vec3& normal) const {
+        float tClosest = std::numeric_limits<float>::infinity();
+        bool hit = false;
 
-    for (int i = 0; i < spheres.size(); ++i) {
-        if (intersect(ray, spheres[i], t)) {
-            hitIndex = i;
+        for (const auto& sphere : spheres) {
+            float t;
+            if (sphere.intersect(ray, t) && t < tClosest) {
+                tClosest = t;
+                hit = true;
+
+                hitPoint = ray.origin + ray.direction * t;
+                normal = (hitPoint - sphere.center).normalize();
+            }
         }
+
+        return hit;
     }
+};
 
-    if (hitIndex == -1) {
-        return Vec3(255,255,255);  // Black background
-    }
+class Renderer {
+public:
+    static const int width = 800;
+    static const int height = 600;
 
-    Vec3 hitPoint = ray.origin + ray.direction * t;
-    Vec3 normal = normalize(hitPoint - spheres[hitIndex].center);
+    static void display() {
+        glClear(GL_COLOR_BUFFER_BIT);
 
-    // Simple shading
-    float intensity = std::max(0.0f, normal.x * ray.direction.x + normal.y * ray.direction.y + normal.z * ray.direction.z);
-    return Vec3(1, 1, 1) * intensity;
-}
+        Scene scene;
+        scene.addSphere(Sphere(Vec3(0, 0, -5), 1.0));
 
-void display() {
-    glClear(GL_COLOR_BUFFER_BIT);
+        Camera camera(Vec3(0, 0, 0), Vec3(0, 0, -1), Vec3(0, 1, 0));
 
-    for (int x = 0; x < width; ++x) {
+        glBegin(GL_POINTS);
+
         for (int y = 0; y < height; ++y) {
-            // Map pixel coordinates to NDC
-            float ndcX = (2.0f * x) / width - 1.0f;
-            float ndcY = 1.0f - (2.0f * y) / height;
+            for (int x = 0; x < width; ++x) {
+                float px = (2.0f * x - width) / width;
+                float py = (height - 2.0f * y) / height;
 
-            Ray ray(Vec3(0,0,0), normalize(Vec3(ndcX, ndcY, -1)));
+                Ray ray = camera.generateRay(px, py);
 
-            Vec3 color = trace(ray, 5);
+                Vec3 hitPoint, normal;
+                if (scene.intersect(ray, hitPoint, normal)) {
+                    glColor3f(1, 1, 1);
+                } else {
+                    glColor3f(0, 0, 0);
+                }
 
-            glColor3f(color.x, color.y, color.z);
-            glBegin(GL_POINTS);
-            glVertex2i(x, y);
-            glEnd();
+                glVertex2f(px, py);
+            }
         }
+
+        glEnd();
+
+        glFlush();
     }
 
-    glutSwapBuffers();
-}
-
-void init() {
-    glClearColor(0.0, 0.0, 0.0, 1.0);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(0, width, 0, height);
-}
+    static void init() {
+        glClearColor(0, 0, 0, 1);
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        gluOrtho2D(-1, 1, -1, 1);
+    }
+};
 
 int main(int argc, char** argv) {
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(width, height);
-    glutCreateWindow("Simple Raytracer");
-
-    init();
-
-    spheres.push_back(Sphere(Vec3(0, 0, -5), 1.0)); // Example Sphere
-
-    glutDisplayFunc(display);
+    glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+    glutInitWindowSize(Renderer::width, Renderer::height);
+    glutCreateWindow("Raytracer");
+    Renderer::init();
+    glutDisplayFunc(Renderer::display);
     glutMainLoop();
 
     return 0;
