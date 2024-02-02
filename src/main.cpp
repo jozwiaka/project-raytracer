@@ -64,7 +64,7 @@ bool intersect(const Ray& ray, const Sphere& sphere, float& t) {
 
 Vec3 trace(const Ray& ray, int depth) {
     if (depth == 0) {
-        return Vec3(0, 0, 0);  // Black for simplicity
+        return Vec3(0,0,0);  // Black for simplicity
     }
 
     float t;
@@ -77,7 +77,7 @@ Vec3 trace(const Ray& ray, int depth) {
     }
 
     if (hitIndex == -1) {
-        return Vec3(0, 0, 0);  // Black background
+        return Vec3(255,255,255);  // Black background
     }
 
     Vec3 hitPoint = ray.origin + ray.direction * t;
@@ -97,7 +97,7 @@ void display() {
             float ndcX = (2.0f * x) / width - 1.0f;
             float ndcY = 1.0f - (2.0f * y) / height;
 
-            Ray ray(Vec3(0, 0, 0), normalize(Vec3(ndcX, ndcY, -1)));
+            Ray ray(Vec3(0,0,0), normalize(Vec3(ndcX, ndcY, -1)));
 
             Vec3 color = trace(ray, 5);
 
