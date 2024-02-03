@@ -1,20 +1,28 @@
+#pragma once
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <string>
+#include "Vec3.h"
 
-class FileIO {
+class FileIO
+{
 public:
-    static bool writePPM(const std::string& filename, const std::vector<Vec3>& pixels, int width, int height) {
+    static bool writePPM(const std::string &filename, const std::vector<Vec3> &pixels, int width, int height)
+    {
         std::ofstream file(filename);
-        if (!file.is_open()) {
+        if (!file.is_open())
+        {
             std::cerr << "Error: Couldn't open file for writing - " << filename << std::endl;
             return false;
         }
 
-        file << "P3\n" << width << " " << height << "\n255\n";
+        file << "P3\n"
+             << width << " " << height << "\n255\n";
 
-        for (const auto& pixel : pixels) {
+        for (const auto &pixel : pixels)
+        {
             int r = static_cast<int>(pixel.x * 255);
             int g = static_cast<int>(pixel.y * 255);
             int b = static_cast<int>(pixel.z * 255);
@@ -26,16 +34,19 @@ public:
         return true;
     }
 
-    static bool readPPM(const std::string& filename, std::vector<Vec3>& pixels, int& width, int& height) {
+    static bool readPPM(const std::string &filename, std::vector<Vec3> &pixels, int &width, int &height)
+    {
         std::ifstream file(filename);
-        if (!file.is_open()) {
+        if (!file.is_open())
+        {
             std::cerr << "Error: Couldn't open file for reading - " << filename << std::endl;
             return false;
         }
 
         std::string magic;
         file >> magic;
-        if (magic != "P3") {
+        if (magic != "P3")
+        {
             std::cerr << "Error: Not a valid PPM file - " << filename << std::endl;
             return false;
         }
@@ -46,7 +57,8 @@ public:
 
         pixels.resize(width * height);
 
-        for (auto& pixel : pixels) {
+        for (auto &pixel : pixels)
+        {
             int r, g, b;
             file >> r >> g >> b;
 
