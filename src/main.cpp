@@ -1,8 +1,4 @@
-#include <iostream>
-#include <vector>
-#include <cmath>
 #include <GL/glut.h>
-#include <memory>
 #include "Renderer.h"
 
 int main(int argc, char **argv)
@@ -14,6 +10,4 @@ int main(int argc, char **argv)
     Renderer::Init();
     glutDisplayFunc(Renderer::Display);
     glutMainLoop();
-
-    return 0;
 }
