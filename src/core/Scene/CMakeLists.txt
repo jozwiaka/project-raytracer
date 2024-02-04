@@ -1,6 +1,6 @@
-add_library(Ray STATIC Ray.cpp)
-# target_link_libraries(Ray PRIVATE )
+add_library(Scene STATIC Scene.cpp)
+# target_link_libraries(Scene PRIVATE Ray)
 target_include_directories(
-    Ray
+    Scene
     INTERFACE "./"
-    PRIVATE "../../utils/Math")
+    PUBLIC "../../utils/Math")
