@@ -9,7 +9,8 @@ conan: prepare
 configure: conan
 	cd build && cmake ..
 build: configure
-	cd build && cmake --build . -v
+	# cd build && cmake --build . -v
+	cd build && cmake --build .
 test: build
 	# cd build && make test
 run:

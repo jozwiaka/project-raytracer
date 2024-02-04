@@ -8,4 +8,5 @@ public:
 public:
     Material() = default;
     Material(const Vec3 &color);
+    Material(const Material &other);
 };
