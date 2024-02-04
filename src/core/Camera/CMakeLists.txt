@@ -1,6 +1,6 @@
-add_library(Ray STATIC Ray.cpp)
-# target_link_libraries(Ray PRIVATE )
+add_library(Camera STATIC Camera.cpp)
+target_link_libraries(Camera PRIVATE Ray)
 target_include_directories(
-    Ray
+    Camera
     INTERFACE "./"
-    PRIVATE "../../utils/Math")
+    PUBLIC "../../utils/Math")
