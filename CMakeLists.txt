@@ -13,13 +13,15 @@ target_compile_options(exe_flags INTERFACE
 )
 
 # packages
-find_package(OpenGL REQUIRED)
-find_package(GLUT REQUIRED)
-find_package(GTest REQUIRED)
+find_package(Vulkan REQUIRED)
+find_package(glfw3 REQUIRED)
+# find_package(OpenGL REQUIRED)
+# find_package(GLUT REQUIRED)
+# find_package(GTest REQUIRED)
 
 # subdirs
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
-add_subdirectory(external)
+# add_subdirectory(external)
 add_subdirectory(src)
 add_subdirectory(tests)
 
