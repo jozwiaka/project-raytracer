@@ -9,7 +9,7 @@ target_link_libraries(Renderer PRIVATE
     Ray
     Material
     # Light
-    # Object
+    Object
     Scene
     Camera
     )
