@@ -2,7 +2,12 @@
 
 void Scene::AddObject(std::unique_ptr<Object> object)
 {
-    Objects.push_back(std::move(object));
+    Objects.emplace_back(std::move(object));
+}
+
+void Scene::AddLight(std::unique_ptr<Light> light)
+{
+    Lights.emplace_back(std::move(light));
 }
 
 bool Scene::Intersect(const Ray &ray, Vec3 &hitPoint, Vec3 &normal, Material &material) const

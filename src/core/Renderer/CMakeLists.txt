@@ -8,7 +8,7 @@ target_link_libraries(Renderer PRIVATE
     exe_flags
     Ray
     Material
-    # Light
+    Light
     Object
     Scene
     Camera
