@@ -3,7 +3,7 @@ target_link_libraries(Renderer PRIVATE
     pthread
     glfw
     ${OPENGL_LIBRARIES}
-    ${GLUT_LIBRARY}
+    GLEW::GLEW
     glad
     exe_flags
     Ray
@@ -17,4 +17,4 @@ target_link_libraries(Renderer PRIVATE
 target_include_directories(
     Renderer
     INTERFACE "./"
-    PUBLIC ${GLUT_INCLUDE_DIRS})
+    PUBLIC ${GLEW_INCLUDE_DIRS})

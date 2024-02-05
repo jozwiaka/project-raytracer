@@ -1,4 +1,5 @@
-#include <GL/glut.h>
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include "Renderer.h"
 #include "Vec3.h"
 #include "Material.h"
