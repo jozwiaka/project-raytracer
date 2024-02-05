@@ -4,7 +4,6 @@ target_link_libraries(Renderer PRIVATE
     glfw
     ${OPENGL_LIBRARIES}
     GLEW::GLEW
-    glad
     exe_flags
     Ray
     Material
