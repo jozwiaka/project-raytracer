@@ -16,8 +16,8 @@ void Renderer::Display()
     Material blueMaterial(Vec3(0, 0, 1));
     scene.AddObject(std::make_unique<Sphere>(Vec3(0, 0, -5), 1.0, redMaterial));
     scene.AddObject(std::make_unique<Sphere>(Vec3(2, 0, -7), 2.0, blueMaterial));
-    scene.AddLight(std::make_unique<Light>(Vec3(0, 5, -5), Vec3(1, 1, 1)));
-    scene.AddLight(std::make_unique<Light>(Vec3(0, -5, -5), Vec3(1, 1, 1)));
+    scene.AddLight(std::make_unique<Light>(Vec3(0, 0, 0), Vec3(1, 1, 1)));
+    // scene.AddLight(std::make_unique<Light>(Vec3(0, -5, -5), Vec3(1, 1, 1)));
 
     Camera camera(Vec3(0, 0, 0), Vec3(0, 0, -1), Vec3(0, 1, 0));
 
