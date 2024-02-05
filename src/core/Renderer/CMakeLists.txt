@@ -12,6 +12,7 @@ target_link_libraries(Renderer PRIVATE
     Object
     Scene
     Camera
+    Image
     )
 target_include_directories(
     Renderer
