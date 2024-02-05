@@ -17,6 +17,7 @@ void Renderer::Display()
     scene.AddObject(std::make_unique<Sphere>(Vec3(0, 0, -5), 1.0, redMaterial));
     scene.AddObject(std::make_unique<Sphere>(Vec3(2, 0, -7), 2.0, blueMaterial));
     scene.AddLight(std::make_unique<Light>(Vec3(0, 5, -5), Vec3(1, 1, 1)));
+    scene.AddLight(std::make_unique<Light>(Vec3(0, -5, -5), Vec3(1, 1, 1)));
 
     Camera camera(Vec3(0, 0, 0), Vec3(0, 0, -1), Vec3(0, 1, 0));
 
@@ -36,10 +37,18 @@ void Renderer::Display()
             Material material;
             if (scene.Intersect(ray, hitPoint, normal, material))
             {
+                Vec3 finalColor = Vec3(0.0f, 0.0f, 0.0f);
+
                 // Lambertian reflection model
-                Vec3 lightDirection = (scene.Lights[0]->Position - hitPoint).Normalize();
-                float diffuseIntensity = std::max(0.0f, normal.Dot(lightDirection));
-                Vec3 finalColor = material.Color * diffuseIntensity * scene.Lights[0]->Color;
+                for (const auto &light : scene.Lights)
+                {
+                    Vec3 lightDirection = (light->Position - hitPoint).Normalize();
+                    float distance = (light->Position - hitPoint).Length();
+                    float attenuation = 1 / (1 + 0.1 * distance + 0.01 * distance * distance);
+                    float diffuseIntensity = std::max(0.0f, normal.Dot(lightDirection));
+                    Vec3 lightContribution = material.Color * diffuseIntensity * light->Color * attenuation;
+                    finalColor += lightContribution;
+                }
 
                 glColor3f(finalColor.x, finalColor.y, finalColor.z);
             }
