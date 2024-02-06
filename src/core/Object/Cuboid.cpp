@@ -1,13 +1,13 @@
-#include "Sphere.h"
+#include "Cuboid.h"
 
-Sphere::Sphere(const Vec3 &center, float radius, const Material &material)
+Cuboid::Cuboid(const Vec3 &center, float radius, const Material &material)
     : Object(material),
       Center(center),
       Radius(radius) {}
 
-bool Sphere::Intersect(const Ray &ray, float &t, Vec3 &hitPoint, Vec3 &normal) const
+bool Cuboid::Intersect(const Ray &ray, float &t, Vec3 &hitPoint, Vec3 &normal) const
 {
-    Vec3 oc = ray.Origin - Center;
+    Vec3 oc = ray.Origin - Center; // offset from the sphere's centre to the origin of the ray
     float a = ray.Direction.Dot(ray.Direction);
     float b = 2.0f * oc.Dot(ray.Direction);
     float c = oc.Dot(oc) - Radius * Radius;
