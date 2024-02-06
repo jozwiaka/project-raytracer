@@ -5,6 +5,7 @@
 #include "Material.h"
 #include "Scene.h"
 #include "Sphere.h"
+#include "Cuboid.h"
 #include "Camera.h"
 #include "Image.h"
 
@@ -15,8 +16,10 @@ void Renderer::Display()
     Scene scene;
     Material redMaterial(Vec3(1, 0, 0));
     Material blueMaterial(Vec3(0, 0, 1));
-    scene.AddObject(std::make_unique<Sphere>(Vec3(0, 0, -5), 1.0, redMaterial));
-    scene.AddObject(std::make_unique<Sphere>(Vec3(2, 0, -7), 2.0, blueMaterial));
+    // scene.AddObject(std::make_unique<Cuboid>(Vec3(0, 0, -5), 1.0, redMaterial));
+
+    // scene.AddObject(std::make_unique<Sphere>(Vec3(0, 0, -5), 1.0, redMaterial));
+    // scene.AddObject(std::make_unique<Sphere>(Vec3(2, 0, -7), 2.0, blueMaterial));
     scene.AddLight(std::make_unique<Light>(Vec3(0, 0, 0), Vec3(1, 1, 1)));
     // scene.AddLight(std::make_unique<Light>(Vec3(0, -5, -5), Vec3(1, 1, 1)));
 

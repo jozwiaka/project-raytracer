@@ -1,4 +1,4 @@
-add_library(Object STATIC Object.cpp Sphere.cpp)
+add_library(Object STATIC Object.cpp Sphere.cpp Cuboid.cpp)
 target_link_libraries(Object PRIVATE Ray Material)
 target_include_directories(
     Object
