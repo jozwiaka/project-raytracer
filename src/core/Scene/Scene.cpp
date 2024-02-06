@@ -27,7 +27,7 @@ bool Scene::Intersect(const Ray &ray, Vec3 &hitPoint, Vec3 &normal, Material &ma
 
             hitPoint = objectHitPoint;
             normal = objectNormal;
-            material = object->ObjMaterial;
+            material = object->Substance;
         }
     }
 
