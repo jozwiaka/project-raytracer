@@ -4,7 +4,6 @@
 class Sphere : public Object
 {
 public:
-    Vec3 Center;
     float Radius;
 
     Sphere(const Vec3 &center, float radius, const Material &material);

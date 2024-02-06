@@ -1,15 +1,16 @@
 #include "Cuboid.h"
+#include <cmath>
 
-Cuboid::Cuboid(const Vec3 &corner1, const Vec3 &corner2, const Material &material)
-    : Object(material),
-      Corner1(corner1),
-      Corner2(corner2)
+Cuboid::Cuboid(const Vec3 &center, unsigned int a, unsigned int b, unsigned int c, const Vec3 &rotationDeg, const Material &material)
+    : Object(center, rotationDeg, material),
+      a(a),
+      b(b),
+      c(c)
 {
 }
 
 bool Cuboid::Intersect(const Ray &ray, float &t, Vec3 &hitPoint, Vec3 &normal) const
 {
-
     // Vec3 oc = ray.Origin - Center;
     // float a = ray.Direction.Dot(ray.Direction);
     // float b = 2.0f * oc.Dot(ray.Direction);

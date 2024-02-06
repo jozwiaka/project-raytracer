@@ -1,8 +1,7 @@
 #include "Sphere.h"
 
 Sphere::Sphere(const Vec3 &center, float radius, const Material &material)
-    : Object(material),
-      Center(center),
+    : Object(center, Vec3(), material),
       Radius(radius) {}
 
 bool Sphere::Intersect(const Ray &ray, float &t, Vec3 &hitPoint, Vec3 &normal) const
