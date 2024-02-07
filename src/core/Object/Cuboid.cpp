@@ -22,7 +22,7 @@ Cuboid::Cuboid(const glm::vec3 &center, const glm::vec3 &size, const glm::vec3 &
 
 bool Cuboid::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 &normal) const
 {
-    Ray rayLocal{Math::Translate(ray.Origin, -Center), Math::Rotate(ray.Direction, -RotationDeg)};
+    Ray rayLocal{Math::Rotate(Math::Translate(ray.Origin, -Center), -RotationDeg), Math::Rotate(ray.Direction, -RotationDeg)};
 
     // xy
     auto p0 = glm::vec3(0, 0, Size.z / 2); // point on the plane
