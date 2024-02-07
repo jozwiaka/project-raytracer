@@ -15,7 +15,8 @@ Cuboid::Cuboid(const glm::vec3 &center, const glm::vec3 &size, const glm::vec3 &
 
 bool Cuboid::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 &normal) const
 {
-    Ray rayLocal{Math::Rot(ray.Origin, -RotationDeg), Math::Rot(ray.Direction, -RotationDeg)};
+    Ray rayLocal{Math::Rotate(ray.Origin, -RotationDeg), Math::Rotate(ray.Direction, -RotationDeg)};
+
     // xy
     auto p0 = Center + glm::vec3(0, 0, Size.z / 2); // point on the plane
     auto n = glm::vec3(0, 0, 1);                    // normal to the plane
@@ -29,7 +30,7 @@ bool Cuboid::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 
             Math::IsWithinRange(p.x, Center.x, Size.x / 2) &&
             Math::IsWithinRange(p.y, Center.y, Size.y / 2))
         {
-            hitPoint = Math::Rot(p, RotationDeg);
+            hitPoint = Math::Rotate(p, RotationDeg);
             normal = glm::normalize((hitPoint - Center));
             return true;
         }
