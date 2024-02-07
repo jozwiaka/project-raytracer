@@ -1,11 +1,11 @@
 #pragma once
-#include "Vec3.h"
+#include <glm/glm.hpp>
 class Material
 {
 public:
-    Vec3 Color;
+    glm::vec3 Color;
 
 public:
     Material() = default;
-    Material(const Vec3 &color);
+    Material(const glm::vec3 &color);
 };

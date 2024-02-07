@@ -1,7 +1,7 @@
 #include "Cuboid.h"
 #include <cmath>
 
-Cuboid::Cuboid(const Vec3 &center, unsigned int a, unsigned int b, unsigned int c, const Vec3 &rotationDeg, const Material &material)
+Cuboid::Cuboid(const glm::vec3 &center, unsigned int a, unsigned int b, unsigned int c, const glm::vec3 &rotationDeg, const Material &material)
     : Object(center, rotationDeg, material),
       a(a),
       b(b),
@@ -9,25 +9,14 @@ Cuboid::Cuboid(const Vec3 &center, unsigned int a, unsigned int b, unsigned int 
 {
 }
 
-bool Cuboid::Intersect(const Ray &ray, float &t, Vec3 &hitPoint, Vec3 &normal) const
+bool Cuboid::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 &normal) const
 {
-    // Vec3 oc = ray.Origin - Center;
-    // float a = ray.Direction.Dot(ray.Direction);
-    // float b = 2.0f * oc.Dot(ray.Direction);
-    // float c = oc.Dot(oc) - Radius * Radius;
-    // float discriminant = b * b - 4 * a * c;
-
-    // if (discriminant > 0)
-    // {
-    //     float t1 = (-b - std::sqrt(discriminant)) / (2.0f * a);
-    //     float t2 = (-b + std::sqrt(discriminant)) / (2.0f * a);
-    //     t = (t1 < t2) ? t1 : t2; // choose smaller value, because it is closer to the ray's origin
-
-    //     hitPoint = ray.Origin + ray.Direction * t;
-    //     normal = (hitPoint - Center).Normalize();
-
-    //     return true;
-    // }
+    // ab
+    // bc
+    // ca
+    // ab'
+    // bc'
+    // ca'
 
     return false;
 }

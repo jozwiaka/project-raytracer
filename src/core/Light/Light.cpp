@@ -1,3 +1,3 @@
 #include "Light.h"
 
-Light::Light(const Vec3 &position, const Vec3 &color) : Position(position), Color(color) {}
+Light::Light(const glm::vec3 &position, const glm::vec3 &color) : Position(position), Color(color) {}

@@ -1,15 +1,15 @@
 #include "Sphere.h"
 
-Sphere::Sphere(const Vec3 &center, float radius, const Material &material)
-    : Object(center, Vec3(), material),
+Sphere::Sphere(const glm::vec3 &center, float radius, const Material &material)
+    : Object(center, glm::vec3(), material),
       Radius(radius) {}
 
-bool Sphere::Intersect(const Ray &ray, float &t, Vec3 &hitPoint, Vec3 &normal) const
+bool Sphere::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 &normal) const
 {
-    Vec3 oc = ray.Origin - Center;
-    float a = ray.Direction.Dot(ray.Direction);
-    float b = 2.0f * oc.Dot(ray.Direction);
-    float c = oc.Dot(oc) - Radius * Radius;
+    glm::vec3 oc = ray.Origin - Center;
+    float a = glm::dot(ray.Direction, ray.Direction);
+    float b = 2.0f * glm::dot(oc, ray.Direction);
+    float c = glm::dot(oc, oc) - Radius * Radius;
     float discriminant = b * b - 4 * a * c;
 
     if (discriminant > 0)
@@ -19,7 +19,7 @@ bool Sphere::Intersect(const Ray &ray, float &t, Vec3 &hitPoint, Vec3 &normal) c
         t = (t1 < t2) ? t1 : t2; // choose smaller value, because it is closer to the ray's origin
 
         hitPoint = ray.Origin + ray.Direction * t;
-        normal = (hitPoint - Center).Normalize();
+        normal = glm::normalize((hitPoint - Center));
 
         return true;
     }

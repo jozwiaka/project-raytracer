@@ -1,16 +1,16 @@
 #include "Camera.h"
 
-Camera::Camera(const Vec3 &position, const Vec3 &target, const Vec3 &upVector)
+Camera::Camera(const glm::vec3 &position, const glm::vec3 &target, const glm::vec3 &upVector)
     : Position(position),
-      Forward((target - position).Normalize()),
-      Right(Forward.Cross(upVector).Normalize()),
-      Up(Right.Cross(Forward).Normalize())
+      Forward(glm::normalize((target - position))),
+      Right(glm::normalize(glm::cross(Forward, upVector))),
+      Up(glm::normalize(glm::cross(Right, Forward)))
 
 {
 }
 
 Ray Camera::GenerateRay(float x, float y) const
 {
-    Vec3 direction = Forward + Right * x + Up * y;
+    glm::vec3 direction = Forward + Right * x + Up * y;
     return Ray(Position, direction);
 }

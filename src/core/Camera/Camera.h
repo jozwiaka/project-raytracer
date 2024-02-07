@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Vec3.h"
+#include <glm/glm.hpp>
 #include "Ray.h"
 
 class Camera
 {
 public:
-    Vec3 Position;
-    Vec3 Forward, Right, Up;
+    glm::vec3 Position;
+    glm::vec3 Forward, Right, Up;
 
 public:
-    Camera(const Vec3 &position, const Vec3 &target, const Vec3 &upVector);
+    Camera(const glm::vec3 &position, const glm::vec3 &target, const glm::vec3 &upVector);
     Ray GenerateRay(float x, float y) const;
 };

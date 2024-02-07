@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Renderer.h"
-#include "Vec3.h"
+#include <glm/glm.hpp>
 #include "Material.h"
 #include "Scene.h"
 #include "Sphere.h"
@@ -14,16 +14,16 @@ void Renderer::Display()
     glClear(GL_COLOR_BUFFER_BIT);
 
     Scene scene;
-    Material redMaterial(Vec3(1, 0, 0));
-    Material blueMaterial(Vec3(0, 0, 1));
-    // scene.AddObject(std::make_unique<Cuboid>(Vec3(0, 0, -5), 1.0, redMaterial));
+    Material redMaterial(glm::vec3(1, 0, 0));
+    Material blueMaterial(glm::vec3(0, 0, 1));
+    // scene.AddObject(std::make_unique<Cuboid>(glm::vec3(0, 0, -5), 1.0, redMaterial));
 
-    // scene.AddObject(std::make_unique<Sphere>(Vec3(0, 0, -5), 1.0, redMaterial));
-    // scene.AddObject(std::make_unique<Sphere>(Vec3(2, 0, -7), 2.0, blueMaterial));
-    scene.AddLight(std::make_unique<Light>(Vec3(0, 0, 0), Vec3(1, 1, 1)));
-    // scene.AddLight(std::make_unique<Light>(Vec3(0, -5, -5), Vec3(1, 1, 1)));
+    scene.AddObject(std::make_unique<Sphere>(glm::vec3(2, 0, -7), 2.0, blueMaterial));
+    scene.AddObject(std::make_unique<Sphere>(glm::vec3(0, 0, -5), 1.0, redMaterial));
+    scene.AddLight(std::make_unique<Light>(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
+    // scene.AddLight(std::make_unique<Light>(glm::vec3(0, -5, -5), glm::vec3(1, 1, 1)));
 
-    Camera camera(Vec3(0, 0, 0), Vec3(0, 0, -1), Vec3(0, 1, 0));
+    Camera camera(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
 
     Image image(Width, Height);
 
@@ -37,20 +37,20 @@ void Renderer::Display()
 
             Ray ray = camera.GenerateRay(px, py);
 
-            Vec3 hitPoint, normal;
+            glm::vec3 hitPoint, normal;
             Material material;
             if (scene.Intersect(ray, hitPoint, normal, material))
             {
-                Vec3 finalColor = Vec3(0.0f, 0.0f, 0.0f);
+                glm::vec3 finalColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
                 // Lambertian reflection model
                 for (const auto &light : scene.Lights)
                 {
-                    Vec3 lightDirection = (light->Position - hitPoint).Normalize();
-                    float distance = (light->Position - hitPoint).Length();
+                    glm::vec3 lightDirection = glm::normalize((light->Position - hitPoint));
+                    float distance = glm::length(light->Position - hitPoint);
                     float attenuation = 1 / (1 + 0.1 * distance + 0.01 * distance * distance);
-                    float diffuseIntensity = std::max(0.0f, normal.Dot(lightDirection));
-                    Vec3 lightContribution = material.Color * diffuseIntensity * light->Color * attenuation;
+                    float diffuseIntensity = std::max(0.0f, glm::dot(normal, lightDirection));
+                    glm::vec3 lightContribution = material.Color * diffuseIntensity * light->Color * attenuation;
                     finalColor += lightContribution;
                 }
 

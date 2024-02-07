@@ -1,10 +1,10 @@
 #pragma once
-#include "Vec3.h"
+#include <glm/glm.hpp>
 class Ray
 {
 public:
-    Vec3 Origin, Direction;
+    glm::vec3 Origin, Direction;
 
 public:
-    Ray(const Vec3 &origin, const Vec3 &direction);
+    Ray(const glm::vec3 &origin, const glm::vec3 &direction);
 };

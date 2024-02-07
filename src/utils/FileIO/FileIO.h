@@ -4,12 +4,12 @@
 #include <fstream>
 #include <vector>
 #include <string>
-#include "Vec3.h"
+#include <glm/glm.hpp>
 
 class FileIO
 {
 public:
-    static bool writePPM(const std::string &filename, const std::vector<Vec3> &pixels, int width, int height)
+    static bool writePPM(const std::string &filename, const std::vector<glm::vec3> &pixels, int width, int height)
     {
         std::ofstream file(filename);
         if (!file.is_open())
@@ -34,7 +34,7 @@ public:
         return true;
     }
 
-    static bool readPPM(const std::string &filename, std::vector<Vec3> &pixels, int &width, int &height)
+    static bool readPPM(const std::string &filename, std::vector<glm::vec3> &pixels, int &width, int &height)
     {
         std::ifstream file(filename);
         if (!file.is_open())
@@ -78,8 +78,8 @@ public:
 //     const int height = 600;
 //     const std::string filename = "output.ppm";
 
-//     // Creating an image (Vec3 values represent RGB color)
-//     std::vector<Vec3> pixels(width * height, Vec3(1, 0, 0));  // Red image
+//     // Creating an image (glm::vec3 values represent RGB color)
+//     std::vector<glm::vec3> pixels(width * height, glm::vec3(1, 0, 0));  // Red image
 
 //     // Writing the image to a PPM file
 //     if (FileIO::writePPM(filename, pixels, width, height)) {
@@ -90,7 +90,7 @@ public:
 //     }
 
 //     // Reading the image from the PPM file
-//     std::vector<Vec3> loadedPixels;
+//     std::vector<glm::vec3> loadedPixels;
 //     int loadedWidth, loadedHeight;
 
 //     if (FileIO::readPPM(filename, loadedPixels, loadedWidth, loadedHeight)) {

@@ -3,4 +3,4 @@ target_link_libraries(Scene PRIVATE Ray Object Material Light)
 target_include_directories(
     Scene
     INTERFACE "./"
-    PUBLIC "../../utils/Math")
+    PUBLIC ${GLM_INCLUDE_DIRS})
