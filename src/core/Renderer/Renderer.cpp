@@ -23,16 +23,15 @@ void Renderer::Display()
     Scene scene;
     Material redMaterial(glm::vec3(1, 0, 0));
     Material blueMaterial(glm::vec3(0, 0, 1));
-    scene.AddObject(std::make_unique<Cuboid>(glm::vec3(-2, 0, -3), glm::vec3(1, 1, 1), glm::vec3(10, 10, 10), blueMaterial));
+    scene.AddObject(std::make_unique<Cuboid>(glm::vec3(-2, 0, -5), glm::vec3(3, 3, 3), glm::vec3(30, 30, 30), blueMaterial));
     scene.AddObject(std::make_unique<Sphere>(glm::vec3(2, 0, -7), 2.0, blueMaterial));
     scene.AddObject(std::make_unique<Sphere>(glm::vec3(0, 0, -5), 1.0, redMaterial));
 
-    scene.AddLight(std::make_unique<Light>(glm::vec3(2, 0, -3), glm::vec3(1, 1, 1)));
-    scene.AddLight(std::make_unique<Light>(glm::vec3(-2, 0, -3), glm::vec3(1, 1, 1)));
-    scene.AddLight(std::make_unique<Light>(glm::vec3(0, 2, -3), glm::vec3(1, 1, 1)));
-    scene.AddLight(std::make_unique<Light>(glm::vec3(0, -2, -3), glm::vec3(1, 1, 1)));
-    scene.AddLight(std::make_unique<Light>(glm::vec3(0, 0, -1), glm::vec3(1, 1, 1)));
-    scene.AddLight(std::make_unique<Light>(glm::vec3(0, 0, -5), glm::vec3(1, 1, 1)));
+    // scene.AddLight(std::make_unique<Light>(glm::vec3(5, 0, -3), glm::vec3(1, 1, 1)));
+    // scene.AddLight(std::make_unique<Light>(glm::vec3(-5, 0, -3), glm::vec3(1, 1, 1)));
+    // scene.AddLight(std::make_unique<Light>(glm::vec3(0, 5, -3), glm::vec3(1, 1, 1)));
+    // scene.AddLight(std::make_unique<Light>(glm::vec3(0, -5, -3), glm::vec3(1, 1, 1)));
+    scene.AddLight(std::make_unique<Light>(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
 
     Camera camera(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
 
@@ -40,8 +39,8 @@ void Renderer::Display()
 
     glBegin(GL_POINTS);
 
-    const size_t X = 1000;
-    const size_t Y = 1000;
+    const size_t X = 800;
+    const size_t Y = 800;
 #ifdef MULTITHREADING
     const size_t MaxThreads = 100;
     std::vector<std::future<void>> threads;
