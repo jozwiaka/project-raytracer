@@ -1,5 +1,5 @@
 add_library(Camera STATIC Camera.cpp)
-target_link_libraries(Camera PRIVATE Ray)
+target_link_libraries(Camera PUBLIC exe_flags Ray)
 target_include_directories(
     Camera
     INTERFACE "./"

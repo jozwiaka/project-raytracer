@@ -1,10 +1,10 @@
 add_library(Renderer STATIC Renderer.cpp)
-target_link_libraries(Renderer PRIVATE
+target_link_libraries(Renderer PUBLIC
+    exe_flags
     pthread
     glfw
     ${OPENGL_LIBRARIES}
     GLEW::GLEW
-    exe_flags
     Ray
     Material
     Light

@@ -1,4 +1,6 @@
 #include "Math.h"
+#include <cmath>
+#include <limits>
 
 glm::vec3 Math::Rot(const glm::vec3 &vec, const glm::vec3 &rotationDeg) noexcept
 {
@@ -13,4 +15,9 @@ glm::vec3 Math::Rot(const glm::vec3 &vec, const glm::vec3 &rotationDeg) noexcept
 
     glm::vec4 rotatedVec = rotationMatrix * glm::vec4(vec, 1.0f);
     return glm::vec3(rotatedVec.x, rotatedVec.y, rotatedVec.z);
+}
+
+bool Math::IsAlmostEqual(float val1, float val2) noexcept
+{
+    return std::abs(val1 - val2) < std::numeric_limits<float>::epsilon();
 }
