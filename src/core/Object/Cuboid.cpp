@@ -5,6 +5,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <limits>
 #include <iostream>
+#include "Math.h"
 
 Cuboid::Cuboid(const glm::vec3 &center, const glm::vec3 &size, const glm::vec3 &rotationDeg, const Material &material)
     : Object(center, rotationDeg, material),
@@ -29,8 +30,9 @@ bool Cuboid::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 
             p.y >= Center.y - Size.y / 2 && p.y <= Center.y + Size.y / 2)
         {
             t = t1;
-            hitPoint = p;
+            hitPoint = Math::Rot(p, RotationDeg);
             normal = glm::normalize((hitPoint - Center));
+
             return true;
         }
     }
