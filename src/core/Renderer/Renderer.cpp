@@ -1,3 +1,5 @@
+// #define MULTITHREADING
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Renderer.h"
@@ -9,6 +11,11 @@
 #include "Camera.h"
 #include "Image.h"
 
+#ifdef MULTITHREADING
+#include <future>
+#include <mutex>
+#endif
+
 void Renderer::Display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -16,9 +23,9 @@ void Renderer::Display()
     Scene scene;
     Material redMaterial(glm::vec3(1, 0, 0));
     Material blueMaterial(glm::vec3(0, 0, 1));
-    scene.AddObject(std::make_unique<Cuboid>(glm::vec3(0, 0, -3), glm::vec3(1, 1, 1), glm::vec3(30, 30, 30), redMaterial));
-    // scene.AddObject(std::make_unique<Sphere>(glm::vec3(2, 0, -7), 2.0, blueMaterial));
-    // scene.AddObject(std::make_unique<Sphere>(glm::vec3(0, 0, -5), 1.0, redMaterial));
+    scene.AddObject(std::make_unique<Cuboid>(glm::vec3(-2, 0, -3), glm::vec3(1, 1, 1), glm::vec3(10, 10, 10), blueMaterial));
+    scene.AddObject(std::make_unique<Sphere>(glm::vec3(2, 0, -7), 2.0, blueMaterial));
+    scene.AddObject(std::make_unique<Sphere>(glm::vec3(0, 0, -5), 1.0, redMaterial));
 
     scene.AddLight(std::make_unique<Light>(glm::vec3(2, 0, -3), glm::vec3(1, 1, 1)));
     scene.AddLight(std::make_unique<Light>(glm::vec3(-2, 0, -3), glm::vec3(1, 1, 1)));
@@ -32,43 +39,64 @@ void Renderer::Display()
     Image image(Width, Height);
 
     glBegin(GL_POINTS);
-    for (int y = 0; y < Height; ++y)
+
+    const size_t X = 1000;
+    const size_t Y = 1000;
+#ifdef MULTITHREADING
+    const size_t MaxThreads = 100;
+    std::vector<std::future<void>> threads;
+    std::mutex mtx;
+#endif
+    for (int y = 0; y < Y; ++y)
     {
-        for (int x = 0; x < Width; ++x)
+        for (int x = 0; x < X; ++x)
         {
-            float px = (2.0f * x - Width) / Width;
-            float py = (Height - 2.0f * y) / Height;
+            float px = (2.0f * x - X) / X;
+            float py = (Y - 2.0f * y) / Y;
+#ifdef MULTITHREADING
+            threads.emplace_back(std::async(std::launch::async, [px, py, &camera, &scene]()
+                                            {
+#endif
+                                                Ray ray = camera.GenerateRay(px, py);
 
-            Ray ray = camera.GenerateRay(px, py);
+                                                glm::vec3 hitPoint, normal;
+                                                Material material;
+                                                if (scene.Intersect(ray, hitPoint, normal, material))
+                                                {
+                                                    glm::vec3 finalColor = glm::vec3(0.0f, 0.0f, 0.0f);
 
-            glm::vec3 hitPoint, normal;
-            Material material;
-            if (scene.Intersect(ray, hitPoint, normal, material))
-            {
-                glm::vec3 finalColor = glm::vec3(0.0f, 0.0f, 0.0f);
+                                                    // Lambertian reflection model
+                                                    for (const auto &light : scene.Lights)
+                                                    {
+                                                        glm::vec3 lightDirection = glm::normalize((light->Position - hitPoint));
+                                                        float distance = glm::length(light->Position - hitPoint);
+                                                        float attenuation = 1 / (1 + 0.1 * distance + 0.01 * distance * distance);
+                                                        float diffuseIntensity = std::max(0.0f, glm::dot(normal, lightDirection));
+                                                        glm::vec3 lightContribution = material.Color * diffuseIntensity * light->Color * attenuation;
+                                                        finalColor += lightContribution;
+                                                    }
 
-                // Lambertian reflection model
-                for (const auto &light : scene.Lights)
-                {
-                    glm::vec3 lightDirection = glm::normalize((light->Position - hitPoint));
-                    float distance = glm::length(light->Position - hitPoint);
-                    float attenuation = 1 / (1 + 0.1 * distance + 0.01 * distance * distance);
-                    float diffuseIntensity = std::max(0.0f, glm::dot(normal, lightDirection));
-                    glm::vec3 lightContribution = material.Color * diffuseIntensity * light->Color * attenuation;
-                    finalColor += lightContribution;
-                }
+                                                    glColor3f(finalColor.x, finalColor.y, finalColor.z);
+                                                }
+                                                else
+                                                {
+                                                    glColor3f(0, 0, 0);
+                                                }
 
-                glColor3f(finalColor.x, finalColor.y, finalColor.z);
-            }
-            else
-            {
-                glColor3f(0, 0, 0);
-            }
-
-            glVertex2f(px, py);
-            image.SetPixel(x, y, material.Color);
+                                                glVertex2f(px, py);
+// image.SetPixel(x, y, material.Color);
+#ifdef MULTITHREADING
+                                            }));
+#endif
         }
     }
+
+#ifdef MULTITHREADING
+    for (auto &thread : threads)
+    {
+        thread.wait();
+    }
+#endif
 
     glEnd();
     glFlush();
