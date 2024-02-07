@@ -14,12 +14,6 @@ Cuboid::Cuboid(const glm::vec3 &center, const glm::vec3 &size, const glm::vec3 &
 {
 }
 
-// Cuboid::Cuboid(const glm::vec3 &corner, const glm::vec3 &size, const glm::vec3 &rotationDeg, const Material &material)
-//     : Object(center, rotationDeg, material),
-//       Size(size)
-// {
-// }
-
 bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 &normal) const
 {
     glm::vec3 p0;
@@ -92,18 +86,13 @@ bool Cuboid::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, Center), -RotationDeg), Math::Rotate(ray.Direction, -RotationDeg)};
 
-    if (CheckWall(rayLocal, Wall::XY, ray, t, hitPoint, normal))
-        return true;
-    if (CheckWall(rayLocal, Wall::XYprime, ray, t, hitPoint, normal))
-        return true;
-    if (CheckWall(rayLocal, Wall::YZ, ray, t, hitPoint, normal))
-        return true;
-    if (CheckWall(rayLocal, Wall::YZprime, ray, t, hitPoint, normal))
-        return true;
-    if (CheckWall(rayLocal, Wall::ZX, ray, t, hitPoint, normal))
-        return true;
-    if (CheckWall(rayLocal, Wall::ZXprime, ray, t, hitPoint, normal))
-        return true;
+    for (int i = static_cast<int>(Wall::XY); i <= static_cast<int>(Wall::ZXprime); ++i)
+    {
+        if (CheckWall(rayLocal, static_cast<Wall>(i), ray, t, hitPoint, normal))
+        {
+            return true;
+        }
+    }
 
     return false;
 }
