@@ -3,7 +3,7 @@ class Renderer
 {
 public:
     static const int Width = 800;
-    static const int Height = 600;
+    static const int Height = 800;
 
 public:
     static void Display();
