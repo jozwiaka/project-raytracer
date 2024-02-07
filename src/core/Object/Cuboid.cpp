@@ -26,8 +26,8 @@ bool Cuboid::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 
 
         if (
             Math::IsAlmostEqual(glm::dot(n, p), glm::dot(n, p0)) &&
-            p.x >= Center.x - Size.x / 2 && p.x <= Center.x + Size.x / 2 &&
-            p.y >= Center.y - Size.y / 2 && p.y <= Center.y + Size.y / 2)
+            Math::IsWithinRange(p.x, Center.x, Size.x / 2) &&
+            Math::IsWithinRange(p.y, Center.y, Size.y / 2))
         {
             t = t1;
             hitPoint = Math::Rot(p, RotationDeg);

@@ -21,3 +21,8 @@ bool Math::IsAlmostEqual(float val1, float val2) noexcept
 {
     return std::abs(val1 - val2) < std::numeric_limits<float>::epsilon();
 }
+
+bool Math::IsWithinRange(float val, float center, float radius) noexcept
+{
+    return val >= center - radius && val <= center + radius;
+}
