@@ -16,12 +16,15 @@ bool Sphere::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 
     {
         float t1 = (-b - std::sqrt(discriminant)) / (2.0f * a);
         float t2 = (-b + std::sqrt(discriminant)) / (2.0f * a);
-        t = (t1 < t2) ? t1 : t2; // choose smaller value, because it is closer to the ray's origin
+        float tSmallerVal = (t1 < t2) ? t1 : t2; // choose smaller value, because it is closer to the ray's origin
 
-        hitPoint = ray.Origin + ray.Direction * t;
-        normal = glm::normalize((hitPoint - Center));
-
-        return true;
+        if (tSmallerVal >= 0)
+        {
+            t = tSmallerVal;
+            hitPoint = ray.Origin + ray.Direction * t;
+            normal = glm::normalize((hitPoint - Center));
+            return true;
+        }
     }
 
     return false;
