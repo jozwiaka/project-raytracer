@@ -40,19 +40,17 @@ void Renderer::Display()
 
     glBegin(GL_POINTS);
 
-    const size_t X = 800;
-    const size_t Y = 800;
 #ifdef MULTITHREADING
     const size_t MaxThreads = 100;
     std::vector<std::future<void>> threads;
     std::mutex mtx;
 #endif
-    for (int y = 0; y < Y; ++y)
+    for (int y = 0; y < Height; ++y)
     {
-        for (int x = 0; x < X; ++x)
+        for (int x = 0; x < Width; ++x)
         {
-            float px = (2.0f * x - X) / X;
-            float py = (Y - 2.0f * y) / Y;
+            float px = (2.0f * x - Width) / Width;
+            float py = (Height - 2.0f * y) / Height;
 #ifdef MULTITHREADING
             threads.emplace_back(std::async(std::launch::async, [px, py, &camera, &scene]()
                                             {
