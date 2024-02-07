@@ -9,7 +9,6 @@
 #include "Sphere.h"
 #include "Cuboid.h"
 #include "Camera.h"
-#include "Image.h"
 
 #ifdef MULTITHREADING
 #include <future>
@@ -35,8 +34,6 @@ void Renderer::Display()
     scene.AddLight(std::make_unique<Light>(glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
 
     Camera camera(glm::vec3(0, 0, 0), glm::vec3(0, 0, -1), glm::vec3(0, 1, 0));
-
-    Image image(Width, Height);
 
     glBegin(GL_POINTS);
 
@@ -82,7 +79,6 @@ void Renderer::Display()
                                                 }
 
                                                 glVertex2f(px, py);
-// image.SetPixel(x, y, material.Color);
 #ifdef MULTITHREADING
                                             }));
 #endif

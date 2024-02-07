@@ -11,7 +11,6 @@ target_link_libraries(Renderer PUBLIC
     Object
     Scene
     Camera
-    Image
     )
 target_include_directories(
     Renderer
