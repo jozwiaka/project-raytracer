@@ -10,7 +10,6 @@
 Cuboid::Cuboid(const glm::vec3 &center, const glm::vec3 &size, const glm::vec3 &rotationDeg, const Material &material)
     : Object(center, rotationDeg, material),
       Size(size)
-
 {
 }
 
