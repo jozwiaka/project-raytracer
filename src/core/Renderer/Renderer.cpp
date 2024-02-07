@@ -23,7 +23,7 @@ void Renderer::Display()
     Scene scene;
     Material redMaterial(glm::vec3(1, 0, 0));
     Material blueMaterial(glm::vec3(0, 0, 1));
-    scene.AddObject(std::make_unique<Cuboid>(glm::vec3(-2, 0, -5), glm::vec3(3, 3, 3), glm::vec3(30, 30, 30), blueMaterial));
+    scene.AddObject(std::make_unique<Cuboid>(glm::vec3(-2, 0, -5), glm::vec3(2, 2, 2), glm::vec3(10, 10, 0), blueMaterial));
     scene.AddObject(std::make_unique<Sphere>(glm::vec3(2, 0, -7), 2.0, blueMaterial));
     scene.AddObject(std::make_unique<Sphere>(glm::vec3(0, 0, -5), 1.0, redMaterial));
 
