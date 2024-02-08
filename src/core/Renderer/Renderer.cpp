@@ -9,6 +9,7 @@
 #include "Sphere.h"
 #include "Cuboid.h"
 #include "Camera.h"
+#include "Cylinder.h"
 
 #ifdef MULTITHREADING
 #include <future>
@@ -25,7 +26,8 @@ void Renderer::Display()
     // scene.AddObject(std::make_unique<Cuboid>(glm::vec3(-2, 0, -7), glm::vec3(2, 2, 2), glm::vec3(10, 10, 0), blueMaterial));
     // scene.AddObject(std::make_unique<Sphere>(glm::vec3(2, 0, -7), 2.0, blueMaterial));
     // scene.AddObject(std::make_unique<Sphere>(glm::vec3(0, 0, -5), 1.0, redMaterial));
-    scene.AddObject(std::make_unique<Cuboid>(glm::vec3(0, 0, -3), glm::vec3(1, 1, 1), glm::vec3(20, 20, 20), redMaterial));
+    // scene.AddObject(std::make_unique<Cuboid>(glm::vec3(0, 0, -3), glm::vec3(1, 1, 1), glm::vec3(20, 20, 20), redMaterial));
+    scene.AddObject(std::make_unique<Cylinder>(glm::vec3(0, 0, -3), 1, 2, glm::vec3(10, 10, 10), redMaterial));
 
     scene.AddLight(std::make_unique<Light>(glm::vec3(5, 0, -3), glm::vec3(1, 1, 1)));
     scene.AddLight(std::make_unique<Light>(glm::vec3(-5, 0, -3), glm::vec3(1, 1, 1)));
