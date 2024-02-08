@@ -17,9 +17,8 @@ Cylinder::Cylinder(const glm::vec3 &center, const float radius, const float heig
 bool Cylinder::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 &normal) const
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, Center), -RotationDeg), Math::Rotate(ray.Direction, -RotationDeg)};
-    // P=O+tD;
     // (p-C-((p-C)*v)*v)^2=r^2
-    // p=P
+    // p=P=O+tD
     auto v = glm::vec3(0, 1, 0);
     auto oc = rayLocal.Origin;
     auto dv = rayLocal.Direction - (v * glm::dot(rayLocal.Direction, v));
