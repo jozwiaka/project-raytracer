@@ -23,8 +23,8 @@ void Renderer::Display()
     Material redMaterial(Math::Vec3(1, 0, 0));
     Material blueMaterial(Math::Vec3(0, 0, 1));
     // scene.AddObject(std::make_unique<Cuboid>(Math::Vec3(-2, 0, -7), Math::Vec3(2, 2, 2), Math::Vec3(10, 10, 0), blueMaterial));
-    // scene.AddObject(std::make_unique<Sphere>(Math::Vec3(2, 0, -7), 2.0, blueMaterial));
-    // scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, 0, -5), 1.0, redMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(2, 0, -7), 2.0, blueMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, 0, -5), 1.0, redMaterial));
     // scene.AddObject(std::make_unique<Cuboid>(Math::Vec3(0, 0, -3), Math::Vec3(1, 1, 1), Math::Vec3(20, 20, 20), redMaterial));
     scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(0, 0, -3), 1, 2, Math::Vec3(10, 10, 10), redMaterial));
 
