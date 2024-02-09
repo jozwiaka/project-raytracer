@@ -12,7 +12,7 @@ bool Sphere::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math::V
     float c = Math::Dot(oc, oc) - Radius * Radius;
     float discriminant = b * b - 4 * a * c;
 
-    if (discriminant > 0)
+    if (discriminant >= 0)
     {
         float t1 = (-b - std::sqrt(discriminant)) / (2.0f * a);
         float t2 = (-b + std::sqrt(discriminant)) / (2.0f * a);

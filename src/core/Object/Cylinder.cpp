@@ -25,7 +25,7 @@ bool Cylinder::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math:
 
     float discriminant = b * b - 4 * a * c;
 
-    if (discriminant > 0)
+    if (discriminant >= 0)
     {
         float t1 = (-b - std::sqrt(discriminant)) / (2.0f * a);
         float t2 = (-b + std::sqrt(discriminant)) / (2.0f * a);

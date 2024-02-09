@@ -26,11 +26,11 @@ void Renderer::Display()
     Material redMaterial(Math::Vec3(1, 0, 0));
     Material blueMaterial(Math::Vec3(0, 0, 1));
     scene.BackgroundColor = Math::Color3(0, 0, 0);
-    // scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, -1000, 0), 1000, blueMaterial));
-    // scene.AddObject(std::make_unique<Sphere>(Math::Vec3(3, 2, 0), 2.0, redMaterial));
-    // scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, 1, 0), 1.0, redMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, -1000, 0), 1000, blueMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(3, 2, 0), 2.0, redMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, 1, 0), 1.0, redMaterial));
 
-    scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(0, 1, 0), 1, 2, Math::Vec3(0, 0, 0), redMaterial));
+    scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(2, 2, 2), 1, 1, Math::Vec3(0, 0, 0), redMaterial));
 
     scene.AddLight(std::make_unique<Light>(Math::Vec3(0, 3, 0), Math::Vec3(1, 1, 1)));
     Camera camera(Math::Vec3(0, 5, 10), Math::Vec3(0, 0, 0), Math::Vec3(0, 1, 0));
