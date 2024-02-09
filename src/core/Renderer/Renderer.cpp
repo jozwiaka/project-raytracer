@@ -22,6 +22,7 @@ void Renderer::Display()
     Scene scene;
     Material redMaterial(Math::Vec3(1, 0, 0));
     Material blueMaterial(Math::Vec3(0, 0, 1));
+    scene.BackgroundColor = Math::Color3(0, 0, 0);
     // scene.AddObject(std::make_unique<Cuboid>(Math::Vec3(-2, 0, -7), Math::Vec3(2, 2, 2), Math::Vec3(10, 10, 0), blueMaterial));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(2, 0, -7), 2.0, blueMaterial));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, 0, -5), 1.0, redMaterial));
@@ -76,7 +77,7 @@ void Renderer::Display()
                                                 }
                                                 else
                                                 {
-                                                    glColor3f(0, 0, 0);
+                                                    glColor3f(scene.BackgroundColor.x, scene.BackgroundColor.y, scene.BackgroundColor.z);
                                                 }
 
                                                 glVertex2f(px, py);
