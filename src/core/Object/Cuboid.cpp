@@ -1,22 +1,19 @@
 #include "Cuboid.h"
 #include <cmath>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 #include <limits>
 #include <iostream>
 #include "Math.h"
 
-Cuboid::Cuboid(const glm::vec3 &center, const glm::vec3 &size, const glm::vec3 &rotationDeg, const Material &material)
+Cuboid::Cuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec3 &rotationDeg, const Material &material)
     : Object(center, rotationDeg, material),
       Size(size)
 {
 }
 
-bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 &normal) const
+bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const
 {
-    glm::vec3 p0;
-    glm::vec3 n;
+    Math::Vec3 p0;
+    Math::Vec3 n;
     bool range1 = false;
     bool range2 = false;
 
@@ -24,28 +21,28 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     {
     case Wall::XY:
     case Wall::XYprime:
-        p0 = glm::vec3(0, 0, (wall == Wall::XY ? 1 : -1) * Size.z / 2);
-        n = glm::vec3(0, 0, 1);
+        p0 = Math::Vec3(0, 0, (wall == Wall::XY ? 1 : -1) * Size.z / 2);
+        n = Math::Vec3(0, 0, 1);
         break;
     case Wall::YZ:
     case Wall::YZprime:
-        p0 = glm::vec3((wall == Wall::YZ ? 1 : -1) * Size.x / 2, 0, 0);
-        n = glm::vec3(1, 0, 0);
+        p0 = Math::Vec3((wall == Wall::YZ ? 1 : -1) * Size.x / 2, 0, 0);
+        n = Math::Vec3(1, 0, 0);
         break;
     case Wall::ZX:
     case Wall::ZXprime:
-        p0 = glm::vec3(0, (wall == Wall::ZX ? 1 : -1) * Size.y / 2, 0);
-        n = glm::vec3(0, 1, 0);
+        p0 = Math::Vec3(0, (wall == Wall::ZX ? 1 : -1) * Size.y / 2, 0);
+        n = Math::Vec3(0, 1, 0);
         break;
     default:
         break;
     }
 
-    float np0 = glm::dot(n, p0);
-    t = (np0 - glm::dot(n, rayLocal.Origin)) / glm::dot(n, rayLocal.Direction);
+    float np0 = Math::Dot(n, p0);
+    t = (np0 - Math::Dot(n, rayLocal.Origin)) / Math::Dot(n, rayLocal.Direction);
     if (t >= 0)
     {
-        glm::vec3 p = rayLocal.Origin + t * rayLocal.Direction;
+        Math::Vec3 p = rayLocal.Origin + t * rayLocal.Direction;
 
         switch (wall)
         {
@@ -69,19 +66,19 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
         }
 
         if (
-            Math::IsAlmostEqual(glm::dot(n, p), np0) &&
+            Math::IsAlmostEqual(Math::Dot(n, p), np0) &&
             range1 &&
             range2)
         {
             hitPoint = ray.Origin + t * ray.Direction;
-            normal = glm::normalize((hitPoint - Center));
+            normal = Math::Normalize((hitPoint - Center));
             return true;
         }
     }
     return false;
 }
 
-bool Cuboid::Intersect(const Ray &ray, float &t, glm::vec3 &hitPoint, glm::vec3 &normal) const
+bool Cuboid::Intersect(const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, Center), -RotationDeg), Math::Rotate(ray.Direction, -RotationDeg)};
 

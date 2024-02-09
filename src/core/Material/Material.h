@@ -1,11 +1,12 @@
 #pragma once
-#include <glm/glm.hpp>
+#include "Math.h"
+
 class Material
 {
 public:
-    glm::vec3 Color;
+    Math::Vec3 Color;
 
 public:
     Material() = default;
-    Material(const glm::vec3 &color);
+    Material(const Math::Vec3 &color);
 };

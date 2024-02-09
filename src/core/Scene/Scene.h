@@ -3,9 +3,10 @@
 #include <memory>
 #include "Object.h"
 #include "Ray.h"
-#include <glm/glm.hpp>
 #include "Material.h"
 #include "Light.h"
+#include "Math.h"
+
 class Scene
 {
 public:
@@ -15,5 +16,5 @@ public:
 public:
     void AddObject(std::unique_ptr<Object> object);
     void AddLight(std::unique_ptr<Light> light);
-    bool Intersect(const Ray &ray, glm::vec3 &hitPoint, glm::vec3 &normal, Material &material) const;
+    bool Intersect(const Ray &ray, Math::Vec3 &hitPoint, Math::Vec3 &normal, Material &material) const;
 };

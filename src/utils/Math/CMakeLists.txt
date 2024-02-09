@@ -3,4 +3,4 @@ target_link_libraries(Math PUBLIC exe_flags)
 target_include_directories(
     Math
     INTERFACE "./"
-    PUBLIC ${GLM_INCLUDE_DIRS})
+    PRIVATE ${GLM_INCLUDE_DIRS})

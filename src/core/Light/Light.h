@@ -1,11 +1,12 @@
 #pragma once
-#include <glm/glm.hpp>
+#include "Math.h"
+
 class Light
 {
 public:
-    glm::vec3 Position;
-    glm::vec3 Color;
+    Math::Vec3 Position;
+    Math::Vec3 Color;
 
 public:
-    Light(const glm::vec3 &position, const glm::vec3 &color);
+    Light(const Math::Vec3 &position, const Math::Vec3 &color);
 };

@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Math.h"
+
 class Renderer
 {
 public:
