@@ -15,6 +15,9 @@
 #include <mutex>
 #endif
 
+#include <thread>
+#include <chrono>
+
 void Renderer::Display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -96,6 +99,8 @@ void Renderer::Display()
 
     glEnd();
     glFlush();
+
+    // std::this_thread::sleep_for(std::chrono::seconds(1));
 }
 
 void Renderer::Init()
