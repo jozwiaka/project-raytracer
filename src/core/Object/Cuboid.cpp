@@ -12,7 +12,7 @@ Cuboid::Cuboid(const Math::Point3 &center, const Math::Vec3 &size, const Math::R
 
 bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, float &t, Math::Point3 &hitPoint, Math::Vec3 &normal) const
 {
-    Math::Vec3 p0;
+    Math::Point3 p0;
     Math::Vec3 n;
     bool range1 = false;
     bool range2 = false;
@@ -20,17 +20,17 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     switch (wall)
     {
     case Wall::XY:
-    case Wall::XYprime:
+    case Wall::XY_Prime:
         p0 = Math::Vec3(0, 0, (wall == Wall::XY ? 1 : -1) * Size.z / 2);
         n = Math::Vec3(0, 0, 1);
         break;
     case Wall::YZ:
-    case Wall::YZprime:
+    case Wall::YZ_Prime:
         p0 = Math::Vec3((wall == Wall::YZ ? 1 : -1) * Size.x / 2, 0, 0);
         n = Math::Vec3(1, 0, 0);
         break;
     case Wall::ZX:
-    case Wall::ZXprime:
+    case Wall::ZX_Prime:
         p0 = Math::Vec3(0, (wall == Wall::ZX ? 1 : -1) * Size.y / 2, 0);
         n = Math::Vec3(0, 1, 0);
         break;
@@ -42,22 +42,22 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     t = (np0 - Math::Dot(n, rayLocal.Origin)) / Math::Dot(n, rayLocal.Direction);
     if (t >= 0)
     {
-        Math::Vec3 p = rayLocal.Origin + t * rayLocal.Direction;
+        Math::Point3 p = rayLocal.At(t);
 
         switch (wall)
         {
         case Wall::XY:
-        case Wall::XYprime:
+        case Wall::XY_Prime:
             range1 = Math::IsWithinRange(p.x, 0, Size.x / 2);
             range2 = Math::IsWithinRange(p.y, 0, Size.y / 2);
             break;
         case Wall::YZ:
-        case Wall::YZprime:
+        case Wall::YZ_Prime:
             range1 = Math::IsWithinRange(p.y, 0, Size.y / 2);
             range2 = Math::IsWithinRange(p.z, 0, Size.z / 2);
             break;
         case Wall::ZX:
-        case Wall::ZXprime:
+        case Wall::ZX_Prime:
             range1 = Math::IsWithinRange(p.x, 0, Size.x / 2);
             range2 = Math::IsWithinRange(p.z, 0, Size.z / 2);
             break;
@@ -70,7 +70,7 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
             range1 &&
             range2)
         {
-            hitPoint = ray.Origin + t * ray.Direction;
+            hitPoint = ray.At(t);
             normal = Math::Normalize((hitPoint - Center));
             return true;
         }
@@ -82,7 +82,7 @@ bool Cuboid::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math::V
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, Center), -RotationDeg), Math::Rotate(ray.Direction, -RotationDeg)};
 
-    for (int i = static_cast<int>(Wall::XY); i <= static_cast<int>(Wall::ZXprime); ++i)
+    for (int i = static_cast<int>(Wall::XY); i <= static_cast<int>(Wall::ZX_Prime); ++i)
     {
         if (CheckWall(rayLocal, static_cast<Wall>(i), ray, t, hitPoint, normal))
         {

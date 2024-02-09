@@ -7,11 +7,11 @@ public:
     enum class Wall
     {
         XY,
-        XYprime,
+        XY_Prime,
         YZ,
-        YZprime,
+        YZ_Prime,
         ZX,
-        ZXprime
+        ZX_Prime
     };
 
 public:

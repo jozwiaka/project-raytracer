@@ -21,7 +21,7 @@ bool Sphere::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math::V
         if (tSmallerVal >= 0)
         {
             t = tSmallerVal;
-            hitPoint = ray.Origin + ray.Direction * t;
+            hitPoint = ray.At(t);
             normal = Math::Normalize((hitPoint - Center));
             return true;
         }

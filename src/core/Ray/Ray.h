@@ -8,4 +8,5 @@ public:
 
 public:
     Ray(const Math::Point3 &origin, const Math::Vec3 &direction);
+    Math::Point3 At(float t) const;
 };

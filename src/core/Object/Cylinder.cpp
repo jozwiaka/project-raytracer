@@ -37,7 +37,7 @@ bool Cylinder::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math:
             if (Math::IsWithinRange(p.y, 0, Height / 2))
             {
                 t = tSmallerVal;
-                hitPoint = ray.Origin + ray.Direction * t;
+                hitPoint = ray.At(t);
                 normal = Math::Normalize((hitPoint - Center));
                 return true;
             }
