@@ -10,7 +10,7 @@ void Scene::AddLight(std::unique_ptr<Light> light)
     Lights.emplace_back(std::move(light));
 }
 
-bool Scene::Intersect(const Ray &ray, Math::Vec3 &hitPoint, Math::Vec3 &normal, Material &material) const
+bool Scene::Intersect(const Ray &ray, Math::Point3 &hitPoint, Math::Vec3 &normal, Material &material) const
 {
     float tClosest = std::numeric_limits<float>::infinity();
     bool hit = false;

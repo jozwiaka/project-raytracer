@@ -4,9 +4,9 @@
 class Material
 {
 public:
-    Math::Vec3 Color;
+    Math::Color3 Color;
 
 public:
     Material() = default;
-    Material(const Math::Vec3 &color);
+    Material(const Math::Color3 &color);
 };

@@ -3,8 +3,9 @@
 class Ray
 {
 public:
-    Math::Vec3 Origin, Direction;
+    Math::Point3 Origin;
+    Math::Vec3 Direction;
 
 public:
-    Ray(const Math::Vec3 &origin, const Math::Vec3 &direction);
+    Ray(const Math::Point3 &origin, const Math::Vec3 &direction);
 };

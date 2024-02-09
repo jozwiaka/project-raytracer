@@ -12,6 +12,7 @@ public:
     using Vec3 = glm::vec3;
     using Point3 = glm::vec3;
     using Rotation3 = glm::vec3;
+    using Color3 = glm::vec3;
 
 public:
     static glm::vec3 Rotate(const glm::vec3 &v, const glm::vec3 &rotationDeg) noexcept;

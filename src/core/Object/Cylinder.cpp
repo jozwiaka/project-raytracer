@@ -4,14 +4,14 @@
 #include <iostream>
 #include "Math.h"
 
-Cylinder::Cylinder(const Math::Vec3 &center, const float radius, const float height, const Math::Vec3 &rotationDeg, const Material &material)
+Cylinder::Cylinder(const Math::Point3 &center, const float radius, const float height, const Math::Rotation3 &rotationDeg, const Material &material)
     : Object(center, rotationDeg, material),
       Radius(radius),
       Height(height)
 {
 }
 
-bool Cylinder::Intersect(const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const
+bool Cylinder::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math::Vec3 &normal) const
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, Center), -RotationDeg), Math::Rotate(ray.Direction, -RotationDeg)};
     // (p-C-((p-C)*v)*v)^2=r^2

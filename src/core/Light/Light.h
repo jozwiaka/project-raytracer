@@ -4,9 +4,9 @@
 class Light
 {
 public:
-    Math::Vec3 Position;
-    Math::Vec3 Color;
+    Math::Point3 Position;
+    Math::Color3 Color;
 
 public:
-    Light(const Math::Vec3 &position, const Math::Vec3 &color);
+    Light(const Math::Point3 &position, const Math::Color3 &color);
 };
