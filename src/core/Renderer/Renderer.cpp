@@ -26,11 +26,10 @@ void Renderer::Display()
     Material redMaterial(Math::Vec3(1, 0, 0));
     Material blueMaterial(Math::Vec3(0, 0, 1));
     scene.BackgroundColor = Math::Color3(0, 0, 0);
-    // scene.AddObject(std::make_unique<Cuboid>(Math::Vec3(-2, 0, -7), Math::Vec3(2, 2, 2), Math::Vec3(10, 10, 0), blueMaterial));
-    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(2, 0, -7), 2.0, blueMaterial));
-    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, 0, -5), 1.0, redMaterial));
-    // scene.AddObject(std::make_unique<Cuboid>(Math::Vec3(0, 0, -3), Math::Vec3(1, 1, 1), Math::Vec3(20, 20, 20), redMaterial));
-    scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(0, 0, -3), 1, 2, Math::Vec3(10, 10, 10), redMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, -1000, 0), 1000, blueMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(2, 2, 0), 2.0, blueMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0, 1, 0), 1.0, redMaterial));
+    scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(-2, 1, 0), 1, 2, Math::Vec3(10, 10, 10), redMaterial));
 
     scene.AddLight(std::make_unique<Light>(Math::Vec3(5, 0, -3), Math::Vec3(1, 1, 1)));
     scene.AddLight(std::make_unique<Light>(Math::Vec3(-5, 0, -3), Math::Vec3(1, 1, 1)));
@@ -38,7 +37,7 @@ void Renderer::Display()
     scene.AddLight(std::make_unique<Light>(Math::Vec3(0, -5, -3), Math::Vec3(1, 1, 1)));
     scene.AddLight(std::make_unique<Light>(Math::Vec3(0, 0, 0), Math::Vec3(1, 1, 1)));
 
-    Camera camera(Math::Vec3(0, 0, 0), Math::Vec3(0, 0, -1), Math::Vec3(0, 1, 0));
+    Camera camera(Math::Vec3(13, 2, 3), Math::Vec3(0, 0, 0), Math::Vec3(0, 1, 0));
 
     glBegin(GL_POINTS);
 
