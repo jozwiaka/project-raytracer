@@ -21,18 +21,18 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     {
     case Wall::XY:
     case Wall::XY_Prime:
-        p0 = Math::Vec3(0, 0, (wall == Wall::XY ? 1 : -1) * Size.z / 2);
-        n = Math::Vec3(0, 0, 1);
+        p0 = Math::Vec3(0.0f, 0.0f, (wall == Wall::XY ? 1.0f : -1.0f) * Size.z / 2.0f);
+        n = Math::Vec3(0.0f, 0.0f, 1.0f);
         break;
     case Wall::YZ:
     case Wall::YZ_Prime:
-        p0 = Math::Vec3((wall == Wall::YZ ? 1 : -1) * Size.x / 2, 0, 0);
-        n = Math::Vec3(1, 0, 0);
+        p0 = Math::Vec3((wall == Wall::YZ ? 1.0f : -1.0f) * Size.x / 2.0f, 0.0f, 0.0f);
+        n = Math::Vec3(1.0f, 0.0f, 0.0f);
         break;
     case Wall::ZX:
     case Wall::ZX_Prime:
-        p0 = Math::Vec3(0, (wall == Wall::ZX ? 1 : -1) * Size.y / 2, 0);
-        n = Math::Vec3(0, 1, 0);
+        p0 = Math::Vec3(0.0f, (wall == Wall::ZX ? 1.0f : -1.0f) * Size.y / 2.0f, 0.0f);
+        n = Math::Vec3(0.0f, 1.0f, 0.0f);
         break;
     default:
         break;
@@ -40,7 +40,7 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
 
     float np0 = Math::Dot(n, p0);
     t = (np0 - Math::Dot(n, rayLocal.Origin)) / Math::Dot(n, rayLocal.Direction);
-    if (t >= 0)
+    if (t >= 0.0f)
     {
         Math::Point3 p = rayLocal.At(t);
 
@@ -48,18 +48,18 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
         {
         case Wall::XY:
         case Wall::XY_Prime:
-            range1 = Math::IsWithinRange(p.x, 0, Size.x / 2);
-            range2 = Math::IsWithinRange(p.y, 0, Size.y / 2);
+            range1 = Math::IsWithinRange(p.x, 0.0f, Size.x / 2.0f);
+            range2 = Math::IsWithinRange(p.y, 0.0f, Size.y / 2.0f);
             break;
         case Wall::YZ:
         case Wall::YZ_Prime:
-            range1 = Math::IsWithinRange(p.y, 0, Size.y / 2);
-            range2 = Math::IsWithinRange(p.z, 0, Size.z / 2);
+            range1 = Math::IsWithinRange(p.y, 0.0f, Size.y / 2.0f);
+            range2 = Math::IsWithinRange(p.z, 0.0f, Size.z / 2.0f);
             break;
         case Wall::ZX:
         case Wall::ZX_Prime:
-            range1 = Math::IsWithinRange(p.x, 0, Size.x / 2);
-            range2 = Math::IsWithinRange(p.z, 0, Size.z / 2);
+            range1 = Math::IsWithinRange(p.x, 0.0f, Size.x / 2.0f);
+            range2 = Math::IsWithinRange(p.z, 0.0f, Size.z / 2.0f);
             break;
         default:
             break;

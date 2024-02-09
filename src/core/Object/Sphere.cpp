@@ -10,15 +10,15 @@ bool Sphere::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math::V
     float a = Math::Dot(ray.Direction, ray.Direction);
     float b = 2.0f * Math::Dot(oc, ray.Direction);
     float c = Math::Dot(oc, oc) - Radius * Radius;
-    float discriminant = b * b - 4 * a * c;
+    float discriminant = b * b - 4.0f * a * c;
 
-    if (discriminant >= 0)
+    if (discriminant >= 0.0f)
     {
         float t1 = (-b - std::sqrt(discriminant)) / (2.0f * a);
         float t2 = (-b + std::sqrt(discriminant)) / (2.0f * a);
         float tSmallerVal = (t1 < t2) ? t1 : t2; // choose smaller value, because it is closer to the ray's origin
 
-        if (tSmallerVal >= 0)
+        if (tSmallerVal >= 0.0f)
         {
             t = tSmallerVal;
             hitPoint = ray.At(t);
