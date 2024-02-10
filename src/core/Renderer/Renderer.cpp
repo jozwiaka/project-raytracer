@@ -54,7 +54,7 @@ void Renderer::Display()
     {
         for (int x = 0; x < Width; ++x)
         {
-            float px = (2.0f * x - Width) / Width;
+            float px = (2.0f * x - Width) / Width * static_cast<float>((float)Width / (float)Height);
             float py = (Height - 2.0f * y) / Height;
 #ifdef MULTITHREADING
             threads.emplace_back(std::async(std::launch::async, [px, py, &camera, &scene]()
