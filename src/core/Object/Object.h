@@ -9,7 +9,7 @@ class Object
 public:
     Math::Point3 Center;
     Math::Rotation3 RotationDeg;
-    Material Substance;
+    Material Mat;
 
 public:
     Object(const Math::Point3 &center, const Math::Rotation3 &rotationDeg, const Material &material);

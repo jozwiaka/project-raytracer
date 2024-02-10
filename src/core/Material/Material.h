@@ -1,5 +1,6 @@
 #pragma once
 #include "Math.h"
+#include "Ray.h"
 
 class Material
 {
@@ -9,4 +10,5 @@ public:
 public:
     Material() = default;
     Material(const Math::Color3 &color);
+    // Scatter()
 };
