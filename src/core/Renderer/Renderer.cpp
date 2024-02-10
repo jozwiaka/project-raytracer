@@ -20,8 +20,16 @@
 
 void Renderer::Display()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
 
+    glViewport(0, 0, Width, Height);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    float aspectRatio = static_cast<float>((float)Width / (float)Height);
+    glOrtho(-aspectRatio, aspectRatio, -1.0, 1.0, -1.0, 1.0);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glClear(GL_COLOR_BUFFER_BIT);
     Scene scene;
     Material redMaterial(Math::Vec3(1.0f, 0.0f, 0.0f));
     Material blueMaterial(Math::Vec3(0.0f, 0.0f, 1.0f));
@@ -101,8 +109,12 @@ void Renderer::Display()
 
 void Renderer::Init()
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluOrtho2D(-1.0f, 1.0f, -1.0f, 1.0f);
+    // glClearColor(GL_COLOR_BUFFER_BIT);
+    // glViewport(0, 0, Width, Height);
+    // glMatrixMode(GL_PROJECTION);
+    // glLoadIdentity();
+    // float aspectRatio = static_cast<float>(Width / Height);
+    // glOrtho(-aspectRatio, aspectRatio, -1.0, 1.0, -1.0, 1.0);
+    // glMatrixMode(GL_MODELVIEW);
+    // glLoadIdentity();
 }
