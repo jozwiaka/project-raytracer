@@ -2,6 +2,26 @@
 #include <cmath>
 #include <limits>
 
+float Math::Dot(const glm::vec3 &v1, const glm::vec3 &v2) noexcept
+{
+    return glm::dot(v1, v2);
+}
+
+glm::vec3 Math::Cross(const glm::vec3 &v1, const glm::vec3 &v2) noexcept
+{
+    return glm::cross(v1, v2);
+}
+
+float Math::Length(const glm::vec3 &v) noexcept
+{
+    return glm::length(v);
+}
+
+glm::vec3 Math::Normalize(const glm::vec3 &v) noexcept
+{
+    return glm::normalize(v);
+}
+
 glm::vec3 Math::Rotate(const glm::vec3 &v, const glm::vec3 &rotationDeg) noexcept
 {
     float yaw = glm::radians(rotationDeg.x);
@@ -32,24 +52,4 @@ bool Math::IsAlmostEqual(float val1, float val2) noexcept
 bool Math::IsWithinRange(float val, float center, float radius) noexcept
 {
     return val >= center - radius && val <= center + radius;
-}
-
-float Math::Dot(const glm::vec3 &v1, const glm::vec3 &v2) noexcept
-{
-    return glm::dot(v1, v2);
-}
-
-glm::vec3 Math::Cross(const glm::vec3 &v1, const glm::vec3 &v2) noexcept
-{
-    return glm::cross(v1, v2);
-}
-
-float Math::Length(const glm::vec3 &v) noexcept
-{
-    return glm::length(v);
-}
-
-glm::vec3 Math::Normalize(const glm::vec3 &v) noexcept
-{
-    return glm::normalize(v);
 }
