@@ -77,9 +77,9 @@ void Renderer::Display()
             {
                 for (int sx = 0; sx < numSamples; ++sx)
                 {
-                    float psx = (2.0f * (x + (sx + 0.5f) / numSamples) - m_Width) / m_Width * m_AspectRatioReal;
-                    float psy = (m_Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Height;
-                    Ray ray = m_Camera->GenerateRay(psx, psy);
+                    float spx = (2.0f * (x + (sx + 0.5f) / numSamples) - m_Width) / m_Width * m_AspectRatioReal;
+                    float spy = (m_Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Height;
+                    Ray ray = m_Camera->GenerateRay(spx, spy);
 
                     Math::Vec3 hitPoint, normal;
                     Material material;
