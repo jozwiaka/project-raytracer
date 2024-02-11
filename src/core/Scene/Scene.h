@@ -12,7 +12,7 @@ class Scene
 public:
     std::vector<std::unique_ptr<Object>> Objects;
     std::vector<std::unique_ptr<Light>> Lights;
-    Math::Color3 BackgroundColor;
+    Math::Color BackgroundColor;
 
 public:
     void AddObject(std::unique_ptr<Object> object);

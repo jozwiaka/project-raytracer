@@ -12,7 +12,7 @@ public:
     using Vec3 = glm::vec3;
     using Point3 = glm::vec3;
     using Rotation3 = glm::vec3;
-    using Color3 = glm::vec3;
+    using Color = glm::vec3;
 
 public:
     static float Dot(const glm::vec3 &v1, const glm::vec3 &v2) noexcept;

@@ -4,5 +4,5 @@
 
 // class Lambertian : public Material
 // {
-//     bool Scatter(const Ray &ray, const Object &object, Math::Color3 &attenuation, Ray &scattered) override;
+//     bool Scatter(const Ray &ray, const Object &object, Math::Color &attenuation, Ray &scattered) override;
 // };

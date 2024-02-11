@@ -5,8 +5,8 @@ class Light
 {
 public:
     Math::Point3 Position;
-    Math::Color3 Color;
+    Math::Color Color;
 
 public:
-    Light(const Math::Point3 &position, const Math::Color3 &color);
+    Light(const Math::Point3 &position, const Math::Color &color);
 };

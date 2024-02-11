@@ -7,8 +7,8 @@
 
 int main()
 {
-    auto redMaterial = std::make_shared<Material>(Math::Color3(1.0f, 0.0f, 0.0f));
-    auto blueMaterial = std::make_shared<Material>(Math::Color3(0.0f, 0.0f, 1.0f));
+    auto redMaterial = std::make_shared<Material>(Math::Color(1.0f, 0.0f, 0.0f));
+    auto blueMaterial = std::make_shared<Material>(Math::Color(0.0f, 0.0f, 1.0f));
 
     auto cameraPosition = Math::Point3(0.0f, 5.0f, 10.0f);
     auto cameraTarget = Math::Point3(0.0f, 0.0f, 0.f);
@@ -16,7 +16,7 @@ int main()
     Camera camera(cameraPosition, cameraTarget, cameraUpVector);
 
     Scene scene;
-    scene.BackgroundColor = Math::Color3(0.0f, 0.0f, 0.0f);
+    scene.BackgroundColor = Math::Color(0.0f, 0.0f, 0.0f);
     // scene.AddLight(std::make_unique<Light>(Math::Vec3(0.0f, 3.0f, 0.0f), Math::Vec3(1.0f, 1.0f, 1.0f)));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, blueMaterial));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(3.0f, 2.0f, 0.0f), 2.0f, redMaterial));
