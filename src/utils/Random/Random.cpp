@@ -1,12 +1,11 @@
 #include "Random.h"
 #include <random>
-#include <limits>
 
 float Random::RandomFloat()
 {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    static std::uniform_real_distribution<float> dis(std::numeric_limits<float>::min(), std::numeric_limits<float>::max());
+    static std::uniform_real_distribution<float> dis(0.0f, 1.0f);
     return dis(gen);
 }
 
