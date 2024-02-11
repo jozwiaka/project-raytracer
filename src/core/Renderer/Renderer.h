@@ -20,8 +20,8 @@ public:
 private:
     Camera *m_Camera;
     Scene *m_Scene;
-    int m_Width = 1200;
-    float m_AspectRatioIdeal = 16.0f / 9.0f;
+    int m_Width;
+    float m_AspectRatioIdeal;
     int m_Height;
     float m_AspectRatioReal;
     GLFWwindow *m_Window;
