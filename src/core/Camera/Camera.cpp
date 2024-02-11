@@ -1,16 +1,16 @@
 #include "Camera.h"
 
 Camera::Camera(const Math::Point3 &position, const Math::Point3 &target, const Math::Vec3 &upVector)
-    : Position(position),
-      Forward(Math::Normalize((target - position))),
-      Right(Math::Normalize(Math::Cross(Forward, upVector))),
-      Up(Math::Normalize(Math::Cross(Right, Forward)))
+    : m_Position(position),
+      m_Forward(Math::Normalize((target - position))),
+      m_Right(Math::Normalize(Math::Cross(m_Forward, upVector))),
+      m_Up(Math::Normalize(Math::Cross(m_Right, m_Forward)))
 
 {
 }
 
 Ray Camera::GenerateRay(float x, float y) const
 {
-    Math::Vec3 direction = Forward + Right * x + Up * y;
-    return Ray(Position, direction);
+    Math::Vec3 direction = m_Forward + m_Right * x + m_Up * y;
+    return Ray(m_Position, direction);
 }
