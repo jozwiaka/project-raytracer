@@ -3,11 +3,12 @@
 #include "Renderer.h"
 #include "Math.h"
 #include "Material.h"
+#include <memory>
 
 int main()
 {
-    Material redMaterial(Math::Vec3(1.0f, 0.0f, 0.0f));
-    Material blueMaterial(Math::Vec3(0.0f, 0.0f, 1.0f));
+    auto redMaterial = std::make_shared<Material>(Math::Color3(1.0f, 0.0f, 0.0f));
+    auto blueMaterial = std::make_shared<Material>(Math::Color3(0.0f, 0.0f, 1.0f));
 
     auto cameraPosition = Math::Point3(0.0f, 5.0f, 10.0f);
     auto cameraTarget = Math::Point3(0.0f, 0.0f, 0.f);

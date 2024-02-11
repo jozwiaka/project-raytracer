@@ -3,17 +3,16 @@
 #include "Material.h"
 #include "Ray.h"
 #include "Math.h"
-
-class Material;
-
+#include <memory>
 class Object
 {
 public:
     Math::Point3 Center;
     Math::Rotation3 RotationDeg;
-    Material Mat;
+    std::shared_ptr<Material> Mat;
 
 public:
-    Object(const Math::Point3 &center, const Math::Rotation3 &rotationDeg, const Material &material);
+    Object(const Math::Point3 &center, const Math::Rotation3 &rotationDeg, std::shared_ptr<Material> material);
+    virtual ~Object() = default;
     virtual bool Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math::Vec3 &normal) const = 0;
 };

@@ -1,10 +1,9 @@
 #include "Cylinder.h"
 #include <cmath>
 #include <limits>
-#include <iostream>
 #include "Math.h"
 
-Cylinder::Cylinder(const Math::Point3 &center, const float radius, const float height, const Math::Rotation3 &rotationDeg, const Material &material)
+Cylinder::Cylinder(const Math::Point3 &center, const float radius, const float height, const Math::Rotation3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       Radius(radius),
       m_Height(height)

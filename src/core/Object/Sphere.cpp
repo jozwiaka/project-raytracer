@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-Sphere::Sphere(const Math::Point3 &center, float radius, const Material &material)
+Sphere::Sphere(const Math::Point3 &center, float radius, std::shared_ptr<Material> material)
     : Object(center, Math::Vec3(), material),
       Radius(radius) {}
 

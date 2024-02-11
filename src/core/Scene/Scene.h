@@ -17,5 +17,5 @@ public:
 public:
     void AddObject(std::unique_ptr<Object> object);
     void AddLight(std::unique_ptr<Light> light);
-    bool Intersect(const Ray &ray, Math::Point3 &hitPoint, Math::Vec3 &normal, Material &material) const;
+    bool Intersect(const Ray &ray, Math::Point3 &hitPoint, Math::Vec3 &normal, std::shared_ptr<Material> &material) const;
 };

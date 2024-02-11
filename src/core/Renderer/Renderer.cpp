@@ -1,5 +1,4 @@
 #include "Renderer.h"
-
 Renderer::Renderer(Camera *camera, Scene *scene, int width, float aspectRatio)
     : m_Camera(camera),
       m_Scene(scene),
@@ -83,7 +82,7 @@ void Renderer::Display()
                     Ray ray = m_Camera->GenerateRay(spx, spy);
 
                     Math::Vec3 hitPoint, normal;
-                    Material material;
+                    std::shared_ptr<Material> material;
                     if (m_Scene->Intersect(ray, hitPoint, normal, material))
                     {
                         // Lambertian reflection model
@@ -93,10 +92,10 @@ void Renderer::Display()
                         //     float distance = Math::Length(light->Position - hitPoint);
                         //     float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
                         //     float diffuseIntensity = std::max(0.0f, Math::Dot(normal, lightDirection));
-                        //     Math::Vec3 lightContribution = material.Color * diffuseIntensity * light->Color * attenuation;
+                        //     Math::Vec3 lightContribution = material->Color * diffuseIntensity * light->Color * attenuation;
                         //     finalColor += lightContribution;
                         // }
-                        finalColor += material.Color;
+                        finalColor += material->Color;
                     }
                     else
                     {

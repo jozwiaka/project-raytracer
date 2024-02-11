@@ -1,10 +1,9 @@
 #include "Cuboid.h"
 #include <cmath>
 #include <limits>
-#include <iostream>
 #include "Math.h"
 
-Cuboid::Cuboid(const Math::Point3 &center, const Math::Vec3 &size, const Math::Rotation3 &rotationDeg, const Material &material)
+Cuboid::Cuboid(const Math::Point3 &center, const Math::Vec3 &size, const Math::Rotation3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       Size(size)
 {
