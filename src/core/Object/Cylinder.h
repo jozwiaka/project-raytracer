@@ -5,7 +5,7 @@ class Cylinder : public Object
 {
 public:
     float Radius;
-    float Height;
+    float m_Height;
 
 public:
     Cylinder(const Math::Point3 &center, const float radius, const float height, const Math::Rotation3 &rotationDeg, const Material &material);

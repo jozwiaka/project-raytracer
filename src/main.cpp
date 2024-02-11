@@ -1,50 +1,31 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "Camera.h"
+#include "Scene.h"
 #include "Renderer.h"
+#include "Math.h"
+#include "Material.h"
 
 int main()
 {
-    // Camera camera;
-    // Scene scene;
-    // Renderer renderer{&camera, &scene};
+    Material redMaterial(Math::Vec3(1.0f, 0.0f, 0.0f));
+    Material blueMaterial(Math::Vec3(0.0f, 0.0f, 1.0f));
 
-    // if(!renderer.Init())
-    // {
-    //     return -1;
-    // }
-    // renderer.MainLoop()
+    Camera camera(Math::Vec3(0.0f, 5.0f, 10.0f), Math::Vec3(0.0f, 0.0f, 0.f), Math::Vec3(0.0f, 1.0f, 0.0f));
 
-    if (!glfwInit())
+    Scene scene;
+    scene.BackgroundColor = Math::Color3(0.0f, 0.0f, 0.0f);
+    // scene.AddLight(std::make_unique<Light>(Math::Vec3(0.0f, 3.0f, 0.0f), Math::Vec3(1.0f, 1.0f, 1.0f)));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, blueMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(3.0f, 2.0f, 0.0f), 2.0f, redMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, 1.0f, 0.0f), 1.0f, redMaterial));
+    // scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(0.0f, 0.0f, 1.0f), 1.0f, 1.0f, Math::Vec3(0.0f, 0.0f, 0.0f), redMaterial));
+
+    float aspectRatio = 16.0f / 9.0f;
+    int width = 1200;
+    Renderer renderer{&camera, &scene, width, aspectRatio};
+
+    if (!renderer.Init())
     {
         return -1;
     }
-
-    GLFWwindow *window = glfwCreateWindow(Renderer::Width, Renderer::Height, "Raytracer", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        return -1;
-    }
-
-    glfwMakeContextCurrent(window);
-
-    if (glewInit() != GLEW_OK)
-    {
-        glfwTerminate();
-        return -1;
-    }
-
-    Renderer::Init();
-
-    while (!glfwWindowShouldClose(window))
-    {
-        Renderer::Display();
-
-        glfwSwapBuffers(window);
-
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
-    return 0;
+    renderer.MainLoop();
 }

@@ -7,7 +7,7 @@
 Cylinder::Cylinder(const Math::Point3 &center, const float radius, const float height, const Math::Rotation3 &rotationDeg, const Material &material)
     : Object(center, rotationDeg, material),
       Radius(radius),
-      Height(height)
+      m_Height(height)
 {
 }
 
@@ -34,7 +34,7 @@ bool Cylinder::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math:
         if (t >= 0.0f)
         {
             Math::Point3 p = rayLocal.At(t);
-            if (Math::IsWithinRange(p.y, 0.0f, Height / 2.0f))
+            if (Math::IsWithinRange(p.y, 0.0f, m_Height / 2.0f))
             {
                 hitPoint = ray.At(t);
                 normal = Math::Normalize((hitPoint - Center));
