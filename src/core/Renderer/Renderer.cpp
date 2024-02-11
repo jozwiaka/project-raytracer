@@ -6,7 +6,8 @@ Renderer::Renderer(Camera *camera, Scene *scene, int width, float aspectRatio)
       m_Width(width),
       m_AspectRatioIdeal(aspectRatio),
       m_Height(static_cast<int>(m_Width / m_AspectRatioIdeal)),
-      m_AspectRatioReal(static_cast<float>(m_Width) / static_cast<float>(m_Height))
+      m_AspectRatioReal(static_cast<float>(m_Width) / static_cast<float>(m_Height)),
+      m_Window(nullptr)
 {
 }
 
