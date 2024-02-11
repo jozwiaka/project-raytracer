@@ -4,6 +4,8 @@
 #include "Ray.h"
 #include "Math.h"
 
+class Material;
+
 class Object
 {
 public:

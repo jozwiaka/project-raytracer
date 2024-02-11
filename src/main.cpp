@@ -4,6 +4,16 @@
 
 int main()
 {
+    // Camera camera;
+    // Scene scene;
+    // Renderer renderer{&camera, &scene};
+
+    // if(!renderer.Init())
+    // {
+    //     return -1;
+    // }
+    // renderer.MainLoop()
+
     if (!glfwInit())
     {
         return -1;

@@ -10,5 +10,6 @@ public:
 public:
     Material() = default;
     Material(const Math::Color3 &color);
-    // Scatter()
+    virtual ~Material() = default;
+    // virtual bool Scatter(const Ray &ray, const Object &object, Math::Color3 &attenuation, Ray &scattered);
 };
