@@ -62,39 +62,52 @@ void Renderer::Display()
 
     glBegin(GL_POINTS);
 
+    int numSamples = 2; // 4x antialiasing (2x2 grid)
+
     for (int y = 0; y < m_Height; ++y)
     {
         for (int x = 0; x < m_Width; ++x)
         {
             float px = (2.0f * x - m_Width) / m_Width * m_AspectRatioReal;
             float py = (m_Height - 2.0f * y) / m_Height;
-            Ray ray = m_Camera->GenerateRay(px, py);
+            Math::Vec3 finalColor = Math::Vec3(0.0f, 0.0f, 0.0f);
 
-            Math::Vec3 hitPoint, normal;
-            Material material;
-            if (m_Scene->Intersect(ray, hitPoint, normal, material))
+            // Collect color samples from sub-pixel locations
+            for (int sy = 0; sy < numSamples; ++sy)
             {
-                Math::Vec3 finalColor = Math::Vec3(0.0f, 0.0f, 0.0f);
-
-                // Lambertian reflection model
-                for (const auto &light : m_Scene->Lights)
+                for (int sx = 0; sx < numSamples; ++sx)
                 {
-                    Math::Vec3 lightDirection = Math::Normalize((light->Position - hitPoint));
-                    float distance = Math::Length(light->Position - hitPoint);
-                    float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
-                    float diffuseIntensity = std::max(0.0f, Math::Dot(normal, lightDirection));
-                    Math::Vec3 lightContribution = material.Color * diffuseIntensity * light->Color * attenuation;
-                    finalColor += lightContribution;
+                    float psx = (2.0f * (x + (sx + 0.5f) / numSamples) - m_Width) / m_Width * m_AspectRatioReal;
+                    float psy = (m_Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Height;
+                    Ray ray = m_Camera->GenerateRay(psx, psy);
+
+                    Math::Vec3 hitPoint, normal;
+                    Material material;
+                    if (m_Scene->Intersect(ray, hitPoint, normal, material))
+                    {
+                        // Lambertian reflection model
+                        // for (const auto &light : m_Scene->Lights)
+                        // {
+                        //     Math::Vec3 lightDirection = Math::Normalize((light->Position - hitPoint));
+                        //     float distance = Math::Length(light->Position - hitPoint);
+                        //     float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
+                        //     float diffuseIntensity = std::max(0.0f, Math::Dot(normal, lightDirection));
+                        //     Math::Vec3 lightContribution = material.Color * diffuseIntensity * light->Color * attenuation;
+                        //     finalColor += lightContribution;
+                        // }
+                        finalColor += material.Color;
+                    }
+                    else
+                    {
+                        finalColor += m_Scene->BackgroundColor;
+                    }
                 }
-                finalColor = material.Color;
-
-                glColor3f(finalColor.x, finalColor.y, finalColor.z);
-            }
-            else
-            {
-                glColor3f(m_Scene->BackgroundColor.x, m_Scene->BackgroundColor.y, m_Scene->BackgroundColor.z);
             }
 
+            // Average color samples
+            finalColor /= (numSamples * numSamples);
+
+            glColor3f(finalColor.x, finalColor.y, finalColor.z);
             glVertex2f(px, py);
         }
     }
