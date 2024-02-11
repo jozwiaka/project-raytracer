@@ -9,7 +9,10 @@ int main()
     Material redMaterial(Math::Vec3(1.0f, 0.0f, 0.0f));
     Material blueMaterial(Math::Vec3(0.0f, 0.0f, 1.0f));
 
-    Camera camera(Math::Vec3(0.0f, 5.0f, 10.0f), Math::Vec3(0.0f, 0.0f, 0.f), Math::Vec3(0.0f, 1.0f, 0.0f));
+    auto cameraPosition = Math::Point3(0.0f, 5.0f, 10.0f);
+    auto cameraTarget = Math::Point3(0.0f, 0.0f, 0.f);
+    auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
+    Camera camera(cameraPosition, cameraTarget, cameraUpVector);
 
     Scene scene;
     scene.BackgroundColor = Math::Color3(0.0f, 0.0f, 0.0f);

@@ -10,6 +10,6 @@ public:
     Math::Vec3 Forward, Right, Up;
 
 public:
-    Camera(const Math::Point3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector);
+    Camera(const Math::Point3 &position, const Math::Point3 &target, const Math::Vec3 &upVector);
     Ray GenerateRay(float x, float y) const;
 };
