@@ -25,7 +25,6 @@ bool Renderer::Init()
     }
 
     glfwMakeContextCurrent(m_Window);
-
     if (glewInit() != GLEW_OK)
     {
         glfwTerminate();
@@ -47,9 +46,7 @@ void Renderer::MainLoop()
     while (!glfwWindowShouldClose(m_Window))
     {
         Display();
-
         glfwSwapBuffers(m_Window);
-
         glfwPollEvents();
     }
 
@@ -59,7 +56,6 @@ void Renderer::MainLoop()
 void Renderer::Display()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-
     glBegin(GL_POINTS);
 
     int numSamples = 2; // 4x antialiasing (2x2 grid)
@@ -104,7 +100,6 @@ void Renderer::Display()
                 }
             }
 
-            // Average color samples
             finalColor /= (numSamples * numSamples);
 
             glColor3f(finalColor.x, finalColor.y, finalColor.z);
