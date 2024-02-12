@@ -16,12 +16,12 @@ bool Cylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
     // (p-C-((p-C)*v)*v)^2.0f=r^2.0f
     // p=P=O+tD
     auto v = Math::Vec3(0.0f, 1.0f, 0.0f);
-    auto oc = rayLocal.Origin - (v * Math::Dot(rayLocal.Origin, v));
-    auto dv = rayLocal.Direction - (v * Math::Dot(rayLocal.Direction, v));
+    auto oxz = rayLocal.Origin - (v * Math::Dot(rayLocal.Origin, v));
+    auto dxz = rayLocal.Direction - (v * Math::Dot(rayLocal.Direction, v));
 
-    float a = Math::Dot(dv, dv);
-    float half_b = Math::Dot(oc, dv);
-    float c = Math::Dot(oc, oc) - m_Radius * m_Radius;
+    float a = Math::Dot(dxz, dxz);
+    float half_b = Math::Dot(oxz, dxz);
+    float c = Math::Dot(oxz, oxz) - m_Radius * m_Radius;
 
     float discriminant = half_b * half_b - a * c;
 
