@@ -10,7 +10,7 @@ int main()
     auto redMaterial = std::make_shared<Material>(Math::Vec3(1.0f, 0.0f, 0.0f));
     auto blueMaterial = std::make_shared<Material>(Math::Vec3(0.0f, 0.0f, 1.0f));
 
-    auto cameraPosition = Math::Vec3(0.0f, 2.0f, 4.0f);
+    auto cameraPosition = Math::Vec3(0.0f, 5.0f, 5.0f);
     auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.f);
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
     Camera camera(cameraPosition, cameraTarget, cameraUpVector);
@@ -26,7 +26,7 @@ int main()
 
     float aspectRatio = 16.0f / 9.0f;
     int width = 1200;
-    int maxDepth = 10;
+    int maxDepth = 20;
     Renderer renderer{&camera, &scene, width, aspectRatio, maxDepth};
 
     if (!renderer.Init())

@@ -125,6 +125,7 @@ Math::Vec3 Renderer::RayColor(const Ray &ray, int depth) const
         return 0.5f * RayColor(Ray(rec.Point, direction), depth - 1);
     }
 
+    // Background
     auto unitDirection = Math::Normalize(ray.Direction);
     auto a = 0.5f * (unitDirection.y + 1.0f);
     return (1.0f - a) * Math::Vec3(1.0f, 1.0f, 1.0f) + a * Math::Vec3(0.5f, 0.7f, 1.0f);
