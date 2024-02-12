@@ -34,12 +34,24 @@ Math::Vec3 Math::Normalize(const Vec3 &v) noexcept
 
 Math::Vec3 Math::Rotate(const Vec3 &v, const Vec3 &rotationDeg) noexcept
 {
-    float yaw = glm::radians(rotationDeg.x);
+    float roll = glm::radians(rotationDeg.x);
     float pitch = glm::radians(rotationDeg.y);
-    float roll = glm::radians(rotationDeg.z);
-    glm::mat4 yawMatrix = glm::rotate(glm::mat4(1.0f), yaw, Vec3(0, 1, 0));
-    glm::mat4 pitchMatrix = glm::rotate(glm::mat4(1.0f), pitch, Vec3(1, 0, 0));
-    glm::mat4 rollMatrix = glm::rotate(glm::mat4(1.0f), roll, Vec3(0, 0, 1));
+    float yaw = glm::radians(rotationDeg.z);
+    glm::mat4 rollMatrix = glm::rotate(glm::mat4(1.0f), roll, Vec3(1, 0, 0));
+    glm::mat4 pitchMatrix = glm::rotate(glm::mat4(1.0f), pitch, Vec3(0, 1, 0));
+    glm::mat4 yawMatrix = glm::rotate(glm::mat4(1.0f), yaw, Vec3(0, 0, 1));
+    glm::mat4 rotationMatrix = rollMatrix * pitchMatrix * yawMatrix;
+    return Vec3(rotationMatrix * glm::vec4(v, 1.0f));
+}
+
+Math::Vec3 Math::RotateT(const Vec3 &v, const Vec3 &rotationDeg) noexcept
+{
+    float roll = glm::radians(-rotationDeg.x);
+    float pitch = glm::radians(-rotationDeg.y);
+    float yaw = glm::radians(-rotationDeg.z);
+    glm::mat4 rollMatrix = glm::rotate(glm::mat4(1.0f), roll, Vec3(1, 0, 0));
+    glm::mat4 pitchMatrix = glm::rotate(glm::mat4(1.0f), pitch, Vec3(0, 1, 0));
+    glm::mat4 yawMatrix = glm::rotate(glm::mat4(1.0f), yaw, Vec3(0, 0, 1));
     glm::mat4 rotationMatrix = yawMatrix * pitchMatrix * rollMatrix;
     return Vec3(rotationMatrix * glm::vec4(v, 1.0f));
 }
@@ -47,11 +59,6 @@ Math::Vec3 Math::Rotate(const Vec3 &v, const Vec3 &rotationDeg) noexcept
 Math::Vec3 Math::Translate(const Vec3 &v, const Vec3 &translation) noexcept
 {
     return v + translation;
-}
-
-Math::Vec3 Math::Transform(const Vec3 &v, const Vec3 &translation, const Vec3 &rotationDeg) noexcept
-{
-    return Translate(Rotate(v, rotationDeg), translation);
 }
 
 bool Math::IsVectorNearZero(const Vec3 &v) noexcept

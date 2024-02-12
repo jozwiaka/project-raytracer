@@ -21,8 +21,8 @@ public:
     static Vec3 Normalize(const Vec3 &v) noexcept;
 
     static Vec3 Rotate(const Vec3 &v, const Vec3 &rotationDeg) noexcept;
+    static Vec3 RotateT(const Vec3 &v, const Vec3 &rotationDeg) noexcept;
     static Vec3 Translate(const Vec3 &v, const Vec3 &translation) noexcept;
-    static Vec3 Transform(const Vec3 &v, const Vec3 &translation, const Vec3 &rotationDeg) noexcept;
 
     static bool IsVectorNearZero(const Vec3 &v) noexcept;
     static bool IsAlmostEqual(float val1, float val2) noexcept;
