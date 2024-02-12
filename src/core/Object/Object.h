@@ -4,12 +4,14 @@
 #include "Ray.h"
 #include "Math.h"
 #include <memory>
+#include "HitRecord.h"
+
 class Object
 {
 public:
     Object(const Math::Vec3 &center, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material);
     virtual ~Object() = default;
-    virtual bool Intersect(const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const = 0;
+    virtual bool Intersect(const Ray &ray, HitRecord &rec) const = 0;
     std::shared_ptr<Material> GetMaterial();
 
 protected:

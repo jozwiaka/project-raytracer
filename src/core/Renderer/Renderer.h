@@ -10,6 +10,7 @@
 #include "Cylinder.h"
 #include "Math.h"
 #include "Ray.h"
+#include "HitRecord.h"
 
 class Renderer
 {

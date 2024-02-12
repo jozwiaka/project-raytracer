@@ -11,6 +11,7 @@ target_link_libraries(Renderer PUBLIC
     Object
     Scene
     Camera
+    HitRecord
     )
 target_include_directories(
     Renderer

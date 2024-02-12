@@ -10,24 +10,19 @@ void Scene::AddLight(std::unique_ptr<Light> light)
     Lights.emplace_back(std::move(light));
 }
 
-bool Scene::Intersect(const Ray &ray, Math::Vec3 &hitPoint, Math::Vec3 &normal, std::shared_ptr<Material> &material) const
+bool Scene::Intersect(const Ray &ray, HitRecord &rec) const
 {
-    float tClosest = Math::Infinity;
+    HitRecord tempRec;
     bool hit = false;
+    float tClosest = Math::Infinity;
 
     for (const auto &object : Objects)
     {
-        float t;
-        Math::Vec3 objectHitPoint, objectNormal;
-
-        if (object->Intersect(ray, t, objectHitPoint, objectNormal) && t < tClosest)
+        if (object->Intersect(ray, tempRec) && tempRec.t < tClosest)
         {
-            tClosest = t;
             hit = true;
-
-            hitPoint = objectHitPoint;
-            normal = objectNormal;
-            material = object->GetMaterial();
+            tClosest = tempRec.t;
+            rec = tempRec;
         }
     }
 

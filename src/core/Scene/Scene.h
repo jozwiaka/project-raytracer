@@ -6,6 +6,7 @@
 #include "Material.h"
 #include "Light.h"
 #include "Math.h"
+#include "HitRecord.h"
 
 class Scene
 {
@@ -17,5 +18,5 @@ public:
 public:
     void AddObject(std::unique_ptr<Object> object);
     void AddLight(std::unique_ptr<Light> light);
-    bool Intersect(const Ray &ray, Math::Vec3 &hitPoint, Math::Vec3 &normal, std::shared_ptr<Material> &material) const;
+    bool Intersect(const Ray &ray, HitRecord &rec) const;
 };

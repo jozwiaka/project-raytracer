@@ -77,21 +77,20 @@ void Renderer::Display()
                     float spy = (m_Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Height;
                     Ray ray = m_Camera->GenerateRay(spx, spy);
 
-                    Math::Vec3 hitPoint, normal;
-                    std::shared_ptr<Material> material;
-                    if (m_Scene->Intersect(ray, hitPoint, normal, material))
+                    HitRecord rec;
+                    if (m_Scene->Intersect(ray, rec))
                     {
                         // Lambertian reflection model
-                        // for (const auto &light : m_Scene->Lights)
-                        // {
-                        //     Math::Vec3 lightDirection = Math::Normalize((light->Position - hitPoint));
-                        //     float distance = Math::Length(light->Position - hitPoint);
-                        //     float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
-                        //     float diffuseIntensity = std::max(0.0f, Math::Dot(normal, lightDirection));
-                        //     Math::Vec3 lightContribution = material->Color * diffuseIntensity * light->Color * attenuation;
-                        //     finalColor += lightContribution;
-                        // }
-                        finalColor += material->Color;
+                        for (const auto &light : m_Scene->Lights)
+                        {
+                            Math::Vec3 lightDirection = Math::Normalize((light->Position - rec.Point));
+                            float distance = Math::Length(light->Position - rec.Point);
+                            float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
+                            float diffuseIntensity = std::max(0.0f, Math::Dot(rec.Normal, lightDirection));
+                            Math::Vec3 lightContribution = rec.Mat->Color * diffuseIntensity * light->Color * attenuation;
+                            finalColor += lightContribution;
+                        }
+                        finalColor += rec.Mat->Color;
                     }
                     else
                     {

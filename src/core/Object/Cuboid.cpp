@@ -9,7 +9,7 @@ Cuboid::Cuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec
 {
 }
 
-bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const
+bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, HitRecord &rec) const
 {
     Math::Vec3 p0;
     Math::Vec3 n;
@@ -38,7 +38,7 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     }
 
     float np0 = Math::Dot(n, p0);
-    t = (np0 - Math::Dot(n, rayLocal.Origin)) / Math::Dot(n, rayLocal.Direction);
+    float t = (np0 - Math::Dot(n, rayLocal.Origin)) / Math::Dot(n, rayLocal.Direction);
     if (t >= 0.0f)
     {
         Math::Vec3 p = rayLocal.At(t);
@@ -69,21 +69,24 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
             range1 &&
             range2)
         {
-            hitPoint = ray.At(t);
-            normal = Math::Normalize((hitPoint - m_Center));
+            rec.t = t;
+            rec.Point = ray.At(rec.t);
+            auto outwardNormal = (rec.Point - m_Center); // TODO
+            rec.SetFaceNormal(ray, outwardNormal);
+            rec.Mat = m_Mat;
             return true;
         }
     }
     return false;
 }
 
-bool Cuboid::Intersect(const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const
+bool Cuboid::Intersect(const Ray &ray, HitRecord &rec) const
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, m_Center), -m_RotationDeg), Math::Rotate(ray.Direction, -m_RotationDeg)};
 
     for (int i = static_cast<int>(Wall::XY); i <= static_cast<int>(Wall::ZX_Prime); ++i)
     {
-        if (CheckWall(rayLocal, static_cast<Wall>(i), ray, t, hitPoint, normal))
+        if (CheckWall(rayLocal, static_cast<Wall>(i), ray, rec))
         {
             return true;
         }
