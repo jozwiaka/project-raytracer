@@ -12,8 +12,8 @@ public:
     using Vec3 = glm::vec3;
 
 public:
-    static float Infinity();
-    static float Epsilon();
+    static float Infinity() noexcept;
+    static float Epsilon() noexcept;
 
     static float Dot(const Vec3 &v1, const Vec3 &v2) noexcept;
     static Vec3 Cross(const Vec3 &v1, const Vec3 &v2) noexcept;

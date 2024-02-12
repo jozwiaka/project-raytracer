@@ -2,12 +2,12 @@
 #include <cmath>
 #include <limits>
 
-float Math::Infinity()
+float Math::Infinity() noexcept
 {
     return std::numeric_limits<float>::infinity();
 }
 
-float Math::Epsilon()
+float Math::Epsilon() noexcept
 {
     return std::numeric_limits<float>::epsilon();
 }

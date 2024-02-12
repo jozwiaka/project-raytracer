@@ -2,8 +2,7 @@
 #include "Math.h"
 #include "Ray.h"
 #include "Color.h"
-
-class Object;
+#include "HitRecord.h"
 
 class Material
 {
@@ -14,5 +13,5 @@ public:
     Material() = default;
     Material(const Color &color);
     virtual ~Material() = default;
-    bool Scatter(const Ray &ray, const Object &object, Math::Vec3 &attenuation, Ray &scattered) const { return false; }
+    bool Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const { return false; }
 };

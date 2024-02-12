@@ -1,9 +1,10 @@
 #pragma once
 
 #include "Ray.h"
-#include "Material.h"
 #include "Math.h"
 #include <memory>
+
+class Material;
 
 class HitRecord
 {
