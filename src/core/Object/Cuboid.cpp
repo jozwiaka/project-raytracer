@@ -38,44 +38,46 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     }
 
     float np0 = Math::Dot(n, p0);
-    float t = (np0 - Math::Dot(n, rayLocal.Origin)) / Math::Dot(n, rayLocal.Direction);
-    if (t >= 0.0f)
+    float root = (np0 - Math::Dot(n, rayLocal.Origin)) / Math::Dot(n, rayLocal.Direction);
+
+    if (!ray_t.Surrounds(root))
     {
-        Math::Vec3 p = rayLocal.At(t);
+        return false;
+    }
 
-        switch (wall)
-        {
-        case Wall::XY:
-        case Wall::XY_Prime:
-            range1 = Math::IsWithinRange(p.x, 0.0f, m_Size.x / 2.0f);
-            range2 = Math::IsWithinRange(p.y, 0.0f, m_Size.y / 2.0f);
-            break;
-        case Wall::YZ:
-        case Wall::YZ_Prime:
-            range1 = Math::IsWithinRange(p.y, 0.0f, m_Size.y / 2.0f);
-            range2 = Math::IsWithinRange(p.z, 0.0f, m_Size.z / 2.0f);
-            break;
-        case Wall::ZX:
-        case Wall::ZX_Prime:
-            range1 = Math::IsWithinRange(p.x, 0.0f, m_Size.x / 2.0f);
-            range2 = Math::IsWithinRange(p.z, 0.0f, m_Size.z / 2.0f);
-            break;
-        default:
-            break;
-        }
+    auto p = rayLocal.At(root);
 
-        if (
-            Math::IsAlmostEqual(Math::Dot(n, p), np0) &&
-            range1 &&
-            range2)
-        {
-            rec.t = t;
-            rec.Point = ray.At(rec.t);
-            auto outwardNormal = Math::Normalize(rec.Point - m_Center); // TODO
-            rec.SetFaceNormal(ray, outwardNormal);
-            rec.Mat = m_Mat;
-            return true;
-        }
+    switch (wall)
+    {
+    case Wall::XY:
+    case Wall::XY_Prime:
+        range1 = Math::IsWithinRange(p.x, 0.0f, m_Size.x / 2.0f);
+        range2 = Math::IsWithinRange(p.y, 0.0f, m_Size.y / 2.0f);
+        break;
+    case Wall::YZ:
+    case Wall::YZ_Prime:
+        range1 = Math::IsWithinRange(p.y, 0.0f, m_Size.y / 2.0f);
+        range2 = Math::IsWithinRange(p.z, 0.0f, m_Size.z / 2.0f);
+        break;
+    case Wall::ZX:
+    case Wall::ZX_Prime:
+        range1 = Math::IsWithinRange(p.x, 0.0f, m_Size.x / 2.0f);
+        range2 = Math::IsWithinRange(p.z, 0.0f, m_Size.z / 2.0f);
+        break;
+    default:
+        break;
+    }
+
+    if (
+        range1 &&
+        range2)
+    {
+        rec.t = root;
+        rec.Point = ray.At(rec.t);
+        auto outwardNormal = Math::Normalize(rec.Point - m_Center); // TODO
+        rec.SetFaceNormal(ray, outwardNormal);
+        rec.Mat = m_Mat;
+        return true;
     }
     return false;
 }
