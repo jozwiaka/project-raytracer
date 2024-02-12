@@ -9,7 +9,8 @@
 
 int main()
 {
-    auto groundMaterial = std::make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
+    // auto groundMaterial = std::make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
+    auto groundMaterial = std::make_shared<Lambertian>(Color(0.1, 0.1, 0.1));
 
     auto cameraPosition = Math::Vec3(0.0f, 5.0f, 5.0f);
     auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.f);
