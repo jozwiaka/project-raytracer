@@ -67,7 +67,7 @@ void Renderer::Display()
         {
             float px = (2.0f * x - m_Width) / m_Width * m_AspectRatioReal;
             float py = (m_Height - 2.0f * y) / m_Height;
-            Math::Vec3 finalColor = Math::Vec3(0.0f, 0.0f, 0.0f);
+            Math::Vec3 pixelColor = Math::Vec3(0.0f, 0.0f, 0.0f);
 
             // Collect color samples from sub-pixel locations
             for (int sy = 0; sy < numSamples; ++sy)
@@ -77,7 +77,7 @@ void Renderer::Display()
                     float spx = (2.0f * (x + (sx + 0.5f) / numSamples) - m_Width) / m_Width * m_AspectRatioReal;
                     float spy = (m_Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Height;
                     Ray ray = m_Camera->GenerateRay(spx, spy);
-                    finalColor += RayColor(ray, m_MaxDepth);
+                    pixelColor += RayColor(ray, m_MaxDepth);
                     // HitRecord rec;
                     // if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity), rec))
                     // {
@@ -89,20 +89,20 @@ void Renderer::Display()
                     //         float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
                     //         float diffuseIntensity = std::max(0.0f, Math::Dot(rec.Normal, lightDirection));
                     //         Math::Vec3 lightContribution = rec.Mat->Color * diffuseIntensity * light->Color * attenuation;
-                    //         finalColor += lightContribution;
+                    //         pixelColor += lightContribution;
                     //     }
-                    //     finalColor += rec.Mat->Color;
+                    //     pixelColor += rec.Mat->Color;
                     // }
                     // else
                     // {
-                    //     finalColor += m_Scene->BackgroundColor;
+                    //     pixelColor += m_Scene->BackgroundColor;
                     // }
                 }
             }
 
-            finalColor /= (numSamples * numSamples);
+            pixelColor /= (numSamples * numSamples);
 
-            glColor3f(finalColor.x, finalColor.y, finalColor.z);
+            glColor3f(pixelColor.x, pixelColor.y, pixelColor.z);
             glVertex2f(px, py);
         }
     }
