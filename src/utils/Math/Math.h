@@ -5,11 +5,14 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
-
+#include <limits>
 class Math
 {
 public:
     using Vec3 = glm::vec3;
+
+public:
+    static constexpr float Infinity = std::numeric_limits<float>::infinity();
 
 public:
     // Vector

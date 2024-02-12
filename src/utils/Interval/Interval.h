@@ -3,6 +3,7 @@
 #include <limits>
 #include <cmath>
 #include <algorithm>
+#include "Math.h"
 
 class Interval
 {
@@ -20,5 +21,5 @@ public:
     float Clamp(float x) const;
 };
 
-const Interval Interval::s_Empty = Interval(std::numeric_limits<float>::infinity(), -std::numeric_limits<float>::infinity());
-const Interval Interval::s_Universe = Interval(-std::numeric_limits<float>::infinity(), std::numeric_limits<float>::infinity());
+const Interval Interval::s_Empty = Interval(Math::Infinity, -Math::Infinity);
+const Interval Interval::s_Universe = Interval(-Math::Infinity, Math::Infinity);

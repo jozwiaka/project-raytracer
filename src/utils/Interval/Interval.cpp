@@ -1,6 +1,6 @@
 #include "Interval.h"
 
-Interval::Interval() : Min(std::numeric_limits<float>::infinity()), Max(-std::numeric_limits<float>::infinity()) {}
+Interval::Interval() : Min(Math::Infinity), Max(-Math::Infinity) {}
 
 Interval::Interval(float min, float max) : Min(min), Max(max) {}
 
