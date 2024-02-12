@@ -1,3 +1,3 @@
 #include "Light.h"
 
-Light::Light(const Math::Point3 &position, const Math::Color &color) : Position(position), Color(color) {}
+Light::Light(const Math::Vec3 &position, const Math::Vec3 &color) : Position(position), Color(color) {}

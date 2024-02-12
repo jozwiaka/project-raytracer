@@ -1,3 +1,3 @@
 #include "Material.h"
 
-Material::Material(const Math::Color &color) : Color(color) {}
+Material::Material(const Math::Vec3 &color) : Color(color) {}

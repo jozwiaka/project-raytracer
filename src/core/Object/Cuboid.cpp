@@ -3,15 +3,15 @@
 #include <limits>
 #include "Math.h"
 
-Cuboid::Cuboid(const Math::Point3 &center, const Math::Vec3 &size, const Math::Rotation3 &rotationDeg, std::shared_ptr<Material> material)
+Cuboid::Cuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       m_Size(size)
 {
 }
 
-bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, float &t, Math::Point3 &hitPoint, Math::Vec3 &normal) const
+bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const
 {
-    Math::Point3 p0;
+    Math::Vec3 p0;
     Math::Vec3 n;
     bool range1 = false;
     bool range2 = false;
@@ -41,7 +41,7 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     t = (np0 - Math::Dot(n, rayLocal.Origin)) / Math::Dot(n, rayLocal.Direction);
     if (t >= 0.0f)
     {
-        Math::Point3 p = rayLocal.At(t);
+        Math::Vec3 p = rayLocal.At(t);
 
         switch (wall)
         {
@@ -77,7 +77,7 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     return false;
 }
 
-bool Cuboid::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math::Vec3 &normal) const
+bool Cuboid::Intersect(const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, m_Center), -m_RotationDeg), Math::Rotate(ray.Direction, -m_RotationDeg)};
 

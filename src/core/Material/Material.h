@@ -7,11 +7,11 @@ class Object;
 class Material
 {
 public:
-    Math::Color Color;
+    Math::Vec3 Color;
 
 public:
     Material() = default;
-    Material(const Math::Color &color);
+    Material(const Math::Vec3 &color);
     virtual ~Material() = default;
-    bool Scatter(const Ray &ray, const Object &object, Math::Color &attenuation, Ray &scattered) const { return false; }
+    bool Scatter(const Ray &ray, const Object &object, Math::Vec3 &attenuation, Ray &scattered) const { return false; }
 };

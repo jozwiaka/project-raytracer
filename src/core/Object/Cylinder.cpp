@@ -3,14 +3,14 @@
 #include <limits>
 #include "Math.h"
 
-Cylinder::Cylinder(const Math::Point3 &center, const float radius, const float height, const Math::Rotation3 &rotationDeg, std::shared_ptr<Material> material)
+Cylinder::Cylinder(const Math::Vec3 &center, const float radius, const float height, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       m_Radius(radius),
       m_Height(height)
 {
 }
 
-bool Cylinder::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math::Vec3 &normal) const
+bool Cylinder::Intersect(const Ray &ray, float &t, Math::Vec3 &hitPoint, Math::Vec3 &normal) const
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, m_Center), -m_RotationDeg), Math::Rotate(ray.Direction, -m_RotationDeg)};
     // (p-C-((p-C)*v)*v)^2.0f=r^2.0f
@@ -32,7 +32,7 @@ bool Cylinder::Intersect(const Ray &ray, float &t, Math::Point3 &hitPoint, Math:
 
         if (t >= 0.0f)
         {
-            Math::Point3 p = rayLocal.At(t);
+            Math::Vec3 p = rayLocal.At(t);
             if (Math::IsWithinRange(p.y, 0.0f, m_Height / 2.0f))
             {
                 hitPoint = ray.At(t);
