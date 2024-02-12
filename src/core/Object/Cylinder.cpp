@@ -19,31 +19,31 @@ bool Cylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
     auto oc = rayLocal.Origin;
     auto dv = rayLocal.Direction - (v * Math::Dot(rayLocal.Direction, v));
     float a = Math::Dot(dv, dv);
-    float b = 2.0f * Math::Dot(oc, dv);
+    float half_b = Math::Dot(oc, dv);
     float c = Math::Dot(oc, oc) - m_Radius * m_Radius;
 
-    float discriminant = b * b - 4.0f * a * c;
+    float discriminant = half_b * half_b - a * c;
 
-    if (discriminant >= 0.0f)
+    if (discriminant < 0.0f)
+        return false;
+
+    // Find the nearest root that lies in the acceptable range.
+    auto sqrtd = sqrt(discriminant);
+    auto root = (-half_b - sqrtd) / a;
+    if (!ray_t.Surrounds(root))
     {
-        float t1 = (-b - std::sqrt(discriminant)) / (2.0f * a);
-        float t2 = (-b + std::sqrt(discriminant)) / (2.0f * a);
-        float t = (t1 < t2) ? t1 : t2; // choose smaller value, because it is closer to the ray's origin
-
-        if (t >= 0.0f)
-        {
-            Math::Vec3 p = rayLocal.At(t);
-            if (Math::IsWithinRange(p.y, 0.0f, m_Height / 2.0f))
-            {
-                rec.t = t;
-                rec.Point = ray.At(rec.t);
-                auto outwardNormal = Math::Normalize(rec.Point - m_Center);
-                rec.SetFaceNormal(ray, outwardNormal);
-                rec.Mat = m_Mat;
-                return true;
-            }
-        }
+        root = (-half_b + sqrtd) / a;
+        if (!ray_t.Surrounds(root))
+            return false;
     }
-
-    return false;
+    auto p = rayLocal.At(root);
+    if (Math::IsWithinRange(p.y, 0.0f, m_Height / 2.0f))
+    {
+        rec.t = root;
+        rec.Point = ray.At(rec.t);
+        auto outwardNormal = Math::Normalize(rec.Point - m_Center);
+        rec.SetFaceNormal(ray, outwardNormal);
+        rec.Mat = m_Mat;
+        return true;
+    }
 }
