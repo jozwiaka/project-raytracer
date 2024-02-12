@@ -110,3 +110,17 @@ void Renderer::Display()
     glEnd();
     glFlush();
 }
+
+Math::Vec3 Renderer::RayColor(const Ray &ray, int depth) const
+{
+    if (depth <= 0)
+    {
+        return Math::Vec3(0.0f, 0.0f, 0.0f); // black
+    }
+
+    // Object obj;
+
+    auto unitDirection = Math::Normalize(ray.Direction);
+    auto a = 0.5f * (unitDirection.y + 1.0f);
+    return (1.0f - a) * Math::Vec3(1.0f, 1.0f, 1.0f) + a * Math::Vec3(0.5f, 0.7f, 1.0f);
+}

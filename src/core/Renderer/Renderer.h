@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Cylinder.h"
 #include "Math.h"
+#include "Ray.h"
 
 class Renderer
 {
@@ -28,4 +29,5 @@ private:
 
 private:
     void Display();
+    Math::Vec3 RayColor(const Ray &ray, int depth) const;
 };
