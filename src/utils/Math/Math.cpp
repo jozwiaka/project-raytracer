@@ -2,6 +2,16 @@
 #include <cmath>
 #include <limits>
 
+float Math::Infinity()
+{
+    return std::numeric_limits<float>::infinity();
+}
+
+float Math::Epsilon()
+{
+    return std::numeric_limits<float>::epsilon();
+}
+
 float Math::Dot(const Vec3 &v1, const Vec3 &v2) noexcept
 {
     return glm::dot(v1, v2);
@@ -44,9 +54,14 @@ Math::Vec3 Math::Transform(const Vec3 &v, const Vec3 &translation, const Vec3 &r
     return Translate(Rotate(v, rotationDeg), translation);
 }
 
+bool Math::IsVectorNearZero(const Vec3 &v) noexcept
+{
+    return (std::fabs(v.x) < Epsilon()) && (std::fabs(v.y) < Epsilon()) && (std::fabs(v.z) < Epsilon());
+}
+
 bool Math::IsAlmostEqual(float val1, float val2) noexcept
 {
-    return std::abs(val1 - val2) < std::numeric_limits<float>::epsilon();
+    return std::fabs(val1 - val2) < Epsilon();
 }
 
 bool Math::IsWithinRange(float val, float center, float radius) noexcept

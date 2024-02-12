@@ -14,7 +14,7 @@ bool Scene::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     HitRecord tempRec;
     bool hit = false;
-    float tClosest = Math::Infinity;
+    float tClosest = Math::Infinity();
 
     for (const auto &object : Objects)
     {

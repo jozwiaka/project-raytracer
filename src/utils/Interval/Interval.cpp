@@ -1,6 +1,6 @@
 #include "Interval.h"
 
-Interval::Interval() : Min(Math::Infinity), Max(-Math::Infinity) {}
+Interval::Interval() : Min(Math::Infinity()), Max(-Math::Infinity()) {}
 
 Interval::Interval(float min, float max) : Min(min), Max(max) {}
 
@@ -29,5 +29,5 @@ float Interval::Clamp(float x) const
     return std::clamp(x, Min, Max);
 }
 
-const Interval Interval::s_Empty = Interval(Math::Infinity, -Math::Infinity);
-const Interval Interval::s_Universe = Interval(-Math::Infinity, Math::Infinity);
+const Interval Interval::s_Empty = Interval(Math::Infinity(), -Math::Infinity());
+const Interval Interval::s_Universe = Interval(-Math::Infinity(), Math::Infinity());

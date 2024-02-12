@@ -79,7 +79,7 @@ void Renderer::Display()
                     Ray ray = m_Camera->GenerateRay(spx, spy);
                     pixelColor += RayColor(ray, m_MaxDepth);
                     // HitRecord rec;
-                    // if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity), rec))
+                    // if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity()), rec))
                     // {
                     //     // Lambertian reflection model
                     //     for (const auto &light : m_Scene->Lights)
@@ -121,7 +121,7 @@ Color Renderer::RayColor(const Ray &ray, int depth) const
     }
 
     HitRecord rec;
-    if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity), rec))
+    if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity()), rec))
     {
         auto direction = rec.Normal + Random::RandomUnitVector();
         return 0.1f * RayColor(Ray(rec.Point, direction), depth - 1);
