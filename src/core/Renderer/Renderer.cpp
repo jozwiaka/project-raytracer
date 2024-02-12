@@ -121,8 +121,8 @@ Math::Vec3 Renderer::RayColor(const Ray &ray, int depth) const
     HitRecord rec;
     if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity), rec))
     {
-        auto direction = Random::RandomOnHemisphere(rec.Normal);
-        return 0.5f * RayColor(Ray(rec.Point, direction), depth - 1);
+        auto direction = rec.Normal + Random::RandomUnitVector();
+        return 0.1f * RayColor(Ray(rec.Point, direction), depth - 1);
     }
 
     // Background
