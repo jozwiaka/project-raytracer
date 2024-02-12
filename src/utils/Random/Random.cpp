@@ -26,7 +26,19 @@ Math::Vec3 Random::RandomVector(float min, float max)
     return Math::Vec3(RandomFloat(min, max), RandomFloat(min, max), RandomFloat(min, max));
 }
 
+Math::Vec3 Random::RandomInUnitSphere()
+{
+    while (true)
+    {
+        auto p = RandomVector(-1, 1);
+        if (Math::Dot(p, p) < 1)
+        {
+            return p;
+        }
+    }
+}
+
 Math::Vec3 Random::RandomUnitVector()
 {
-    return Math::Normalize(Math::Vec3(RandomFloat(-1, 1), RandomFloat(-1, 1), RandomFloat(-1, 1)));
+    return Math::Normalize(RandomInUnitSphere());
 }
