@@ -28,3 +28,6 @@ float Interval::Clamp(float x) const
 {
     return std::clamp(x, Min, Max);
 }
+
+const Interval Interval::s_Empty = Interval(Math::Infinity, -Math::Infinity);
+const Interval Interval::s_Universe = Interval(-Math::Infinity, Math::Infinity);

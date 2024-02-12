@@ -20,6 +20,3 @@ public:
     bool Surrounds(float x) const;
     float Clamp(float x) const;
 };
-
-const Interval Interval::s_Empty = Interval(Math::Infinity, -Math::Infinity);
-const Interval Interval::s_Universe = Interval(-Math::Infinity, Math::Infinity);

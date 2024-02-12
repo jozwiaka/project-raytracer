@@ -9,7 +9,7 @@ Cuboid::Cuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec
 {
 }
 
-bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, HitRecord &rec) const
+bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Math::Vec3 p0;
     Math::Vec3 n;
@@ -80,13 +80,13 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     return false;
 }
 
-bool Cuboid::Intersect(const Ray &ray, HitRecord &rec) const
+bool Cuboid::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, m_Center), -m_RotationDeg), Math::Rotate(ray.Direction, -m_RotationDeg)};
 
     for (int i = static_cast<int>(Wall::XY); i <= static_cast<int>(Wall::ZX_Prime); ++i)
     {
-        if (CheckWall(rayLocal, static_cast<Wall>(i), ray, rec))
+        if (CheckWall(rayLocal, static_cast<Wall>(i), ray, ray_t, rec))
         {
             return true;
         }

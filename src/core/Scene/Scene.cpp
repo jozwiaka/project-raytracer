@@ -10,7 +10,7 @@ void Scene::AddLight(std::unique_ptr<Light> light)
     Lights.emplace_back(std::move(light));
 }
 
-bool Scene::Intersect(const Ray &ray, HitRecord &rec) const
+bool Scene::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     HitRecord tempRec;
     bool hit = false;
@@ -18,7 +18,7 @@ bool Scene::Intersect(const Ray &ray, HitRecord &rec) const
 
     for (const auto &object : Objects)
     {
-        if (object->Intersect(ray, tempRec) && tempRec.t < tClosest)
+        if (object->Intersect(ray, Interval(ray_t.Min, tClosest), tempRec))
         {
             hit = true;
             tClosest = tempRec.t;

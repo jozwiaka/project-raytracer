@@ -78,7 +78,7 @@ void Renderer::Display()
                     Ray ray = m_Camera->GenerateRay(spx, spy);
 
                     HitRecord rec;
-                    if (m_Scene->Intersect(ray, rec))
+                    if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity), rec))
                     {
                         // Lambertian reflection model
                         for (const auto &light : m_Scene->Lights)
