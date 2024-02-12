@@ -15,5 +15,5 @@ public:
 protected:
     Math::Vec3 m_Center;
     Math::Vec3 m_RotationDeg;
-    std::shared_ptr<Material> m_Material;
+    std::shared_ptr<Material> m_Mat;
 };

@@ -1,5 +1,6 @@
 add_subdirectory(Ray)
 add_subdirectory(Material)
+add_subdirectory(HitRecord)
 add_subdirectory(Light)
 add_subdirectory(Object)
 add_subdirectory(Scene)
