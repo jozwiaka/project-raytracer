@@ -16,7 +16,7 @@ int main()
     auto dielectric = std::make_shared<Dielectric>(1.5);
 
     auto cameraPosition = Math::Vec3(0.0f, 5.0f, 5.0f);
-    auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.f);
+    auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
     Camera camera(cameraPosition, cameraTarget, cameraUpVector);
 
@@ -26,10 +26,10 @@ int main()
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, lambertian));
     // scene.AddObject(std::make_unique<Sphere>(Math::Vec3(-4.0f, 2.0f, 0.0f), 2.0f, metal));
     // scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, 2.0f, 0.0f), 2.0f, dielectric));
-    // scene.AddObject(std::make_unique<Sphere>(Math::Vec3(4.0f, 2.0f, 0.0f), 2.0f, metal));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(4.0f, 2.0f, 0.0f), 2.0f, metal));
 
-    scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(2.0f, 1.0f, 0.0f), 2.0f, 2.0f, Math::Vec3(0.0f, 0.0f, 0.0f), metal));
-    scene.AddObject(std::make_unique<Cuboid>(Math::Vec3(-2.0f, 1.0f, 0.0f), Math::Vec3(2.0f, 2.0f, 2.0f), Math::Vec3(0.0f, 0.0f, 0.0f), metal));
+    // scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(2.0f, 1.0f, 0.0f), 2.0f, 2.0f, Math::Vec3(0.0f, 0.0f, 0.0f), metal));
+    scene.AddObject(std::make_unique<Cuboid>(Math::Vec3(-2.0f, 1.0f, 0.0f), Math::Vec3(2.0f, 2.0f, 2.0f), Math::Vec3(45.0f, 45.0f, 45.0f), metal));
 
     float aspectRatio = 16.0f / 9.0f;
     int width = 1200;

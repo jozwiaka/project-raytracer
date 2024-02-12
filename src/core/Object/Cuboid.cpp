@@ -82,7 +82,7 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
 
 bool Cuboid::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
-    Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, m_Center), -m_RotationDeg), Math::Rotate(ray.Direction, -m_RotationDeg)};
+    Ray rayLocal{Math::Rotate(Math::Translate(ray.Origin, -m_Center), -m_RotationDeg), Math::Rotate(ray.Direction, -m_RotationDeg)};
 
     for (int i = static_cast<int>(Wall::XY); i <= static_cast<int>(Wall::ZX_Prime); ++i)
     {
