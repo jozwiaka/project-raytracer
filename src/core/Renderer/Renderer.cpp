@@ -123,8 +123,13 @@ Color Renderer::RayColor(const Ray &ray, int depth) const
     HitRecord rec;
     if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity()), rec))
     {
-        auto direction = rec.Normal + Random::RandomUnitVector();
-        return 0.1f * RayColor(Ray(rec.Point, direction), depth - 1);
+        Ray scattered;
+        Color attenuation;
+        if (rec.Mat->Scatter(ray, rec, attenuation, scattered))
+        {
+            return attenuation * RayColor(scattered, depth - 1);
+        }
+        return Color();
     }
 
     // Background

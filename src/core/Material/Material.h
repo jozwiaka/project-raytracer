@@ -13,5 +13,5 @@ public:
     Material() = default;
     Material(const Color &color);
     virtual ~Material() = default;
-    bool Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const { return false; }
+    virtual bool Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const = 0;
 };
