@@ -29,7 +29,6 @@ bool Cylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
         return false;
     }
 
-    // Find the nearest root that lies in the acceptable range.
     auto sqrtd = sqrt(discriminant);
     auto root = (-half_b - sqrtd) / a;
     if (!ray_t.Surrounds(root))
