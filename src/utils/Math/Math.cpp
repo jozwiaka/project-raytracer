@@ -68,3 +68,16 @@ bool Math::IsWithinRange(float val, float center, float radius) noexcept
 {
     return val >= center - radius && val <= center + radius;
 }
+
+Math::Vec3 Math::Reflect(const Vec3 &v, const Vec3 &n) noexcept
+{
+    return v - 2 * Dot(v, n) * n;
+}
+
+Math::Vec3 Math::Refract(const Vec3 &uv, const Vec3 &n, float etaiOverEtat) noexcept
+{
+    float cosTheta = std::fmin(Dot(-uv, n), 1.0f);
+    Vec3 rOutPerp = etaiOverEtat * (uv + cosTheta * n);
+    Vec3 rOutParallel = -std::sqrt(std::fabs(1.0f - Dot(rOutPerp, rOutPerp))) * n;
+    return rOutPerp + rOutParallel;
+}

@@ -27,4 +27,7 @@ public:
     static bool IsVectorNearZero(const Vec3 &v) noexcept;
     static bool IsAlmostEqual(float val1, float val2) noexcept;
     static bool IsWithinRange(float val, float center, float radius) noexcept;
+
+    static Vec3 Reflect(const Vec3 &v, const Vec3 &n) noexcept;
+    static Vec3 Refract(const Vec3 &uv, const Vec3 &n, float etaiOverEtat) noexcept;
 };

@@ -4,6 +4,8 @@ Metal::Metal(const Color &albedo, float fuzz) : m_Albedo(albedo), m_Fuzz(fuzz < 
 
 bool Metal::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
 {
-
-    return true;
+    auto reflected = Math::Reflect(Math::Normalize(ray.Direction), rec.Normal);
+    scattered = Ray(rec.Point, reflected + m_Fuzz * Random::RandomInUnitSphere());
+    attenuation = m_Albedo;
+    return (Math::Dot(scattered.Direction, rec.Normal) > 0);
 }

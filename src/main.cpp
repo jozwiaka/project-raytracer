@@ -6,11 +6,12 @@
 #include <memory>
 #include "Color.h"
 #include "Lambertian.h"
+#include "Metal.h"
 
 int main()
 {
-    // auto groundMaterial = std::make_shared<Lambertian>(Color(0.5, 0.5, 0.5));
-    auto groundMaterial = std::make_shared<Lambertian>(Color(0.1, 0.1, 0.1));
+    auto lambertian = std::make_shared<Lambertian>(Color(0.2, 0.2, 0.2));
+    auto metal = std::make_shared<Metal>(Color(0.2, 0.2, 0.2), 0.5);
 
     auto cameraPosition = Math::Vec3(0.0f, 5.0f, 5.0f);
     auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.f);
@@ -20,11 +21,11 @@ int main()
     Scene scene;
     scene.BackgroundColor = Color();
     // scene.AddLight(std::make_unique<Light>(Math::Vec3(0.0f, 3.0f, 0.0f), Math::Vec3(1.0f, 1.0f, 1.0f)));
-    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMaterial));
-    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(-3.0f, 1.0f, 0.0f), 1.0f, groundMaterial));
-    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, 2.0f, 0.0f), 2.0f, groundMaterial));
-    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(3.0f, 1.0f, 0.0f), 1.0f, groundMaterial));
-    // scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(0.0f, 0.0f, 1.0f), 1.0f, 1.0f, Math::Vec3(0.0f, 0.0f, 0.0f),groundMaterial));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, lambertian));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(-3.0f, 1.0f, 0.0f), 1.0f, metal));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, 2.0f, 0.0f), 2.0f, metal));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(3.0f, 1.0f, 0.0f), 1.0f, metal));
+    // scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(0.0f, 0.0f, 1.0f), 1.0f, 1.0f, Math::Vec3(0.0f, 0.0f, 0.0f),lambertian));
 
     float aspectRatio = 16.0f / 9.0f;
     int width = 1200;
