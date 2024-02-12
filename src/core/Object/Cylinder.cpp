@@ -3,7 +3,7 @@
 #include <limits>
 #include "Math.h"
 
-Cylinder::Cylinder(const Math::Vec3 &center, const float radius, const float height, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
+Cylinder::Cylinder(const Math::Vec3 &center, float radius, float height, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       m_Radius(radius),
       m_Height(height)
