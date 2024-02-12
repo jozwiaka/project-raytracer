@@ -42,3 +42,16 @@ Math::Vec3 Random::RandomUnitVector()
 {
     return Math::Normalize(RandomInUnitSphere());
 }
+
+Math::Vec3 Random::RandomOnHemisphere(const Math::Vec3 &normal)
+{
+    auto onUnitSphere = RandomUnitVector();
+    if (Math::Dot(onUnitSphere, normal) > 0.0f)
+    {
+        return onUnitSphere;
+    }
+    else
+    {
+        return -onUnitSphere;
+    }
+}
