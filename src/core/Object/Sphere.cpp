@@ -27,7 +27,7 @@ bool Sphere::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 
     rec.t = root;
     rec.Point = ray.At(rec.t);
-    auto outwardNormal = (rec.Point - m_Center) / m_Radius;
+    auto outwardNormal = Math::Normalize(rec.Point - m_Center);
     rec.SetFaceNormal(ray, outwardNormal);
     rec.Mat = m_Mat;
 

@@ -10,7 +10,7 @@ Cylinder::Cylinder(const Math::Vec3 &center, const float radius, const float hei
 {
 }
 
-bool Cylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord& rec) const
+bool Cylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Ray rayLocal{-Math::Rotate(Math::Translate(ray.Origin, m_Center), -m_RotationDeg), Math::Rotate(ray.Direction, -m_RotationDeg)};
     // (p-C-((p-C)*v)*v)^2.0f=r^2.0f
@@ -37,7 +37,7 @@ bool Cylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord& rec) const
             {
                 rec.t = t;
                 rec.Point = ray.At(rec.t);
-                auto outwardNormal = (rec.Point - m_Center) / m_Radius; // TODO
+                auto outwardNormal = Math::Normalize(rec.Point - m_Center);
                 rec.SetFaceNormal(ray, outwardNormal);
                 rec.Mat = m_Mat;
                 return true;

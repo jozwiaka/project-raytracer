@@ -71,7 +71,7 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
         {
             rec.t = t;
             rec.Point = ray.At(rec.t);
-            auto outwardNormal = (rec.Point - m_Center); // TODO
+            auto outwardNormal = Math::Normalize(rec.Point - m_Center); // TODO
             rec.SetFaceNormal(ray, outwardNormal);
             rec.Mat = m_Mat;
             return true;
