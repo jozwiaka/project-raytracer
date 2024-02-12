@@ -8,13 +8,14 @@
 #include "Math.h"
 #include "HitRecord.h"
 #include "Interval.h"
+#include "Color.h"
 
 class Scene
 {
 public:
     std::vector<std::unique_ptr<Object>> Objects;
     std::vector<std::unique_ptr<Light>> Lights;
-    Math::Vec3 BackgroundColor;
+    Color BackgroundColor;
 
 public:
     void AddObject(std::unique_ptr<Object> object);

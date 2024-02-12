@@ -1,3 +1,4 @@
+add_subdirectory(Color)
 add_subdirectory(Ray)
 add_subdirectory(Material)
 add_subdirectory(HitRecord)

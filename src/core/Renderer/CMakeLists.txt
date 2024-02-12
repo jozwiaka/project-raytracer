@@ -8,6 +8,7 @@ target_link_libraries(Renderer PUBLIC
     Math
     Random
     Interval
+    Color
     Ray
     Material
     Light

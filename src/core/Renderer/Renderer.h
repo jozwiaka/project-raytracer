@@ -13,6 +13,7 @@
 #include "HitRecord.h"
 #include "Random.h"
 #include "Interval.h"
+#include "Color.h"
 
 class Renderer
 {
@@ -33,5 +34,5 @@ private:
 
 private:
     void Display();
-    Math::Vec3 RayColor(const Ray &ray, int depth) const;
+    Color RayColor(const Ray &ray, int depth) const;
 };

@@ -67,7 +67,7 @@ void Renderer::Display()
         {
             float px = (2.0f * x - m_Width) / m_Width * m_AspectRatioReal;
             float py = (m_Height - 2.0f * y) / m_Height;
-            Math::Vec3 pixelColor = Math::Vec3(0.0f, 0.0f, 0.0f);
+            Color pixelColor = Color();
 
             // Collect color samples from sub-pixel locations
             for (int sy = 0; sy < numSamples; ++sy)
@@ -88,10 +88,10 @@ void Renderer::Display()
                     //         float distance = Math::Length(light->Position - rec.Point);
                     //         float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
                     //         float diffuseIntensity = std::max(0.0f, Math::Dot(rec.Normal, lightDirection));
-                    //         Math::Vec3 lightContribution = rec.Mat->Color * diffuseIntensity * light->Color * attenuation;
+                    //         Color lightContribution = rec.Mat->m_Color * diffuseIntensity * light->m_Color * attenuation;
                     //         pixelColor += lightContribution;
                     //     }
-                    //     pixelColor += rec.Mat->Color;
+                    //     pixelColor += rec.Mat->m_Color;
                     // }
                     // else
                     // {
@@ -102,6 +102,8 @@ void Renderer::Display()
 
             pixelColor /= (numSamples * numSamples);
 
+            pixelColor = ColorManipulator::GammaCorrection(pixelColor);
+
             glColor3f(pixelColor.x, pixelColor.y, pixelColor.z);
             glVertex2f(px, py);
         }
@@ -111,11 +113,11 @@ void Renderer::Display()
     glFlush();
 }
 
-Math::Vec3 Renderer::RayColor(const Ray &ray, int depth) const
+Color Renderer::RayColor(const Ray &ray, int depth) const
 {
     if (depth <= 0)
     {
-        return Math::Vec3(0.0f, 0.0f, 0.0f); // black
+        return Color(); // black
     }
 
     HitRecord rec;
@@ -128,5 +130,5 @@ Math::Vec3 Renderer::RayColor(const Ray &ray, int depth) const
     // Background
     auto unitDirection = Math::Normalize(ray.Direction);
     auto a = 0.5f * (unitDirection.y + 1.0f);
-    return (1.0f - a) * Math::Vec3(1.0f, 1.0f, 1.0f) + a * Math::Vec3(0.5f, 0.7f, 1.0f);
+    return (1.0f - a) * Color(1.0f, 1.0f, 1.0f) + a * Color(0.5f, 0.7f, 1.0f);
 }
