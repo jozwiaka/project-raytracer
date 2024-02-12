@@ -1,5 +1,4 @@
-#include "Color.h"
-#include <cmath>
+#include "ColorManipulator.h"
 
 Color ColorManipulator::GammaCorrection(const Color &color)
 {

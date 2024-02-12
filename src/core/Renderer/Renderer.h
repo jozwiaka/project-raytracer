@@ -14,6 +14,7 @@
 #include "Random.h"
 #include "Interval.h"
 #include "Color.h"
+#include "ColorManipulator.h"
 
 class Renderer
 {
