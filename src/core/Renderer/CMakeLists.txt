@@ -5,6 +5,9 @@ target_link_libraries(Renderer PUBLIC
     glfw
     ${OPENGL_LIBRARIES}
     GLEW::GLEW
+    Math
+    Random
+    Interval
     Ray
     Material
     Light

@@ -11,11 +11,13 @@
 #include "Math.h"
 #include "Ray.h"
 #include "HitRecord.h"
+#include "Random.h"
+#include "Interval.h"
 
 class Renderer
 {
 public:
-    Renderer(Camera *camera, Scene *scene, int width, float aspectRatio);
+    Renderer(Camera *camera, Scene *scene, int width, float aspectRatio, int maxDepth);
     bool Init();
     void MainLoop();
 
@@ -26,6 +28,7 @@ private:
     float m_AspectRatioIdeal;
     int m_Height;
     float m_AspectRatioReal;
+    int m_MaxDepth;
     GLFWwindow *m_Window;
 
 private:

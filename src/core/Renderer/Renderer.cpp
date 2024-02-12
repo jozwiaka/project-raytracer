@@ -1,11 +1,12 @@
 #include "Renderer.h"
-Renderer::Renderer(Camera *camera, Scene *scene, int width, float aspectRatio)
+Renderer::Renderer(Camera *camera, Scene *scene, int width, float aspectRatio, int maxDepth)
     : m_Camera(camera),
       m_Scene(scene),
       m_Width(width),
       m_AspectRatioIdeal(aspectRatio),
       m_Height(static_cast<int>(m_Width / m_AspectRatioIdeal)),
       m_AspectRatioReal(static_cast<float>(m_Width) / static_cast<float>(m_Height)),
+      m_MaxDepth(maxDepth),
       m_Window(nullptr)
 {
 }
@@ -76,26 +77,26 @@ void Renderer::Display()
                     float spx = (2.0f * (x + (sx + 0.5f) / numSamples) - m_Width) / m_Width * m_AspectRatioReal;
                     float spy = (m_Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Height;
                     Ray ray = m_Camera->GenerateRay(spx, spy);
-
-                    HitRecord rec;
-                    if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity), rec))
-                    {
-                        // Lambertian reflection model
-                        for (const auto &light : m_Scene->Lights)
-                        {
-                            Math::Vec3 lightDirection = Math::Normalize((light->Position - rec.Point));
-                            float distance = Math::Length(light->Position - rec.Point);
-                            float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
-                            float diffuseIntensity = std::max(0.0f, Math::Dot(rec.Normal, lightDirection));
-                            Math::Vec3 lightContribution = rec.Mat->Color * diffuseIntensity * light->Color * attenuation;
-                            finalColor += lightContribution;
-                        }
-                        finalColor += rec.Mat->Color;
-                    }
-                    else
-                    {
-                        finalColor += m_Scene->BackgroundColor;
-                    }
+                    finalColor += RayColor(ray, m_MaxDepth);
+                    // HitRecord rec;
+                    // if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity), rec))
+                    // {
+                    //     // Lambertian reflection model
+                    //     for (const auto &light : m_Scene->Lights)
+                    //     {
+                    //         Math::Vec3 lightDirection = Math::Normalize((light->Position - rec.Point));
+                    //         float distance = Math::Length(light->Position - rec.Point);
+                    //         float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
+                    //         float diffuseIntensity = std::max(0.0f, Math::Dot(rec.Normal, lightDirection));
+                    //         Math::Vec3 lightContribution = rec.Mat->Color * diffuseIntensity * light->Color * attenuation;
+                    //         finalColor += lightContribution;
+                    //     }
+                    //     finalColor += rec.Mat->Color;
+                    // }
+                    // else
+                    // {
+                    //     finalColor += m_Scene->BackgroundColor;
+                    // }
                 }
             }
 
@@ -117,7 +118,12 @@ Math::Vec3 Renderer::RayColor(const Ray &ray, int depth) const
         return Math::Vec3(0.0f, 0.0f, 0.0f); // black
     }
 
-    // Object obj;
+    HitRecord rec;
+    if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity), rec))
+    {
+        auto direction = Random::RandomOnHemisphere(rec.Normal);
+        return 0.5f * RayColor(Ray(rec.Point, direction), depth - 1);
+    }
 
     auto unitDirection = Math::Normalize(ray.Direction);
     auto a = 0.5f * (unitDirection.y + 1.0f);
