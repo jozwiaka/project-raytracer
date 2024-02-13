@@ -23,7 +23,7 @@ int main()
     auto cameraPosition = Math::Vec3(0.0f, 3.0f, 5.0f);
     auto cameraTarget = Math::Vec3(0.0f, 2.0f, 0.0f);
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
-    float defocusAngle = 0.0f;
+    float defocusAngle = 5.0f;
     float verticalFOV = 90.0f;
     Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, &image);
 
