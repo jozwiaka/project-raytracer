@@ -3,9 +3,9 @@
 class Image
 {
 public:
-    float Width;
+    int Width;
     float AspectRatioIdeal;
-    float Height;
+    int Height;
     float AspectRatioReal;
 
 public:
