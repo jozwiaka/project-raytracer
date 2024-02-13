@@ -17,7 +17,8 @@ Ray Camera::GenerateRay(float x, float y) const
 {
     Math::Vec3 direction = m_Forward + m_Right * x + m_Up * y;
     auto defocusOffset = m_DefocusAngle <= 0 ? Math::Vec3() : DefocusDiskSample();
-    defocusOffset *= 1 - Math::Dot(direction, m_Forward) / (Math::Length(direction) * Math::Length(m_Forward));
+    float scale = 1 - Math::Dot(direction, m_Forward) / (Math::Length(direction) * Math::Length(m_Forward));
+    defocusOffset *= scale;
     return Ray(m_Position + defocusOffset, direction - defocusOffset);
 }
 
