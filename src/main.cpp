@@ -18,7 +18,7 @@ int main()
     auto cameraPosition = Math::Vec3(0.0f, 2.0f, 6.0f);
     auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
-    float defocusAngle = 10.0f;
+    float defocusAngle = 0.6f;
     Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle);
 
     Scene scene;
