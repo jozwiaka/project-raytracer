@@ -25,6 +25,7 @@ Ray Camera::GenerateRay(float x, float y) const
 Math::Vec3 Camera::DefocusDiskSample() const
 {
     auto p = Random::RandomInUnitDisk();
+    // defAng = 2*arctan(D/2f) = 2*arctan(2*R/2f) => R = f * tan(defAngle/2)
     float defocusRadius = m_FocusDist * std::tan(Math::Radians(m_DefocusAngle / 2));
     Math::Vec3 defocusDiskRight = m_Right * defocusRadius;
     Math::Vec3 defocusDiskUp = m_Up * defocusRadius;
