@@ -15,13 +15,13 @@ Camera::Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math:
 
 Ray Camera::GenerateRay(float x, float y) const
 {
-    static float tanVertical = std::tan(Math::Radians(m_VerticalFOV / 2));
-    static float tanHorizontal = std::tan(Math::Radians(m_VerticalFOV * m_Image->AspectRatioReal / 2));
-
-    Math::Vec3 direction = m_Forward + m_Right * x + m_Up * y;
+    // static float tanVertical = std::tan(Math::Radians(m_VerticalFOV / 2));
+    // static float tanHorizontal = std::tan(Math::Radians(m_VerticalFOV * m_Image->AspectRatioReal / 2));
     // Math::Vec3 direction = m_Forward +
     //                        m_Right * x * tanHorizontal +
     //                        m_Up * y * tanVertical;
+
+    Math::Vec3 direction = m_Forward + m_Right * x + m_Up * y;
 
     auto defocusOffset = m_DefocusAngle <= 0 ? Math::Vec3() : DefocusDiskSample();
     float scale = 1 - Math::Dot(direction, m_Forward) / (Math::Length(direction) * Math::Length(m_Forward));
