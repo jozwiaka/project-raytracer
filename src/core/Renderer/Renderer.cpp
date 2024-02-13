@@ -78,25 +78,6 @@ void Renderer::Display()
                     float spy = (m_Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Height;
                     Ray ray = m_Camera->GenerateRay(spx, spy);
                     pixelColor += RayColor(ray, m_MaxDepth);
-                    // HitRecord rec;
-                    // if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity()), rec))
-                    // {
-                    //     // Lambertian reflection model
-                    //     for (const auto &light : m_Scene->Lights)
-                    //     {
-                    //         Math::Vec3 lightDirection = Math::Normalize((light->Position - rec.Point));
-                    //         float distance = Math::Length(light->Position - rec.Point);
-                    //         float attenuation = 1.0f / (1.0f + 0.1f * distance + 0.01f * distance * distance);
-                    //         float diffuseIntensity = std::max(0.0f, Math::Dot(rec.Normal, lightDirection));
-                    //         Color lightContribution = rec.Mat->m_Color * diffuseIntensity * light->m_Color * attenuation;
-                    //         pixelColor += lightContribution;
-                    //     }
-                    //     pixelColor += rec.Mat->m_Color;
-                    // }
-                    // else
-                    // {
-                    //     pixelColor += m_Scene->BackgroundColor;
-                    // }
                 }
             }
 

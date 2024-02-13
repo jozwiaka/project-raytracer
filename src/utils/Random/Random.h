@@ -12,4 +12,5 @@ public:
     static Math::Vec3 RandomInUnitSphere();
     static Math::Vec3 RandomUnitVector();
     static Math::Vec3 RandomOnHemisphere(const Math::Vec3 &normal);
+    static Math::Vec3 RandomInUnitDisk();
 };

@@ -55,3 +55,13 @@ Math::Vec3 Random::RandomOnHemisphere(const Math::Vec3 &normal)
         return -onUnitSphere;
     }
 }
+
+Math::Vec3 Random::RandomInUnitDisk()
+{
+    while (true)
+    {
+        auto p = Math::Vec3(RandomFloat(-1.0f, 1.0f), RandomFloat(-1.0f, 1.0f), 0.0f);
+        if (Math::Dot(p, p) < 1)
+            return p;
+    }
+}

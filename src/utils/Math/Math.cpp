@@ -12,6 +12,11 @@ float Math::Epsilon() noexcept
     return std::numeric_limits<float>::epsilon();
 }
 
+float Math::Pi() noexcept
+{
+    return 3.14159265358979323846;
+}
+
 float Math::Dot(const Vec3 &v1, const Vec3 &v2) noexcept
 {
     return glm::dot(v1, v2);
@@ -87,4 +92,9 @@ Math::Vec3 Math::Refract(const Vec3 &uv, const Vec3 &n, float etaiOverEtat) noex
     Vec3 rOutPerp = etaiOverEtat * (uv + cosTheta * n);
     Vec3 rOutParallel = -std::sqrt(std::fabs(1.0f - Dot(rOutPerp, rOutPerp))) * n;
     return rOutPerp + rOutParallel;
+}
+
+float Math::Radians(float angle) noexcept
+{
+    return glm::radians(angle);
 }

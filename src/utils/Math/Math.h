@@ -14,6 +14,7 @@ public:
 public:
     static float Infinity() noexcept;
     static float Epsilon() noexcept;
+    static float Pi() noexcept;
 
     static float Dot(const Vec3 &v1, const Vec3 &v2) noexcept;
     static Vec3 Cross(const Vec3 &v1, const Vec3 &v2) noexcept;
@@ -30,4 +31,6 @@ public:
 
     static Vec3 Reflect(const Vec3 &v, const Vec3 &n) noexcept;
     static Vec3 Refract(const Vec3 &uv, const Vec3 &n, float etaiOverEtat) noexcept;
+
+    static float Radians(float angle) noexcept;
 };
