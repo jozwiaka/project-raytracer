@@ -8,6 +8,7 @@
 #include "Lambertian.h"
 #include "Metal.h"
 #include "Dielectric.h"
+#include "Image.h"
 
 int main()
 {
@@ -15,12 +16,16 @@ int main()
     auto metal = std::make_shared<Metal>(Color(0.2, 0.2, 0.2), 0.5);
     auto dielectric = std::make_shared<Dielectric>(1.5);
 
+    float aspectRatio = 16.0f / 9.0f;
+    int width = 1200;
+    Image image(width, aspectRatio);
+
     auto cameraPosition = Math::Vec3(0.0f, 3.0f, 5.0f);
     auto cameraTarget = Math::Vec3(0.0f, 2.0f, 0.0f);
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
     float defocusAngle = 0.0f;
     float verticalFOV = 90.0f;
-    Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV);
+    Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, &image);
 
     Scene scene;
     scene.BackgroundColor = Color();
@@ -33,14 +38,11 @@ int main()
     // scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(4.0f, 2.0f, -4.0f), 2.0f, 4.0f, Math::Vec3(0.0f, 0.0f, 0.0f), metal));
     // scene.AddObject(std::make_unique<Cuboid>(Math::Vec3(-4.0f, 2.0f, -4.0f), Math::Vec3(4.0f, 4.0f, 4.0f), Math::Vec3(0.0f, 0.0f, 0.0f), metal));
 
-    float aspectRatio = 16.0f / 9.0f;
-    int width = 1200;
     int maxDepth = 20;
-    Renderer renderer{&camera, &scene, width, aspectRatio, maxDepth};
+    Renderer renderer{&camera, &scene, &image, maxDepth};
 
-    if (!renderer.Init())
+    if (!renderer.RenderLoop())
     {
         return -1;
     }
-    renderer.MainLoop();
 }

@@ -15,25 +15,23 @@
 #include "Interval.h"
 #include "Color.h"
 #include "ColorManipulator.h"
+#include "Image.h"
 
 class Renderer
 {
 public:
-    Renderer(Camera *camera, Scene *scene, int width, float aspectRatio, int maxDepth);
-    bool Init();
-    void MainLoop();
+    Renderer(Camera *camera, Scene *scene, Image *image, int maxDepth);
+    bool RenderLoop();
 
 private:
     Camera *m_Camera;
     Scene *m_Scene;
-    int m_Width;
-    float m_AspectRatioIdeal;
-    int m_Height;
-    float m_AspectRatioReal;
+    Image *m_Image;
     int m_MaxDepth;
     GLFWwindow *m_Window;
 
 private:
+    bool Init();
     void Display();
     Color RayColor(const Ray &ray, int depth) const;
 };

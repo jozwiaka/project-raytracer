@@ -1,14 +1,29 @@
 #include "Renderer.h"
-Renderer::Renderer(Camera *camera, Scene *scene, int width, float aspectRatio, int maxDepth)
+Renderer::Renderer(Camera *camera, Scene *scene, Image *image, int maxDepth)
     : m_Camera(camera),
       m_Scene(scene),
-      m_Width(width),
-      m_AspectRatioIdeal(aspectRatio),
-      m_Height(static_cast<int>(m_Width / m_AspectRatioIdeal)),
-      m_AspectRatioReal(static_cast<float>(m_Width) / static_cast<float>(m_Height)),
+      m_Image(image),
       m_MaxDepth(maxDepth),
       m_Window(nullptr)
 {
+}
+
+bool Renderer::RenderLoop()
+{
+    if (!Init())
+    {
+        return false;
+    }
+
+    while (!glfwWindowShouldClose(m_Window))
+    {
+        Display();
+        glfwSwapBuffers(m_Window);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
+    return true;
 }
 
 bool Renderer::Init()
@@ -18,7 +33,7 @@ bool Renderer::Init()
         return false;
     }
 
-    m_Window = glfwCreateWindow(m_Width, m_Height, "Raytracer", NULL, NULL);
+    m_Window = glfwCreateWindow(m_Image->Width, m_Image->Height, "Raytracer", NULL, NULL);
     if (!m_Window)
     {
         glfwTerminate();
@@ -32,26 +47,14 @@ bool Renderer::Init()
         return false;
     }
 
-    glViewport(0, 0, m_Width, m_Height);
+    glViewport(0, 0, m_Image->Width, m_Image->Height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(-m_AspectRatioReal, m_AspectRatioReal, -1.0, 1.0, -1.0, 1.0);
+    glOrtho(-m_Image->AspectRatioReal, m_Image->AspectRatioReal, -1.0, 1.0, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
     return true;
-}
-
-void Renderer::MainLoop()
-{
-    while (!glfwWindowShouldClose(m_Window))
-    {
-        Display();
-        glfwSwapBuffers(m_Window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
 }
 
 void Renderer::Display()
@@ -61,12 +64,12 @@ void Renderer::Display()
 
     int numSamples = 2; // 4x antialiasing (2x2 grid)
 
-    for (int y = 0; y < m_Height; ++y)
+    for (int y = 0; y < m_Image->Height; ++y)
     {
-        for (int x = 0; x < m_Width; ++x)
+        for (int x = 0; x < m_Image->Width; ++x)
         {
-            float px = (2.0f * x - m_Width) / m_Width * m_AspectRatioReal;
-            float py = (m_Height - 2.0f * y) / m_Height;
+            float px = (2.0f * x - m_Image->Width) / m_Image->Width * m_Image->AspectRatioReal;
+            float py = (m_Image->Height - 2.0f * y) / m_Image->Height;
             Color pixelColor = Color();
 
             // Collect color samples from sub-pixel locations
@@ -74,8 +77,8 @@ void Renderer::Display()
             {
                 for (int sx = 0; sx < numSamples; ++sx)
                 {
-                    float spx = (2.0f * (x + (sx + 0.5f) / numSamples) - m_Width) / m_Width * m_AspectRatioReal;
-                    float spy = (m_Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Height;
+                    float spx = (2.0f * (x + (sx + 0.5f) / numSamples) - m_Image->Width) / m_Image->Width * m_Image->AspectRatioReal;
+                    float spy = (m_Image->Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Image->Height;
                     Ray ray = m_Camera->GenerateRay(spx, spy);
                     pixelColor += RayColor(ray, m_MaxDepth);
                 }

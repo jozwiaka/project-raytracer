@@ -3,11 +3,13 @@
 #include "Ray.h"
 #include "Math.h"
 #include "Random.h"
+#include "Image.h"
 
 class Camera
 {
+
 public:
-    Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV);
+    Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, Image *image);
     Ray GenerateRay(float x, float y) const;
 
 private:
@@ -16,6 +18,7 @@ private:
     float m_DefocusAngle;
     float m_VerticalFOV;
     float m_FocusDist;
+    Image *m_Image;
 
 private:
     Math::Vec3 DefocusDiskSample() const;

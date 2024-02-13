@@ -6,7 +6,7 @@
 Cylinder::Cylinder(const Math::Vec3 &center, float radius, float height, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       m_Radius(radius),
-      m_Height(height)
+      Height(height)
 {
 }
 
@@ -41,7 +41,7 @@ bool Cylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
         }
     }
     auto p = rayLocal.At(root);
-    if (!Math::IsWithinRange(p.y, 0.0f, m_Height / 2.0f))
+    if (!Math::IsWithinRange(p.y, 0.0f, Height / 2.0f))
     {
         return false;
     }
