@@ -19,7 +19,8 @@ int main()
     auto cameraTarget = Math::Vec3(0.0f, 2.0f, 0.0f);
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
     float defocusAngle = 0.0f;
-    Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle);
+    float verticalFOV = 90.0f;
+    Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV);
 
     Scene scene;
     scene.BackgroundColor = Color();
