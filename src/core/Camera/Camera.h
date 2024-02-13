@@ -17,8 +17,8 @@ private:
     Math::Vec3 m_Forward, m_Right, m_Up;
     float m_DefocusAngle;
     float m_VerticalFOV;
-    float m_FocusDist;
     Image *m_Image;
+    float m_FocusDist;
 
 private:
     Math::Vec3 DefocusDiskSample() const;
