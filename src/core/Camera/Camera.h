@@ -12,6 +12,7 @@ public:
 
 private:
     Math::Vec3 m_Position;
+    Math::Vec3 m_Target;
     Math::Vec3 m_Forward, m_Right, m_Up;
     float m_DefocusAngle;
     float m_FocusDist;

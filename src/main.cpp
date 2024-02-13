@@ -15,10 +15,10 @@ int main()
     auto metal = std::make_shared<Metal>(Color(0.2, 0.2, 0.2), 0.5);
     auto dielectric = std::make_shared<Dielectric>(1.5);
 
-    auto cameraPosition = Math::Vec3(0.0f, 2.0f, 6.0f);
-    auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
+    auto cameraPosition = Math::Vec3(0.0f, 3.0f, 5.0f);
+    auto cameraTarget = Math::Vec3(0.0f, 2.0f, 0.0f);
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
-    float defocusAngle = 0.6f;
+    float defocusAngle = 5.0f;
     Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle);
 
     Scene scene;
@@ -26,7 +26,7 @@ int main()
     // scene.AddLight(std::make_unique<Light>(Math::Vec3(0.0f, 3.0f, 0.0f), Math::Vec3(1.0f, 1.0f, 1.0f)));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, lambertian));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(-4.0f, 2.0f, 0.0f), 2.0f, metal));
-    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, 2.0f, 0.0f), 2.0f, dielectric));
+    scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, 2.0f, 0.0f), 2.0f, metal));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(4.0f, 2.0f, 0.0f), 2.0f, metal));
 
     // scene.AddObject(std::make_unique<Cylinder>(Math::Vec3(4.0f, 2.0f, -4.0f), 2.0f, 4.0f, Math::Vec3(0.0f, 0.0f, 0.0f), metal));
