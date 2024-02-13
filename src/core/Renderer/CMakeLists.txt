@@ -17,6 +17,7 @@ target_link_libraries(Renderer PUBLIC
     Camera
     HitRecord
     Image
+    ThreadPool
     )
 target_include_directories(
     Renderer
