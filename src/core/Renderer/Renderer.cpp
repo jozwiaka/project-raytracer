@@ -1,10 +1,11 @@
 #include "Renderer.h"
 #include <iostream>
 
-Renderer::Renderer(Camera *camera, Scene *scene, Image *image, int maxDepth, unsigned int numThreads, int tileSize)
+Renderer::Renderer(Camera *camera, Scene *scene, Image *image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize)
     : m_Camera(camera),
       m_Scene(scene),
       m_Image(image),
+      m_NumSamples(numSamples),
       m_MaxDepth(maxDepth),
       m_ThreadPool(numThreads),
       m_TileSize(tileSize),
@@ -98,7 +99,6 @@ void Renderer::Render()
 
 void Renderer::RenderTile(int startX, int startY)
 {
-    int numSamples = 2; // 4x antialiasing (2x2 grid)
     for (int y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
     {
         for (int x = startX; x < startX + m_TileSize && x < m_Image->Width; ++x)
@@ -108,18 +108,18 @@ void Renderer::RenderTile(int startX, int startY)
             Color pixelColor = Color();
 
             // Collect color samples from sub-pixel locations
-            for (int sy = 0; sy < numSamples; ++sy)
+            for (int sy = 0; sy < m_NumSamples; ++sy)
             {
-                for (int sx = 0; sx < numSamples; ++sx)
+                for (int sx = 0; sx < m_NumSamples; ++sx)
                 {
-                    float spx = (2.0f * (x + (sx + 0.5f) / numSamples) - m_Image->Width) / m_Image->Width * m_Image->AspectRatioReal;
-                    float spy = (m_Image->Height - 2.0f * (y + (sy + 0.5f) / numSamples)) / m_Image->Height;
+                    float spx = (2.0f * (x + (sx + 0.5f) / m_NumSamples) - m_Image->Width) / m_Image->Width * m_Image->AspectRatioReal;
+                    float spy = (m_Image->Height - 2.0f * (y + (sy + 0.5f) / m_NumSamples)) / m_Image->Height;
                     Ray ray = m_Camera->GenerateRay(spx, spy);
                     pixelColor += RayColor(ray, m_MaxDepth);
                 }
             }
 
-            pixelColor /= (numSamples * numSamples);
+            pixelColor /= (m_NumSamples * m_NumSamples);
 
             pixelColor = ColorManipulator::GammaCorrection(pixelColor);
 

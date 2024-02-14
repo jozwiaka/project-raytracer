@@ -73,10 +73,11 @@ int main()
     auto material3 = std::make_shared<Metal>(Color(0.7f, 0.6f, 0.5f), 0.0f);
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
 
+    int numSamples = 2;
     int maxDepth = 20;
-    unsigned int numThreads = std::thread::hardware_concurrency();
+    unsigned int numThreads = 10 * std::thread::hardware_concurrency();
     int tileSize = 200;
-    Renderer renderer{&camera, &scene, &image, maxDepth, numThreads, tileSize};
+    Renderer renderer{&camera, &scene, &image, numSamples, maxDepth, numThreads, tileSize};
 
     if (!renderer.RenderLoop())
     {
