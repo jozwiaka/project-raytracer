@@ -19,7 +19,6 @@
 #include "ThreadPool.h"
 #include <future>
 #include <thread>
-#include <mutex>
 class Renderer
 {
 public:
@@ -34,7 +33,6 @@ private:
     ThreadPool m_ThreadPool;
     int m_TileSize;
     GLFWwindow *m_Window;
-    std::mutex m_Mtx;
 
 private:
     bool Init();

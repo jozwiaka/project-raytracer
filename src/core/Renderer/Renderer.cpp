@@ -85,12 +85,12 @@ void Renderer::Render()
 
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
-    for (const auto &pixel : m_Image->Pixels)
+    for (const auto &pixel : m_Image->GetPixels())
     {
         glColor3f(pixel.Col.x, pixel.Col.y, pixel.Col.z);
         glVertex2f(pixel.x, pixel.y);
     }
-    m_Image->Pixels.clear();
+    m_Image->Clear();
 
     glEnd();
     glFlush();
@@ -123,10 +123,7 @@ void Renderer::RenderTile(int startX, int startY)
 
             pixelColor = ColorManipulator::GammaCorrection(pixelColor);
 
-            {
-                std::unique_lock lock(m_Mtx);
-                m_Image->Pixels.emplace_back(px, py, pixelColor);
-            }
+            m_Image->AddPixel(px, py, pixelColor);
         }
     }
 }
