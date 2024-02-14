@@ -13,7 +13,7 @@ public:
     Ray GenerateRay(float x, float y) const;
 
 private:
-    Math::Vec3 m_Position;
+    Math::Vec3 m_Pos;
     Math::Vec3 m_Forward, m_Right, m_Up;
     float m_DefocusAngle;
     float m_VerticalFOV;

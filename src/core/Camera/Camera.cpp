@@ -2,7 +2,7 @@
 #include <cmath>
 
 Camera::Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, Image *image)
-    : m_Position(position),
+    : m_Pos(position),
       m_Forward(Math::Normalize(target - position)),
       m_Right(Math::Normalize(Math::Cross(m_Forward, upVector))),
       m_Up(Math::Normalize(Math::Cross(m_Right, m_Forward))),
@@ -26,7 +26,7 @@ Ray Camera::GenerateRay(float x, float y) const
     auto defocusOffset = m_DefocusAngle <= 0 ? Math::Vec3() : DefocusDiskSample();
     float scale = 1 - Math::Dot(direction, m_Forward) / (Math::Length(direction) * Math::Length(m_Forward));
     defocusOffset *= scale;
-    return Ray(m_Position + defocusOffset, direction - defocusOffset);
+    return Ray(m_Pos + defocusOffset, direction - defocusOffset);
 }
 
 Math::Vec3 Camera::DefocusDiskSample() const

@@ -16,11 +16,14 @@
 #include "Color.h"
 #include "ColorManipulator.h"
 #include "Image.h"
-
+#include "ThreadPool.h"
+#include <future>
+#include <thread>
+#include <mutex>
 class Renderer
 {
 public:
-    Renderer(Camera *camera, Scene *scene, Image *image, int maxDepth);
+    Renderer(Camera *camera, Scene *scene, Image *image, int maxDepth, unsigned int numThreads, int tileSize);
     bool RenderLoop();
 
 private:
@@ -28,10 +31,14 @@ private:
     Scene *m_Scene;
     Image *m_Image;
     int m_MaxDepth;
+    ThreadPool m_ThreadPool;
+    int m_TileSize;
     GLFWwindow *m_Window;
+    std::mutex m_Mtx;
 
 private:
     bool Init();
-    void Display();
+    void Render();
     Color RayColor(const Ray &ray, int depth) const;
+    void RenderTile(int startX, int startY);
 };

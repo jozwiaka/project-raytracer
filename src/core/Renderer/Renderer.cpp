@@ -1,9 +1,13 @@
 #include "Renderer.h"
-Renderer::Renderer(Camera *camera, Scene *scene, Image *image, int maxDepth)
+#include <iostream>
+
+Renderer::Renderer(Camera *camera, Scene *scene, Image *image, int maxDepth, unsigned int numThreads, int tileSize)
     : m_Camera(camera),
       m_Scene(scene),
       m_Image(image),
       m_MaxDepth(maxDepth),
+      m_ThreadPool(numThreads),
+      m_TileSize(tileSize),
       m_Window(nullptr)
 {
 }
@@ -17,7 +21,7 @@ bool Renderer::RenderLoop()
 
     while (!glfwWindowShouldClose(m_Window))
     {
-        Display();
+        Render();
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
     }
@@ -57,16 +61,47 @@ bool Renderer::Init()
     return true;
 }
 
-void Renderer::Display()
+void Renderer::Render()
 {
+    std::vector<std::future<void>> futures;
+
+    for (int y = 0; y < m_Image->Height; y += m_TileSize)
+    {
+        for (int x = 0; x < m_Image->Width; x += m_TileSize)
+        {
+            futures.emplace_back(m_ThreadPool.Enqueue(
+                [this](int startX, int startY)
+                {
+                    this->RenderTile(startX, startY);
+                },
+                x, y));
+        }
+    }
+
+    for (auto &future : futures)
+    {
+        future.get();
+    }
+
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
-
-    int numSamples = 2; // 4x antialiasing (2x2 grid)
-
-    for (int y = 0; y < m_Image->Height; ++y)
+    for (const auto &pixel : m_Image->Pixels)
     {
-        for (int x = 0; x < m_Image->Width; ++x)
+        glColor3f(pixel.Col.x, pixel.Col.y, pixel.Col.z);
+        glVertex2f(pixel.x, pixel.y);
+    }
+    m_Image->Pixels.clear();
+
+    glEnd();
+    glFlush();
+}
+
+void Renderer::RenderTile(int startX, int startY)
+{
+    int numSamples = 2; // 4x antialiasing (2x2 grid)
+    for (int y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
+    {
+        for (int x = startX; x < startX + m_TileSize && x < m_Image->Width; ++x)
         {
             float px = (2.0f * x - m_Image->Width) / m_Image->Width * m_Image->AspectRatioReal;
             float py = (m_Image->Height - 2.0f * y) / m_Image->Height;
@@ -88,13 +123,12 @@ void Renderer::Display()
 
             pixelColor = ColorManipulator::GammaCorrection(pixelColor);
 
-            glColor3f(pixelColor.x, pixelColor.y, pixelColor.z);
-            glVertex2f(px, py);
+            {
+                std::unique_lock lock(m_Mtx);
+                m_Image->Pixels.emplace_back(px, py, pixelColor);
+            }
         }
     }
-
-    glEnd();
-    glFlush();
 }
 
 Color Renderer::RayColor(const Ray &ray, int depth) const

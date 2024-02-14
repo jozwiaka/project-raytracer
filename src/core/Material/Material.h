@@ -7,7 +7,7 @@
 class Material
 {
 public:
-    Math::Vec3 m_Color;
+    Math::Vec3 m_Col;
 
 public:
     Material() = default;

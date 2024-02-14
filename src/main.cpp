@@ -74,7 +74,9 @@ int main()
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
 
     int maxDepth = 20;
-    Renderer renderer{&camera, &scene, &image, maxDepth};
+    unsigned int numThreads = std::thread::hardware_concurrency();
+    int tileSize = 200;
+    Renderer renderer{&camera, &scene, &image, maxDepth, numThreads, tileSize};
 
     if (!renderer.RenderLoop())
     {

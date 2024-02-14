@@ -1,71 +1,71 @@
-#include "ThreadPool.h"
+// #include "ThreadPool.h"
 
-ThreadPool::ThreadPool(std::size_t numThreads) : m_Stop(false)
-{
-    m_Workers.reserve(numThreads);
-    for (std::size_t i = 0; i < numThreads; ++i)
-    {
-        m_Workers.emplace_back([this]
-                               {
-                while(true)
-                {
-                    std::function<void()> task;
-                    {
-                        std::unique_lock lock(m_QueueMutex);
+// ThreadPool::ThreadPool(unsigned int numThreads) : m_Stop(false)
+// {
+//     m_Workers.reserve(numThreads);
+//     for (unsigned int i = 0; i < numThreads; ++i)
+//     {
+//         m_Workers.emplace_back([this]
+//                                {
+//                 while(true)
+//                 {
+//                     std::function<void()> task;
+//                     {
+//                         std::unique_lock lock(m_QueueMutex);
 
-                        while(!m_Stop && m_Tasks.empty())
-                        {
-                            m_Condition.wait(lock);
-                        }
+//                         while(!m_Stop && m_Tasks.empty())
+//                         {
+//                             m_Condition.wait(lock);
+//                         }
 
-                        if (m_Stop && m_Tasks.empty())
-                        {
-                            return;
-                        }
-                        
-                        task = std::move(m_Tasks.front());
-                        m_Tasks.pop();
-                    }
+//                         if (m_Stop && m_Tasks.empty())
+//                         {
+//                             return;
+//                         }
 
-                    task();
-                } });
-    }
-}
+//                         task = std::move(m_Tasks.front());
+//                         m_Tasks.pop();
+//                     }
 
-template <typename F, typename... Args>
-auto ThreadPool::Enqueue(F &&f, Args &&...args) -> std::future<std::invoke_result_t<F, Args...>>
-{
-    using ReturnType = std::invoke_result_t<F, Args...>;
+//                     task();
+//                 } });
+//     }
+// }
 
-    auto task = std::make_shared<std::packaged_task<ReturnType()>>(
-        [f = std::forward<F>(f), args = std::make_tuple(std::forward<Args>(args)...)]() mutable
-        {
-            return std::apply(std::move(f), std::move(args));
-        });
+// template <typename F, typename... Args>
+// auto ThreadPool::Enqueue(F &&f, Args &&...args) -> std::future<std::invoke_result_t<F, Args...>>
+// {
+//     using ReturnType = std::invoke_result_t<F, Args...>;
 
-    auto future = task->get_future();
+//     auto task = std::make_shared<std::packaged_task<ReturnType()>>(
+//         [f = std::forward<F>(f), args = std::make_tuple(std::forward<Args>(args)...)]() mutable
+//         {
+//             return std::apply(std::move(f), std::move(args));
+//         });
 
-    {
-        std::unique_lock lock(m_QueueMutex);
-        m_Tasks.emplace([task]()
-                        { std::invoke(*task); });
-    }
+//     auto future = task->get_future();
 
-    m_Condition.notify_one();
-    return future;
-}
+//     {
+//         std::unique_lock lock(m_QueueMutex);
+//         m_Tasks.emplace([task]()
+//                         { std::invoke(*task); });
+//     }
 
-ThreadPool::~ThreadPool()
-{
-    {
-        std::unique_lock lock(m_QueueMutex);
-        m_Stop = true;
-    }
+//     m_Condition.notify_one();
+//     return future;
+// }
 
-    m_Condition.notify_all();
+// ThreadPool::~ThreadPool()
+// {
+//     {
+//         std::unique_lock lock(m_QueueMutex);
+//         m_Stop = true;
+//     }
 
-    for (auto &worker : m_Workers)
-    {
-        worker.join();
-    }
-}
+//     m_Condition.notify_all();
+
+//     for (auto &worker : m_Workers)
+//     {
+//         worker.join();
+//     }
+// }
