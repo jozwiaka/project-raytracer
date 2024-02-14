@@ -52,7 +52,6 @@ bool Renderer::Init()
         return false;
     }
 
-    glViewport(0, 0, m_Image->Width, m_Image->Height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, m_Image->Width, 0, m_Image->Height, -1.0, 1.0);
@@ -104,21 +103,7 @@ void Renderer::RenderTile(int startX, int startY)
     {
         for (int x = startX; x < startX + m_TileSize && x < m_Image->Width; ++x)
         {
-            // float px = (2.0f * x - m_Image->Width) / m_Image->Width * m_Image->AspectRatioReal;
-            // float py = (m_Image->Height - 2.0f * y) / m_Image->Height;
             Color pixelColor = Color();
-
-            // for (int sy = 0; sy < m_NumSamples; ++sy)
-            // {
-            //     for (int sx = 0; sx < m_NumSamples; ++sx)
-            //     {
-            //         float spx = (2.0f * (x + (sx + 0.5f) / m_NumSamples) - m_Image->Width) / m_Image->Width * m_Image->AspectRatioReal;
-            //         float spy = (m_Image->Height - 2.0f * (y + (sy + 0.5f) / m_NumSamples)) / m_Image->Height;
-            //         Ray ray = m_Camera->GenerateRay(spx, spy);
-            //         pixelColor += RayColor(ray, m_MaxDepth);
-            //     }
-            // }
-
             for (int sample = 0; sample < m_NumSamples; ++sample)
             {
                 Ray ray = m_Camera->GenerateRay(x, y);
@@ -127,7 +112,7 @@ void Renderer::RenderTile(int startX, int startY)
 
             pixelColor /= m_NumSamples;
             pixelColor = ColorManipulator::GammaCorrection(pixelColor);
-            m_Image->AddPixel(x, m_Image->Height - y, pixelColor);
+            m_Image->AddPixel(x, m_Image->Height - 1 - y, pixelColor);
         }
     }
 }
