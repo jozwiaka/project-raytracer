@@ -93,6 +93,12 @@ void Renderer::Render()
     }
     glEnd();
     glFlush();
+
+    for (auto &object : m_Scene->Objects)
+    {
+        auto moveRandom = Math::Vec3(Random::RandomFloat(-0.1f, 0.1f), 0.0f, Random::RandomFloat(-0.1f, 0.1f));
+        object->Move(moveRandom);
+    }
 }
 
 void Renderer::RenderTile(int startX, int startY)
