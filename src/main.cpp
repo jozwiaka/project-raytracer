@@ -22,8 +22,8 @@ int main()
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
     float defocusAngle = 0.6f;
     float verticalFOV = 90.0f;
-    float focusDistance = 10.0f;
-    Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDistance, &image);
+    float focusDist = 10.0f;
+    Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, &image);
 
     Scene scene;
     auto groundMat = std::make_shared<Lambertian>(Color(0.5f, 0.5f, 0.5f));
