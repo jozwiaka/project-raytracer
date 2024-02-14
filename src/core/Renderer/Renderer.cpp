@@ -91,7 +91,6 @@ void Renderer::Render()
         glVertex2f(pixel.x, pixel.y);
     }
     m_Image->Clear();
-    std::cout << "*** Done *** \n";
 
     glEnd();
     glFlush();
@@ -109,7 +108,6 @@ void Renderer::RenderTile(int startX, int startY)
                 Ray ray = m_Camera->GenerateRay(x, y);
                 pixelColor += RayColor(ray, m_MaxDepth);
             }
-
             pixelColor /= m_NumSamples;
             pixelColor = ColorManipulator::GammaCorrection(pixelColor);
             m_Image->AddPixel(x, m_Image->Height - 1 - y, pixelColor);
