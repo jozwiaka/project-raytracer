@@ -21,46 +21,46 @@ void Camera::Init()
     auto viewportHeight = 2.0f * h * m_FocusDist;
     auto viewportWidth = viewportHeight * m_Image->AspectRatioReal;
 
-    Math::Vec3 viewportU = viewportWidth * m_Right;
-    Math::Vec3 viewportV = viewportHeight * -m_Up;
+    Math::Vec3 viewportRight = viewportWidth * m_Right;
+    Math::Vec3 viewportUp = viewportHeight * -m_Up;
 
-    m_PixelDeltaU = viewportU / static_cast<float>(m_Image->Width);
-    m_PixelDeltaV = viewportV / static_cast<float>(m_Image->Height);
+    m_PixelDeltaRight = viewportRight / static_cast<float>(m_Image->Width);
+    m_PixelDeltaUp = viewportUp / static_cast<float>(m_Image->Height);
 
-    auto viewportUpperLeft = m_Pos - (m_FocusDist * m_Forward) - viewportU / 2.0f - viewportV / 2.0f;
-    m_Pixel00Loc = viewportUpperLeft + 0.5f * (m_PixelDeltaU + m_PixelDeltaV);
+    auto viewportUpperLeft = m_Pos - (m_FocusDist * m_Forward) - viewportRight / 2.0f - viewportUp / 2.0f;
+    m_Pixel00Loc = viewportUpperLeft + 0.5f * (m_PixelDeltaRight + m_PixelDeltaUp);
 
     auto defocusRadius = m_FocusDist * std::tan(Math::Radians(m_DefocusAngle / 2.0f));
-    m_DefocusDiskU = m_Right * defocusRadius;
-    m_DefocusDiskV = m_Up * defocusRadius;
+    m_DefocusDiskRight = m_Right * defocusRadius;
+    m_DefocusDiskUp = m_Up * defocusRadius;
 }
 
 Ray Camera::GenerateRay(int i, int j) const
 {
-    auto pixelCenter = m_Pixel00Loc + (static_cast<float>(i) * m_PixelDeltaU) + (static_cast<float>(j) * m_PixelDeltaV);
-    auto pixelSample = pixelCenter + m_PixelSampleSquare();
+    auto pixelCenter = m_Pixel00Loc + (static_cast<float>(i) * m_PixelDeltaRight) + (static_cast<float>(j) * m_PixelDeltaUp);
+    auto pixelSample = pixelCenter + PixelSampleSquare();
 
-    auto rayOrigin = (m_DefocusAngle <= 0) ? m_Pos : m_DefocusDiskSample();
+    auto rayOrigin = (m_DefocusAngle <= 0) ? m_Pos : DefocusDiskSample();
     auto rayDirection = pixelSample - rayOrigin;
 
     return Ray(rayOrigin, rayDirection);
 }
 
-Math::Vec3 Camera::m_PixelSampleSquare() const
+Math::Vec3 Camera::PixelSampleSquare() const
 {
     auto px = -0.5f + Random::RandomFloat();
     auto py = -0.5f + Random::RandomFloat();
-    return (px * m_PixelDeltaU) + (py * m_PixelDeltaV);
+    return (px * m_PixelDeltaRight) + (py * m_PixelDeltaUp);
 }
 
-Math::Vec3 Camera::m_PixelSampleDisk(float radius) const
+Math::Vec3 Camera::PixelSampleDisk(float radius) const
 {
     auto p = radius * Random::RandomInUnitDisk();
-    return (p.x * m_PixelDeltaU) + (p.y * m_PixelDeltaV);
+    return (p.x * m_PixelDeltaRight) + (p.y * m_PixelDeltaUp);
 }
 
-Math::Vec3 Camera::m_DefocusDiskSample() const
+Math::Vec3 Camera::DefocusDiskSample() const
 {
     auto p = Random::RandomInUnitDisk();
-    return m_Pos + (p.x * m_DefocusDiskU) + (p.y * m_DefocusDiskV);
+    return m_Pos + (p.x * m_DefocusDiskRight) + (p.y * m_DefocusDiskUp);
 }

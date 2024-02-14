@@ -18,16 +18,15 @@ private:
     float m_VerticalFOV;
     Image *m_Image;
     float m_FocusDist;
-
     Math::Vec3 m_Pixel00Loc;
-    Math::Vec3 m_PixelDeltaU;
-    Math::Vec3 m_PixelDeltaV;
-    Math::Vec3 m_DefocusDiskU;
-    Math::Vec3 m_DefocusDiskV;
+    Math::Vec3 m_PixelDeltaRight;
+    Math::Vec3 m_PixelDeltaUp;
+    Math::Vec3 m_DefocusDiskRight;
+    Math::Vec3 m_DefocusDiskUp;
 
 private:
-    Math::Vec3 m_DefocusDiskSample() const;
-    Math::Vec3 m_PixelSampleSquare() const;
-    Math::Vec3 m_PixelSampleDisk(float radius) const;
+    Math::Vec3 DefocusDiskSample() const;
+    Math::Vec3 PixelSampleSquare() const;
+    Math::Vec3 PixelSampleDisk(float radius) const;
     void Init();
 };
