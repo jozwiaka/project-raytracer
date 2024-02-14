@@ -27,7 +27,6 @@ int main()
     Scene scene;
     auto groundMat = std::make_shared<Lambertian>(Color(0.5f, 0.5f, 0.5f));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
-
     for (int a = -11; a < 11; a++)
     {
         for (int b = -11; b < 11; b++)
@@ -63,13 +62,10 @@ int main()
             }
         }
     }
-
     auto material1 = std::make_shared<Dielectric>(1.5f);
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(0.0f, 1.0f, 0.0f), 1.0f, material1));
-
     auto material2 = std::make_shared<Lambertian>(Color(0.4f, 0.2f, 0.1f));
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(-4.0f, 1.0f, 0.0f), 1.0f, material2));
-
     auto material3 = std::make_shared<Metal>(Color(0.7f, 0.6f, 0.5f), 0.0f);
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
 
