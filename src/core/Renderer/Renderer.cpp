@@ -96,7 +96,7 @@ void Renderer::Render()
 
     for (auto &object : m_Scene->Objects)
     {
-        auto moveRandom = Math::Vec3(Random::RandomFloat(-0.1f, 0.1f), 0.0f, Random::RandomFloat(-0.1f, 0.1f));
+        auto moveRandom = Math::Vec3(Random::RandomFloat(-0.05f, 0.05f), 0.0f, Random::RandomFloat(-0.05f, 0.05f));
         object->Move(moveRandom);
     }
 }
