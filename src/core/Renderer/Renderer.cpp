@@ -22,6 +22,8 @@ bool Renderer::RenderLoop()
 
     while (!glfwWindowShouldClose(m_Window))
     {
+        glClear(GL_COLOR_BUFFER_BIT);
+        m_Image->Clear();
         Render();
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
@@ -83,15 +85,12 @@ void Renderer::Render()
         future.get();
     }
 
-    glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
     for (const auto &pixel : m_Image->GetPixels())
     {
         glColor3f(pixel.Col.x, pixel.Col.y, pixel.Col.z);
         glVertex2f(pixel.x, pixel.y);
     }
-    m_Image->Clear();
-
     glEnd();
     glFlush();
 }
