@@ -107,7 +107,6 @@ void Renderer::RenderTile(int startX, int startY)
             float py = (m_Image->Height - 2.0f * y) / m_Image->Height;
             Color pixelColor = Color();
 
-            // Collect color samples from sub-pixel locations
             for (int sy = 0; sy < m_NumSamples; ++sy)
             {
                 for (int sx = 0; sx < m_NumSamples; ++sx)
@@ -120,9 +119,7 @@ void Renderer::RenderTile(int startX, int startY)
             }
 
             pixelColor /= (m_NumSamples * m_NumSamples);
-
             pixelColor = ColorManipulator::GammaCorrection(pixelColor);
-
             m_Image->AddPixel(px, py, pixelColor);
         }
     }
@@ -132,7 +129,7 @@ Color Renderer::RayColor(const Ray &ray, int depth) const
 {
     if (depth <= 0)
     {
-        return Color(); // black
+        return Color();
     }
 
     HitRecord rec;
