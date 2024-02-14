@@ -1,15 +1,15 @@
 #include "Camera.h"
 #include <cmath>
 
-Camera::Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, Image *image)
+Camera::Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, float focusDist, Image *image)
     : m_Pos(position),
       m_Forward(Math::Normalize(position - target)),
       m_Right(Math::Normalize(Math::Cross(upVector, m_Forward))),
       m_Up(Math::Normalize(Math::Cross(m_Forward, m_Right))),
       m_DefocusAngle(defocusAngle),
       m_VerticalFOV(verticalFOV),
-      m_Image(image),
-      m_FocusDist(Math::Length(target - position))
+      m_FocusDist(focusDist <= 0 ? Math::Length(target - position) : focusDist),
+      m_Image(image)
 {
     Init();
 }

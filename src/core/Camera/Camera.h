@@ -8,7 +8,7 @@
 class Camera
 {
 public:
-    Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, Image *image);
+    Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, float focusDist, Image *image);
     Ray GenerateRay(int i, int j) const;
 
 private:
