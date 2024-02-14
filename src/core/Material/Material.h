@@ -3,6 +3,7 @@
 #include "Ray.h"
 #include "Color.h"
 #include "HitRecord.h"
+#include "Texture.h"
 
 class Material
 {

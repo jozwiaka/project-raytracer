@@ -1,5 +1,6 @@
 add_subdirectory(Image)
 add_subdirectory(Color)
+add_subdirectory(Texture)
 add_subdirectory(Pixel)
 add_subdirectory(Ray)
 add_subdirectory(HitRecord)
