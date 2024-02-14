@@ -20,7 +20,7 @@ int main()
     auto cameraPosition = Math::Vec3(13.0f, 2.0f, 3.0f);
     auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
     auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
-    float defocusAngle = 0.0f;
+    float defocusAngle = 0.6f;
     float verticalFOV = 90.0f;
     Camera camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, &image);
 
@@ -69,10 +69,10 @@ int main()
     auto material3 = std::make_shared<Metal>(Color(0.7f, 0.6f, 0.5f), 0.0f);
     scene.AddObject(std::make_unique<Sphere>(Math::Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
 
-    int numSamples = 2;
+    int numSamples = 10;
     int maxDepth = 20;
-    unsigned int numThreads = 10 * std::thread::hardware_concurrency();
-    int tileSize = 200;
+    unsigned int numThreads = std::thread::hardware_concurrency();
+    int tileSize = 400;
     Renderer renderer{&camera, &scene, &image, numSamples, maxDepth, numThreads, tileSize};
 
     if (!renderer.RenderLoop())
