@@ -15,6 +15,7 @@
 #include "Dielectric.h"
 #include "Image.h"
 #include "Random.h"
+#include <memory>
 
 class RaytracerWidget : public QWidget
 {
@@ -25,35 +26,33 @@ public:
         QVBoxLayout *layout = new QVBoxLayout(this);
 
         // Create sliders for camera settings
-        createSlider("Camera Position X", &cameraPosition.x, -20.0f, 20.0f, layout);
-        createSlider("Camera Position Y", &cameraPosition.y, -20.0f, 20.0f, layout);
-        createSlider("Camera Position Z", &cameraPosition.z, -20.0f, 20.0f, layout);
+        CreateSlider("Camera Position X", &cameraPosition.x, -20.0f, 20.0f, layout);
+        CreateSlider("Camera Position Y", &cameraPosition.y, -20.0f, 20.0f, layout);
+        CreateSlider("Camera Position Z", &cameraPosition.z, -20.0f, 20.0f, layout);
 
-        createSlider("Camera Target X", &cameraTarget.x, -20.0f, 20.0f, layout);
-        createSlider("Camera Target Y", &cameraTarget.y, -20.0f, 20.0f, layout);
-        createSlider("Camera Target Z", &cameraTarget.z, -20.0f, 20.0f, layout);
+        CreateSlider("Camera Target X", &cameraTarget.x, -20.0f, 20.0f, layout);
+        CreateSlider("Camera Target Y", &cameraTarget.y, -20.0f, 20.0f, layout);
+        CreateSlider("Camera Target Z", &cameraTarget.z, -20.0f, 20.0f, layout);
 
         // Create button to trigger rendering
         renderButton = new QPushButton("Render", this);
         layout->addWidget(renderButton);
-        connect(renderButton, &QPushButton::clicked, this, &RaytracerWidget::renderScene);
+        connect(renderButton, &QPushButton::clicked, this, &RaytracerWidget::RenderScene);
 
         setLayout(layout);
 
         // Set up the initial camera and scene
-        setupCamera();
-        setupScene();
+        SetupCamera();
+        SetupScene();
     }
 
 private:
-    Math::Vec3 cameraPosition;
-    Math::Vec3 cameraTarget;
     QPushButton *renderButton;
-    Camera camera;
-    Scene scene;
-    Image image;
+    std::unique_ptr<Camera> camera;
+    std::unique_ptr<Scene> scene;
+    std::shared_ptr<Image> image;
 
-    void createSlider(const QString &labelText, float *value, float minValue, float maxValue, QVBoxLayout *layout)
+    void CreateSlider(const QString &labelText, float *value, float minValue, float maxValue, QVBoxLayout *layout)
     {
         QLabel *label = new QLabel(labelText, this);
         layout->addWidget(label);
@@ -67,20 +66,24 @@ private:
                 { *value = newValue / 100.0f; });
     }
 
-    void setupCamera()
+    void SetupCamera()
     {
-        float aspectRatio = 16.0f / 9.0f;
-        int width = 1200;
-        camera = Camera(cameraPosition, cameraTarget, Math::Vec3(0.0f, 1.0f, 0.0f), 0.6f, 20.0f, 10.0f, &image);
+        auto cameraPosition = Math::Vec3(13.0f, 2.0f, 3.0f);
+        auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
+        auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
+        float defocusAngle = 0.6f;
+        float verticalFOV = 20.0f;
+        float focusDist = 10.0f;
+        camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, &image);
     }
 
-    void setupScene()
+    void SetupScene()
     {
         // Set up the scene here as before
         // ...
     }
 
-    void renderScene()
+    void RenderScene()
     {
         // Render the scene using your Renderer class
         // ...

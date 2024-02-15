@@ -20,7 +20,7 @@ build: configure
 test: build
 	# cd build && make test
 run:
-	cd build && ./src/exe
+	cd build && ./src/gui_less/exe
 callgrind:
 	cd build && valgrind --tool=callgrind ./exe && kcachegrin callgrind.out.*
 all: prepare conan configure build test run

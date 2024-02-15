@@ -8,16 +8,18 @@
 class Camera
 {
 public:
+    Math::Vec3 Pos;
+    Math::Vec3 Forward, Right, Up;
+    float DefocusAngle;
+    float VerticalFOV;
+    float FocusDist;
+
+public:
     Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, float focusDist, Image *image);
     Ray GenerateRay(int i, int j) const;
 
 private:
-    Math::Vec3 m_Pos;
-    Math::Vec3 m_Forward, m_Right, m_Up;
-    float m_DefocusAngle;
-    float m_VerticalFOV;
     Image *m_Image;
-    float m_FocusDist;
     Math::Vec3 m_Pixel00Loc;
     Math::Vec3 m_PixelDeltaRight;
     Math::Vec3 m_PixelDeltaUp;
