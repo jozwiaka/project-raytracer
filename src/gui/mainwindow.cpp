@@ -83,10 +83,16 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Create button to trigger rendering
     m_RenderButton = new QPushButton("Render", this);
-    // m_Layout->addWidget(m_RenderButton);
-    // connect(m_RenderButton, &QPushButton::clicked, this, &RaytracerWidget::RenderScene);
-    OpenGLWidget *openGLWidget = new OpenGLWidget(m_Renderer, this);
-    m_Layout->addWidget(openGLWidget);
+    m_Layout->addWidget(m_RenderButton);
+    connect(m_RenderButton, &QPushButton::clicked, this, &MainWindow::Render);
+    m_OpenGLWidget = new OpenGLWidget(m_Renderer, this);
+    m_Layout->addWidget(m_OpenGLWidget);
+}
+
+void MainWindow::Render()
+{
+    m_Renderer->Render();
+    m_OpenGLWidget->update();
 }
 
 MainWindow::~MainWindow()

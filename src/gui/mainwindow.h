@@ -26,11 +26,13 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    void Render();
 
 private:
     std::unique_ptr<Ui::MainWindow> m_Ui;
     QVBoxLayout *m_Layout;
     QPushButton *m_RenderButton;
+    OpenGLWidget *m_OpenGLWidget;
     std::shared_ptr<Renderer> m_Renderer;
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Scene> m_Scene;
