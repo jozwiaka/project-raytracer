@@ -1,3 +1,6 @@
+find_package(OpenGL REQUIRED)
+find_package(GLEW REQUIRED)
+
 file(GLOB SOURCES "./*.cpp")
 add_library(core STATIC ${SOURCES})
 target_link_libraries(core PUBLIC
@@ -9,7 +12,6 @@ target_link_libraries(core PUBLIC
     external
     utils
 )
-
 
 target_include_directories(
     core
