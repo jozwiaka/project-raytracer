@@ -15,7 +15,6 @@ public:
 
 protected:
     void initializeGL() override;
-    // void resizeGL() override;
     void paintGL() override;
 
 private:
