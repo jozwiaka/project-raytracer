@@ -10,6 +10,7 @@ Camera::Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math:
       FocusDist(focusDist <= 0 ? Math::Length(target - position) : focusDist),
       m_Image(image)
 {
+    Init();
 }
 
 void Camera::Init()
