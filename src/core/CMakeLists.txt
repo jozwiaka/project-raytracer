@@ -1,12 +1,16 @@
-add_subdirectory(Image)
-add_subdirectory(Color)
-add_subdirectory(Texture)
-add_subdirectory(Pixel)
-add_subdirectory(Ray)
-add_subdirectory(HitRecord)
-add_subdirectory(Material)
-add_subdirectory(Light)
-add_subdirectory(Object)
-add_subdirectory(Scene)
-add_subdirectory(Camera)
-add_subdirectory(Renderer)
+file(GLOB SOURCES "./*.cpp")
+add_library(core STATIC ${SOURCES})
+target_link_libraries(core PUBLIC
+    exe_flags
+    utils
+    glfw
+    ${OPENGL_LIBRARIES}
+    GLEW::GLEW
+)
+
+
+target_include_directories(
+    core
+    INTERFACE "./"
+    PUBLIC ${GLEW_INCLUDE_DIRS}
+)

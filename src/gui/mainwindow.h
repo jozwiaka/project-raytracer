@@ -2,10 +2,19 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
+#include <QApplication>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QSlider>
+#include <QLabel>
+#include <memory>
+#include "core.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui {
-class MainWindow;
+namespace Ui
+{
+    class MainWindow;
 }
 QT_END_NAMESPACE
 
@@ -18,6 +27,7 @@ public:
     ~MainWindow();
 
 private:
-    Ui::MainWindow *ui;
+    std::unique_ptr<Ui::MainWindow> m_Ui;
+    QPushButton *renderButton;
 };
 #endif // MAINWINDOW_H

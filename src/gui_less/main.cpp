@@ -1,15 +1,4 @@
-#include "Camera.h"
-#include "Scene.h"
-#include "Renderer.h"
-#include "Math.h"
-#include "Material.h"
-#include <memory>
-#include "Color.h"
-#include "Lambertian.h"
-#include "Metal.h"
-#include "Dielectric.h"
-#include "Image.h"
-#include "Random.h"
+#include "core.h"
 
 int main()
 {
