@@ -23,12 +23,12 @@
 class Renderer
 {
 public:
-    Renderer(std::unique_ptr<Camera> camera, std::unique_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize);
+    Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize);
     bool RenderLoop();
 
 private:
-    std::unique_ptr<Camera> m_Camera;
-    std::unique_ptr<Scene> m_Scene;
+    std::shared_ptr<Camera> m_Camera;
+    std::shared_ptr<Scene> m_Scene;
     std::shared_ptr<Image> m_Image;
     int m_NumSamples;
     int m_MaxDepth;

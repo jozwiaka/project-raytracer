@@ -13,9 +13,9 @@ int main()
     constexpr float defocusAngle = 0.6f;
     constexpr float verticalFOV = 20.0f;
     constexpr float focusDist = 10.0f;
-    auto camera = std::make_unique<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
+    auto camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
 
-    auto scene = std::make_unique<Scene>();
+    auto scene = std::make_shared<Scene>();
     auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
     scene->AddObject(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
     for (int a = -11; a < 11; a++)
@@ -65,7 +65,7 @@ int main()
     // unsigned int numThreads = std::thread::hardware_concurrency();
     constexpr unsigned int numThreads = 1000;
     constexpr int tileSize = 50;
-    auto renderer = std::make_unique<Renderer>(std::move(camera), std::move(scene), image, numSamples, maxDepth, numThreads, tileSize);
+    auto renderer = std::make_shared<Renderer>(camera, scene, image, numSamples, maxDepth, numThreads, tileSize);
 
     if (!renderer->RenderLoop())
     {

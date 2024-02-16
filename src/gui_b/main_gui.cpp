@@ -48,8 +48,8 @@ public:
 
 private:
     QPushButton *renderButton;
-    std::unique_ptr<Camera> camera;
-    std::unique_ptr<Scene> scene;
+    std::shared_ptr<Camera> camera;
+    std::shared_ptr<Scene> scene;
     std::shared_ptr<Image> image;
 
     void CreateSlider(const QString &labelText, float *value, float minValue, float maxValue, QVBoxLayout *layout)

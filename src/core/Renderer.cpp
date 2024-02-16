@@ -1,9 +1,9 @@
 #include "Renderer.h"
 #include <iostream>
 
-Renderer::Renderer(std::unique_ptr<Camera> camera, std::unique_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize)
-    : m_Camera(std::move(camera)),
-      m_Scene(std::move(scene)),
+Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize)
+    : m_Camera(camera),
+      m_Scene(scene),
       m_Image(image),
       m_NumSamples(numSamples),
       m_MaxDepth(maxDepth),
