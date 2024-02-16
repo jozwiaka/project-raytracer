@@ -12,8 +12,6 @@ OpenGLWidget::~OpenGLWidget() {}
 
 void OpenGLWidget::initializeGL()
 {
-    // Initialize OpenGL state
-    // initializeOpenGLFunctions();
     m_Renderer->Init();
 }
 
@@ -25,6 +23,5 @@ void OpenGLWidget::initializeGL()
 
 void OpenGLWidget::paintGL()
 {
-    // Render OpenGL scene
     m_Renderer->Render();
 }
