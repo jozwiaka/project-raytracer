@@ -25,7 +25,6 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Core)
 # find_package(GTest REQUIRED)
 
 # subdirs
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 # add_subdirectory(external)
 add_subdirectory(src)
 add_subdirectory(tests)
