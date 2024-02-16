@@ -29,13 +29,14 @@ public:
 
 private:
     std::unique_ptr<Ui::MainWindow> m_Ui;
+    QVBoxLayout *m_Layout;
     QPushButton *m_RenderButton;
     std::shared_ptr<Renderer> m_Renderer;
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Scene> m_Scene;
 
 private:
-    void CreateSlider(const QString &labelText, float *value, float minValue, float maxValue, QVBoxLayout *layout);
+    void CreateSlider(const QString &labelText, float *value, float minValue, float maxValue);
 };
 
 #endif // MAINWINDOW_H

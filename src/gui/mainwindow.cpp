@@ -69,39 +69,39 @@ MainWindow::MainWindow(QWidget *parent)
     constexpr int tileSize = 50;
     m_Renderer = std::make_shared<Renderer>(m_Camera, m_Scene, image, numSamples, maxDepth, numThreads, tileSize);
 
-    // Set up the layout
-    QVBoxLayout *layout = new QVBoxLayout(m_Ui->centralwidget);
+    // Set up the m_Layout
+    m_Layout = new QVBoxLayout(m_Ui->centralwidget);
 
     // Create sliders for camera settings
-    CreateSlider("Camera Position X", &m_Camera->Pos.x, -20.0f, 20.0f, layout);
-    CreateSlider("Camera Position Y", &m_Camera->Pos.y, -20.0f, 20.0f, layout);
-    CreateSlider("Camera Position Z", &m_Camera->Pos.z, -20.0f, 20.0f, layout);
+    CreateSlider("Camera Position X", &m_Camera->Pos.x, -20.0f, 20.0f);
+    CreateSlider("Camera Position Y", &m_Camera->Pos.y, -20.0f, 20.0f);
+    CreateSlider("Camera Position Z", &m_Camera->Pos.z, -20.0f, 20.0f);
 
-    CreateSlider("Camera Target X", &m_Camera->Target.x, -20.0f, 20.0f, layout);
-    CreateSlider("Camera Target Y", &m_Camera->Target.y, -20.0f, 20.0f, layout);
-    CreateSlider("Camera Target Z", &m_Camera->Target.z, -20.0f, 20.0f, layout);
+    CreateSlider("Camera Target X", &m_Camera->Target.x, -20.0f, 20.0f);
+    CreateSlider("Camera Target Y", &m_Camera->Target.y, -20.0f, 20.0f);
+    CreateSlider("Camera Target Z", &m_Camera->Target.z, -20.0f, 20.0f);
 
     // Create button to trigger rendering
     m_RenderButton = new QPushButton("Render", this);
-    // layout->addWidget(m_RenderButton);
+    // m_Layout->addWidget(m_RenderButton);
     // connect(m_RenderButton, &QPushButton::clicked, this, &RaytracerWidget::RenderScene);
     OpenGLWidget *openGLWidget = new OpenGLWidget(m_Renderer, this);
-    layout->addWidget(openGLWidget);
+    m_Layout->addWidget(openGLWidget);
 }
 
 MainWindow::~MainWindow()
 {
 }
 
-void MainWindow::CreateSlider(const QString &labelText, float *value, float minValue, float maxValue, QVBoxLayout *layout)
+void MainWindow::CreateSlider(const QString &labelText, float *value, float minValue, float maxValue)
 {
     QLabel *label = new QLabel(labelText, this);
-    layout->addWidget(label);
+    m_Layout->addWidget(label);
 
     QSlider *slider = new QSlider(Qt::Horizontal, this);
     slider->setRange(minValue * 100, maxValue * 100);
     slider->setValue((*value) * 100);
-    layout->addWidget(slider);
+    m_Layout->addWidget(slider);
 
     connect(slider, &QSlider::valueChanged, this, [value, slider](int newValue)
             { *value = newValue / 100.0f; });
