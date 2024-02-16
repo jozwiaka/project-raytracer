@@ -1,40 +1,24 @@
-#pragma once
+#ifndef OPENGLWIDGET_H
+#define OPENGLWIDGET_H
 
+#include "Renderer.h"
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions>
 #include <memory>
-#include "core.h"
-#include <iostream>
 
-class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
+class OpenGLWidget : public QOpenGLWidget
 {
+    Q_OBJECT
 public:
-    OpenGLWidget(std::shared_ptr<Renderer> renderer, QWidget *parent = nullptr)
-        : QOpenGLWidget(parent), m_Renderer(renderer) {}
-
-    void paintGL() override
-    {
-        Render();
-    }
+    explicit OpenGLWidget(std::shared_ptr<Renderer> renderer, QWidget *parent = nullptr);
+    ~OpenGLWidget();
 
 protected:
-    void initializeGL() override
-    {
-        initializeOpenGLFunctions();
-        if (!m_Renderer->Init())
-        {
-            std::cerr << "Failed to initialize renderer!" << std::endl;
-            return;
-        }
-    }
+    void initializeGL() override;
+    // void resizeGL() override;
+    void paintGL() override;
 
 private:
-    void Render()
-    {
-        makeCurrent();
-        m_Renderer->Render();
-        doneCurrent();
-    }
-
     std::shared_ptr<Renderer> m_Renderer;
 };
+
+#endif // OPENGLWIDGET_H

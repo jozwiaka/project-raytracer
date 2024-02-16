@@ -90,10 +90,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     setLayout(layout);
 
-    while (true)
-    {
-        openGLWidget->paintGL();
-    }
+    // while (true)
+    // {
+    //     openGLWidget->paintGL();
+    // }
 }
 
 MainWindow::~MainWindow()
