@@ -61,6 +61,7 @@ bool Renderer::Init()
 
 void Renderer::Render()
 {
+    std::cout << "Rendering...\n";
     m_Camera->Init();
     WriteImagePixels();
     glClear(GL_COLOR_BUFFER_BIT);
@@ -74,6 +75,7 @@ void Renderer::Render()
     glFlush();
     glfwSwapBuffers(m_Window);
     glfwPollEvents();
+    std::cout << "Done...\n";
 }
 
 void Renderer::WriteImagePixels()

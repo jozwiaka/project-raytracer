@@ -70,7 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_Renderer = std::make_shared<Renderer>(m_Camera, m_Scene, image, numSamples, maxDepth, numThreads, tileSize);
 
     // Set up the layout
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    QVBoxLayout *layout = new QVBoxLayout(m_Ui->centralwidget);
 
     // Create sliders for camera settings
     CreateSlider("Camera Position X", &m_Camera->Pos.x, -20.0f, 20.0f, layout);
@@ -87,13 +87,6 @@ MainWindow::MainWindow(QWidget *parent)
     // connect(m_RenderButton, &QPushButton::clicked, this, &RaytracerWidget::RenderScene);
     OpenGLWidget *openGLWidget = new OpenGLWidget(m_Renderer, this);
     layout->addWidget(openGLWidget);
-
-    setLayout(layout);
-
-    // while (true)
-    // {
-    //     openGLWidget->paintGL();
-    // }
 }
 
 MainWindow::~MainWindow()
