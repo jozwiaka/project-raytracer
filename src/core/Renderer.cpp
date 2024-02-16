@@ -23,8 +23,6 @@ bool Renderer::RenderLoop()
     while (!glfwWindowShouldClose(m_Window))
     {
         Render();
-        glfwSwapBuffers(m_Window);
-        glfwPollEvents();
     }
 
     glfwTerminate();
@@ -63,6 +61,7 @@ bool Renderer::Init()
 
 void Renderer::Render()
 {
+    m_Camera->Init();
     WriteImagePixels();
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
@@ -73,6 +72,8 @@ void Renderer::Render()
     }
     glEnd();
     glFlush();
+    glfwSwapBuffers(m_Window);
+    glfwPollEvents();
 }
 
 void Renderer::WriteImagePixels()

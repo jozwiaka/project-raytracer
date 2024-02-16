@@ -24,4 +24,4 @@ run_gui:
 	cd build && ./src/gui/exe_gui
 callgrind:
 	cd build && valgrind --tool=callgrind ./exe && kcachegrin callgrind.out.*
-all: prepare conan configure build test run
+all: prepare conan configure build test run_gui
