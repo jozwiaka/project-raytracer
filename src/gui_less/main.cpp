@@ -61,8 +61,9 @@ int main()
 
     int numSamples = 10;
     int maxDepth = 20;
-    unsigned int numThreads = std::thread::hardware_concurrency();
-    int tileSize = 400;
+    // unsigned int numThreads = std::thread::hardware_concurrency();
+    unsigned int numThreads = 1000;
+    int tileSize = 50;
     Renderer renderer{&camera, &scene, &image, numSamples, maxDepth, numThreads, tileSize};
 
     if (!renderer.RenderLoop())
