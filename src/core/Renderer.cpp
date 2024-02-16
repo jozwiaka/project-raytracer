@@ -22,8 +22,6 @@ bool Renderer::RenderLoop()
 
     while (!glfwWindowShouldClose(m_Window))
     {
-        glClear(GL_COLOR_BUFFER_BIT);
-        m_Image->Clear();
         Render();
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
@@ -65,8 +63,22 @@ bool Renderer::Init()
 
 void Renderer::Render()
 {
-    std::vector<std::future<void>> futures;
+    WriteImagePixels();
+    glClear(GL_COLOR_BUFFER_BIT);
+    glBegin(GL_POINTS);
+    for (const auto &pixel : m_Image->GetPixels())
+    {
+        glColor3f(pixel.Col.x, pixel.Col.y, pixel.Col.z);
+        glVertex2f(pixel.x, pixel.y);
+    }
+    glEnd();
+    glFlush();
+}
 
+void Renderer::WriteImagePixels()
+{
+    m_Image->Clear();
+    std::vector<std::future<void>> futures;
     for (int y = 0; y < m_Image->Height; y += m_TileSize)
     {
         for (int x = 0; x < m_Image->Width; x += m_TileSize)
@@ -74,7 +86,7 @@ void Renderer::Render()
             futures.emplace_back(m_ThreadPool.Enqueue(
                 [this](int startX, int startY)
                 {
-                    this->RenderTile(startX, startY);
+                    this->WriteTilePixels(startX, startY);
                 },
                 x, y));
         }
@@ -84,24 +96,9 @@ void Renderer::Render()
     {
         future.get();
     }
-
-    glBegin(GL_POINTS);
-    for (const auto &pixel : m_Image->GetPixels())
-    {
-        glColor3f(pixel.Col.x, pixel.Col.y, pixel.Col.z);
-        glVertex2f(pixel.x, pixel.y);
-    }
-    glEnd();
-    glFlush();
-
-    for (auto &object : m_Scene->Objects)
-    {
-        auto moveRandom = Math::Vec3(Random::RandomFloat(-0.05f, 0.05f), 0.0f, Random::RandomFloat(-0.05f, 0.05f));
-        object->Move(moveRandom);
-    }
 }
 
-void Renderer::RenderTile(int startX, int startY)
+void Renderer::WriteTilePixels(int startX, int startY)
 {
     for (int y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
     {

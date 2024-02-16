@@ -40,5 +40,6 @@ private:
     bool Init();
     void Render();
     Color RayColor(const Ray &ray, int depth) const;
-    void RenderTile(int startX, int startY);
+    void WriteImagePixels();
+    void WriteTilePixels(int startX, int startY);
 };
