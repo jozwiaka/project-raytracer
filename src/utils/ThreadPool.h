@@ -7,7 +7,6 @@
 #include <list>
 #include <mutex>
 #include <memory>
-#include <stop_token>
 #include <condition_variable>
 #include <queue>
 #include <functional>

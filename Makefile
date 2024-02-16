@@ -3,7 +3,6 @@ download_stb:
 	wget https://raw.githubusercontent.com/nothings/stb/master/stb_image_write.h
 	mv stb_image.h external/stb
 	mv stb_image_write.h external/stb
-
 prepare:
 	rm -rf build
 	mkdir build
