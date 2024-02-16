@@ -15,5 +15,12 @@ set(PROJECT_SOURCES
 )
 
 add_executable(exe_gui ${PROJECT_SOURCES})
-target_link_libraries(exe_gui PRIVATE exe_flags pthread core Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Core)
+target_link_libraries(exe_gui PRIVATE
+        exe_flags pthread
+        core
+        Qt${QT_VERSION_MAJOR}::Widgets
+        Qt${QT_VERSION_MAJOR}::Network
+        Qt${QT_VERSION_MAJOR}::Core
+        Qt${QT_VERSION_MAJOR}::OpenGL
+)
 
