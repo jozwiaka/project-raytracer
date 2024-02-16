@@ -1,4 +1,4 @@
-# find_package(GTest REQUIRED)
+find_package(GTest REQUIRED)
 # tests
 # enable_testing()
 # include(CTest)
