@@ -13,6 +13,7 @@ RUN apt-get update && \
     libglew-dev \
     libglm-dev \
     libassimp-dev \
+    libgtest-dev \
     && apt-get clean
 
 ENV PATH /root/.local/bin:$PATH
