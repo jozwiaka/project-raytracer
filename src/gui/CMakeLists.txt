@@ -10,6 +10,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        openglwidget.cpp
+        openglwidget.h
 )
 
 add_executable(exe_gui ${PROJECT_SOURCES})

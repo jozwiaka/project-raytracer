@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <memory>
 #include "core.h"
+#include "openglwidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui

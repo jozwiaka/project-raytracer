@@ -85,11 +85,14 @@ MainWindow::MainWindow(QWidget *parent)
     m_RenderButton = new QPushButton("Render", this);
     // layout->addWidget(m_RenderButton);
     // connect(m_RenderButton, &QPushButton::clicked, this, &RaytracerWidget::RenderScene);
+    OpenGLWidget *openGLWidget = new OpenGLWidget(m_Renderer, this);
+    layout->addWidget(openGLWidget);
 
     setLayout(layout);
 
-    if (!m_Renderer->RenderLoop())
+    while (true)
     {
+        openGLWidget->paintGL();
     }
 }
 
