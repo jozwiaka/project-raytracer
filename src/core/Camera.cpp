@@ -1,7 +1,7 @@
 #include "Camera.h"
 #include <cmath>
 
-Camera::Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, float focusDist, Image *image)
+Camera::Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, float focusDist, std::shared_ptr<Image> image)
     : Pos(position),
       Forward(Math::Normalize(position - target)),
       Right(Math::Normalize(Math::Cross(upVector, Forward))),

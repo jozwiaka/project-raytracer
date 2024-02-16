@@ -28,6 +28,7 @@ public:
 
 private:
     std::unique_ptr<Ui::MainWindow> m_Ui;
-    QPushButton *renderButton;
+    QPushButton *m_RenderButton;
+    // Renderer m_Renderer;
 };
 #endif // MAINWINDOW_H

@@ -19,16 +19,17 @@
 #include "ThreadPool.h"
 #include <future>
 #include <thread>
+#include <memory>
 class Renderer
 {
 public:
-    Renderer(Camera *camera, Scene *scene, Image *image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize);
+    Renderer(std::unique_ptr<Camera> camera, std::unique_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize);
     bool RenderLoop();
 
 private:
-    Camera *m_Camera;
-    Scene *m_Scene;
-    Image *m_Image;
+    std::unique_ptr<Camera> m_Camera;
+    std::unique_ptr<Scene> m_Scene;
+    std::shared_ptr<Image> m_Image;
     int m_NumSamples;
     int m_MaxDepth;
     ThreadPool m_ThreadPool;
