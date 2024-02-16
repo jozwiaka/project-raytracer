@@ -4,10 +4,10 @@
 #include <GLFW/glfw3.h>
 #include "Material.h"
 #include "Scene.h"
-#include "Sphere.h"
-#include "Cuboid.h"
+#include "ObjectSphere.h"
+#include "ObjectCuboid.h"
 #include "Camera.h"
-#include "Cylinder.h"
+#include "ObjectCylinder.h"
 #include "Math.h"
 #include "Ray.h"
 #include "HitRecord.h"

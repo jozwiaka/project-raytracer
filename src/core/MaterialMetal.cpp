@@ -1,8 +1,8 @@
-#include "Metal.h"
+#include "MaterialMetal.h"
 
-Metal::Metal(const Color &albedo, float fuzz) : m_Albedo(albedo), m_Fuzz(fuzz < 1 ? fuzz : 1) {}
+MaterialMetal::MaterialMetal(const Color &albedo, float fuzz) : m_Albedo(albedo), m_Fuzz(fuzz < 1 ? fuzz : 1) {}
 
-bool Metal::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
+bool MaterialMetal::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
 {
     auto reflected = Math::Reflect(Math::Normalize(ray.Direction), rec.Normal);
     scattered = Ray(rec.Point, reflected + m_Fuzz * Random::RandomInUnitSphere());

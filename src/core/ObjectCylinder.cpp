@@ -1,16 +1,16 @@
-#include "Cylinder.h"
+#include "ObjectCylinder.h"
 #include <cmath>
 #include <limits>
 #include "Math.h"
 
-Cylinder::Cylinder(const Math::Vec3 &center, float radius, float height, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
+ObjectCylinder::ObjectCylinder(const Math::Vec3 &center, float radius, float height, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       m_Radius(radius),
       Height(height)
 {
 }
 
-bool Cylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
+bool ObjectCylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -m_Center), -m_RotationDeg), Math::RotateT(ray.Direction, -m_RotationDeg)};
     // (p-C-((p-C)*v)*v)^2.0f=r^2.0f

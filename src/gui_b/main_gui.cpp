@@ -10,9 +10,9 @@
 #include "Material.h"
 #include <memory>
 #include "Color.h"
-#include "Lambertian.h"
-#include "Metal.h"
-#include "Dielectric.h"
+#include "MaterialLambertian.h"
+#include "MaterialMetal.h"
+#include "MaterialDielectric.h"
 #include "Image.h"
 #include "Random.h"
 #include <memory>

@@ -1,10 +1,10 @@
-#include "Sphere.h"
+#include "ObjectSphere.h"
 
-Sphere::Sphere(const Math::Vec3 &center, float radius, std::shared_ptr<Material> material)
+ObjectSphere::ObjectSphere(const Math::Vec3 &center, float radius, std::shared_ptr<Material> material)
     : Object(center, Math::Vec3(), material),
       m_Radius(radius) {}
 
-bool Sphere::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
+bool ObjectSphere::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Math::Vec3 oc = ray.Origin - m_Center;
     float a = Math::Dot(ray.Direction, ray.Direction);

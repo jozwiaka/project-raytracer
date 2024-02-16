@@ -4,10 +4,10 @@
 #include "Color.h"
 #include "Random.h"
 
-class Lambertian : public Material
+class MaterialLambertian : public Material
 {
 public:
-    Lambertian(const Color &albedo);
+    MaterialLambertian(const Color &albedo);
     bool Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const override;
 
 private:

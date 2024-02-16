@@ -1,8 +1,8 @@
-#include "Lambertian.h"
+#include "MaterialLambertian.h"
 
-Lambertian::Lambertian(const Color &albedo) : m_Albedo(albedo) {}
+MaterialLambertian::MaterialLambertian(const Color &albedo) : m_Albedo(albedo) {}
 
-bool Lambertian::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
+bool MaterialLambertian::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
 {
     auto scatterDirection = rec.Normal + Random::RandomUnitVector();
 

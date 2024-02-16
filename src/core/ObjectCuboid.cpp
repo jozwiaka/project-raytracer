@@ -1,15 +1,15 @@
-#include "Cuboid.h"
+#include "ObjectCuboid.h"
 #include <cmath>
 #include <limits>
 #include "Math.h"
 
-Cuboid::Cuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
+ObjectCuboid::ObjectCuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       m_Size(size)
 {
 }
 
-bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray &ray, Interval ray_t, HitRecord &rec) const
+bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall, const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Math::Vec3 p0;
     Math::Vec3 n;
@@ -82,7 +82,7 @@ bool Cuboid::CheckWall(const Ray &rayLocal, const Cuboid::Wall &wall, const Ray 
     return false;
 }
 
-bool Cuboid::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
+bool ObjectCuboid::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -m_Center), -m_RotationDeg), Math::RotateT(ray.Direction, -m_RotationDeg)};
 

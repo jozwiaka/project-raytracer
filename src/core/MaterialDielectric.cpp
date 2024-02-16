@@ -1,10 +1,10 @@
-#include "Dielectric.h"
+#include "MaterialDielectric.h"
 #include <cmath>
 #include "Random.h"
 
-Dielectric::Dielectric(float indexOfRefraction) : m_IndexOfRefraction(indexOfRefraction) {}
+MaterialDielectric::MaterialDielectric(float indexOfRefraction) : m_IndexOfRefraction(indexOfRefraction) {}
 
-bool Dielectric::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
+bool MaterialDielectric::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
 {
     attenuation = Color(1.0f, 1.0f, 1.0f);
     float refractionRatio = rec.FrontFace ? (1.0f / m_IndexOfRefraction) : m_IndexOfRefraction;
@@ -28,7 +28,7 @@ bool Dielectric::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &atten
     return true;
 }
 
-float Dielectric::Reflectance(float cosine, float refIdx)
+float MaterialDielectric::Reflectance(float cosine, float refIdx)
 {
     // Use Schlick's approximation for reflectance.
     auto r0 = (1 - refIdx) / (1 + refIdx);
