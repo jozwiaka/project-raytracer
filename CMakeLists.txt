@@ -10,7 +10,7 @@ target_compile_options(exe_flags INTERFACE
   "$<$<COMPILE_LANG_AND_ID:CXX,MSVC>:$<BUILD_INTERFACE:-W3>>"
 )
 
-include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
+# include(${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
 
 add_subdirectory(external)
 add_subdirectory(src)
