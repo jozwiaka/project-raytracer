@@ -3,9 +3,10 @@
 
 #include "Renderer.h"
 #include <QOpenGLWidget>
+#include <QOpenGLFunctions>
 #include <memory>
 
-class OpenGLWidget : public QOpenGLWidget
+class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:

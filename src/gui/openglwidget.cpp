@@ -12,7 +12,8 @@ OpenGLWidget::~OpenGLWidget() {}
 
 void OpenGLWidget::initializeGL()
 {
-    m_Renderer->Init();
+    initializeOpenGLFunctions();
+    m_Renderer->ConfigureViewport();
 }
 
 // void OpenGLWidget::resizeGL(int w, int h)

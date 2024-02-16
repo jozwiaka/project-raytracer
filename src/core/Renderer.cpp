@@ -15,21 +15,25 @@ Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene,
 
 bool Renderer::RenderLoop()
 {
-    if (!Init())
+    if (!InitWindow())
     {
         return false;
     }
 
+    ConfigureViewport();
+
     while (!glfwWindowShouldClose(m_Window))
     {
         Render();
+        glfwSwapBuffers(m_Window);
+        glfwPollEvents();
     }
 
     glfwTerminate();
     return true;
 }
 
-bool Renderer::Init()
+bool Renderer::InitWindow()
 {
     if (!glfwInit())
     {
@@ -49,14 +53,17 @@ bool Renderer::Init()
         glfwTerminate();
         return false;
     }
+    return true;
+}
 
+void Renderer::ConfigureViewport()
+{
+    glViewport(0, 0, m_Image->Width, m_Image->Height);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, m_Image->Width, 0, m_Image->Height, -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
-    return true;
 }
 
 void Renderer::Render()
@@ -73,8 +80,6 @@ void Renderer::Render()
     }
     glEnd();
     glFlush();
-    glfwSwapBuffers(m_Window);
-    glfwPollEvents();
     std::cout << "Done...\n";
 }
 
