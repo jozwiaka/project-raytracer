@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include <iostream>
+// #include <GL/glew.h>
 
 Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize)
     : m_Camera(camera),
@@ -48,11 +49,11 @@ bool Renderer::InitWindow()
     }
 
     glfwMakeContextCurrent(m_Window);
-    if (glewInit() != GLEW_OK)
-    {
-        glfwTerminate();
-        return false;
-    }
+    // if (glewInit() != GLEW_OK)
+    // {
+    //     glfwTerminate();
+    //     return false;
+    // }
     return true;
 }
 
