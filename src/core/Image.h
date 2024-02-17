@@ -22,5 +22,5 @@ public:
 private:
     std::vector<Pixel> m_Pixels;
     std::mutex m_Mtx;
-    std::string m_TmpDir = "../images/tmp/";
+    std::string m_TmpDir = "../images/rendered/tmp/";
 };
