@@ -76,7 +76,7 @@ void Renderer::Render()
     for (const auto &pixel : m_Image->GetPixels())
     {
         glColor3f(pixel.Col.x, pixel.Col.y, pixel.Col.z);
-        glVertex2f(pixel.x, pixel.y);
+        glVertex2f(pixel.x, m_Image->Height - 1 - pixel.y);
     }
     glEnd();
     glFlush();
@@ -121,7 +121,7 @@ void Renderer::WriteTilePixels(int startX, int startY)
             }
             pixelColor /= m_NumSamples;
             pixelColor = ColorManipulator::GammaCorrection(pixelColor);
-            m_Image->AddPixel(x, m_Image->Height - 1 - y, pixelColor);
+            m_Image->AddPixel(x, y, pixelColor);
         }
     }
 }

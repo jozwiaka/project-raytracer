@@ -1,6 +1,7 @@
 #include "Image.h"
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
+#include <iostream>
 
 Image::Image(int width, float aspectRatio)
     : Width(width),
@@ -51,7 +52,7 @@ void Image::SaveAsPNG() const
   }
 
   static size_t i = 0;
-  std::string filename = "../../output/frames/frame_" + std::to_string(++i) + ".png";
+  std::string filename = "../output/frames/frame_" + std::to_string(++i) + ".png";
   // Write pixel data to PNG file
   if (!stbi_write_png(filename.c_str(), Width, Height, 3, imageData.data(), Width * 3))
   {
