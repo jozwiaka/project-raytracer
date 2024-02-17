@@ -28,8 +28,9 @@ void Image::AddPixel(float x, float y, const Color &color)
   }
 }
 
-std::vector<Pixel> Image::GetPixels() const
+std::vector<Pixel> Image::GetPixels()
 {
+  std::unique_lock<std::mutex> lock(m_Mtx);
   return m_Pixels;
 }
 
@@ -39,18 +40,19 @@ void Image::Clear()
   m_Pixels.clear();
 }
 
-void Image::SaveAsPNG() const
+void Image::SaveAsPNG()
 {
+  std::unique_lock<std::mutex> lock(m_Mtx);
   if (m_Pixels.empty())
   {
     return;
   }
 
-  std::vector<unsigned char> imageData(Width * Height * 3); // 3 channels (RGB)
+  std::vector<unsigned char> imageData(Width * Height * m_Channels);
 
   for (const Pixel &pixel : m_Pixels)
   {
-    int index = (pixel.y * Width + pixel.x) * 3;
+    int index = (pixel.y * Width + pixel.x) * m_Channels;
     imageData[index] = static_cast<unsigned char>(pixel.Col.x * 255);
     imageData[index + 1] = static_cast<unsigned char>(pixel.Col.y * 255);
     imageData[index + 2] = static_cast<unsigned char>(pixel.Col.z * 255);
@@ -59,7 +61,7 @@ void Image::SaveAsPNG() const
   static size_t i = 0;
   std::stringstream ss;
   ss << m_TmpDir << "frame_" << ++i << ".png";
-  if (!stbi_write_png(ss.str().c_str(), Width, Height, 3, imageData.data(), Width * 3))
+  if (!stbi_write_png(ss.str().c_str(), Width, Height, m_Channels, imageData.data(), Width * m_Channels))
   {
     return;
   }

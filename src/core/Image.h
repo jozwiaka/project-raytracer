@@ -15,12 +15,13 @@ public:
 public:
     Image(int width, float aspectRatio);
     void AddPixel(float x, float y, const Color &color);
-    std::vector<Pixel> GetPixels() const;
+    std::vector<Pixel> GetPixels();
     void Clear();
-    void SaveAsPNG() const;
+    void SaveAsPNG();
 
 private:
     std::vector<Pixel> m_Pixels;
     std::mutex m_Mtx;
     std::string m_TmpDir = "../images/rendered/tmp/";
+    int m_Channels = 3;
 };
