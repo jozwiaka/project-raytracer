@@ -17,6 +17,7 @@ public:
     void AddPixel(float x, float y, const Color &color);
     std::vector<Pixel> GetPixels() const;
     void Clear();
+    void SaveAsPNG() const;
 
 private:
     std::vector<Pixel> m_Pixels;

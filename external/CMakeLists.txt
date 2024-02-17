@@ -3,4 +3,4 @@
 # target_link_libraries(external PUBLIC exe_flags)
 # target_include_directories(external PUBLIC "./")
 add_library(external INTERFACE)
-target_include_directories(external INTERFACE "./")
+target_include_directories(external INTERFACE "./stb")

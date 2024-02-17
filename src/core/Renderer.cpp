@@ -80,6 +80,7 @@ void Renderer::Render()
     }
     glEnd();
     glFlush();
+    m_Image->SaveAsPNG();
     std::cout << "Done...\n";
 }
 
