@@ -2,6 +2,8 @@
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "stb_image_write.h"
 #include <iostream>
+#include <filesystem>
+#include <sstream>
 
 Image::Image(int width, float aspectRatio)
     : Width(width),
@@ -10,6 +12,11 @@ Image::Image(int width, float aspectRatio)
       AspectRatioReal(static_cast<float>(Width) / static_cast<float>(Height))
 {
   m_Pixels.reserve(Width * Height);
+  if (std::filesystem::exists(m_TmpDir))
+  {
+    std::filesystem::remove_all(m_TmpDir);
+  }
+  std::filesystem::create_directory(m_TmpDir);
 }
 
 void Image::AddPixel(float x, float y, const Color &color)
@@ -36,13 +43,11 @@ void Image::SaveAsPNG() const
 {
   if (m_Pixels.empty())
   {
-    // std::cerr << "Error: Cannot save empty image." << std::endl;
     return;
   }
 
   std::vector<unsigned char> imageData(Width * Height * 3); // 3 channels (RGB)
 
-  // Fill buffer with pixel data
   for (const Pixel &pixel : m_Pixels)
   {
     int index = (pixel.y * Width + pixel.x) * 3;
@@ -52,9 +57,9 @@ void Image::SaveAsPNG() const
   }
 
   static size_t i = 0;
-  std::string filename = "../output/frames/frame_" + std::to_string(++i) + ".png";
-  // Write pixel data to PNG file
-  if (!stbi_write_png(filename.c_str(), Width, Height, 3, imageData.data(), Width * 3))
+  std::stringstream ss;
+  ss << m_TmpDir << "frame_" << ++i << ".png";
+  if (!stbi_write_png(ss.str().c_str(), Width, Height, 3, imageData.data(), Width * 3))
   {
     return;
   }
