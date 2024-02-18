@@ -22,7 +22,7 @@ void Camera::Init()
     auto theta = Math::Radians(VerticalFOV);
     auto h = std::tan(theta / 2.0f);
     auto viewportHeight = 2.0f * h * FocusDist;
-    auto viewportWidth = viewportHeight * m_Image->AspectRatioReal;
+    auto viewportWidth = viewportHeight * m_Image->AspectRatio;
 
     Math::Vec3 viewportU = viewportWidth * m_U;
     Math::Vec3 viewportV = viewportHeight * -m_V;

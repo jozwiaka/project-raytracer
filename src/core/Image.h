@@ -8,9 +8,8 @@ class Image
 {
 public:
     uint32_t Width;
-    float AspectRatioIdeal;
     uint32_t Height;
-    float AspectRatioReal;
+    float AspectRatio;
     std::vector<uint32_t> VerticalIter;
     std::vector<uint32_t> HorizontalIter;
     std::vector<std::vector<Color>> Data;

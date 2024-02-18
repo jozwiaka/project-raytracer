@@ -7,9 +7,8 @@
 
 Image::Image(uint32_t width, float aspectRatio)
     : Width(width),
-      AspectRatioIdeal(aspectRatio),
-      Height(static_cast<uint32_t>(Width / AspectRatioIdeal)),
-      AspectRatioReal(static_cast<float>(Width) / static_cast<float>(Height))
+      Height(static_cast<uint32_t>(Width / aspectRatio)),
+      AspectRatio(static_cast<float>(Width) / static_cast<float>(Height))
 {
   Resize();
   if (std::filesystem::exists(m_TmpDir))
@@ -42,6 +41,7 @@ void Image::Resize()
   {
     VerticalIter[i] = i;
   }
+  AspectRatio = static_cast<float>(Width) / static_cast<float>(Height);
 }
 
 void Image::SaveAsPNG()
