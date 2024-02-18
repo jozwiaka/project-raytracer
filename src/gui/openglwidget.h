@@ -5,6 +5,7 @@
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions>
 #include <memory>
+#include <QResizeEvent>
 
 class OpenGLWidget : public QOpenGLWidget, protected QOpenGLFunctions
 {
@@ -16,6 +17,7 @@ public:
 protected:
     void initializeGL() override;
     void paintGL() override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     std::shared_ptr<Renderer> m_Renderer;

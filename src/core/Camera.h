@@ -30,8 +30,9 @@ public:
     float GetFocusDist() const;
     void SetFocusDist(float newFocusDist);
 
-private:
     void Init();
+
+private:
     Math::Vec3 DefocusDiskSample() const;
     Math::Vec3 PixelSampleSquare() const;
     Math::Vec3 PixelSampleDisk(float radius) const;

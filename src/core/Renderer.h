@@ -26,6 +26,8 @@ public:
     void Render();
     void ConfigureViewport();
     bool InitWindow();
+    void ResizeViewport(uint32_t width, uint32_t height);
+    void ResizeWindow(uint32_t width, uint32_t height);
 
 private:
     void PerPixel(uint32_t x, uint32_t y);

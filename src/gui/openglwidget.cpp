@@ -1,5 +1,6 @@
 
 #include "OpenGLWidget.h"
+#include <QDebug>
 
 OpenGLWidget::OpenGLWidget(std::shared_ptr<Renderer> renderer, QWidget *parent)
     : QOpenGLWidget(parent),
@@ -14,6 +15,13 @@ void OpenGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
     m_Renderer->ConfigureViewport();
+}
+
+void OpenGLWidget::resizeEvent(QResizeEvent *event)
+{
+    m_Renderer->ResizeViewport(event->size().width(), event->size().height());
+    QWidget::resizeEvent(event);
+    m_Renderer->Display();
 }
 
 void OpenGLWidget::paintGL()
