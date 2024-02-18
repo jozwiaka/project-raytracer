@@ -24,11 +24,11 @@ public:
     bool DisplayLoop();
     void Display();
     void ConfigureViewport();
+    void Render();
+    bool InitWindow();
 
 private:
-    bool InitWindow();
     Color RayColor(const Ray &ray, uint32_t depth) const;
-    void Render();
 
 private:
     std::shared_ptr<Camera> m_Camera;
