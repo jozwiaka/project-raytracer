@@ -49,7 +49,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::Display()
 {
-    m_Renderer->Display();
     m_OpenGLWidget->update();
 }
 

@@ -15,7 +15,7 @@ Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene,
 {
 }
 
-bool Renderer::CreateWindowAndDisplayInLoop()
+bool Renderer::CreateWindowAndDisplayInLoop(bool save)
 {
     if (!InitWindow())
     {
@@ -26,7 +26,7 @@ bool Renderer::CreateWindowAndDisplayInLoop()
 
     while (!glfwWindowShouldClose(m_Window))
     {
-        Display();
+        Display(save);
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
     }
@@ -77,7 +77,7 @@ void Renderer::ResizeWindow(uint32_t width, uint32_t height)
     InitWindow();
 }
 
-void Renderer::Display()
+void Renderer::Display(bool save)
 {
     Render();
     glClear(GL_COLOR_BUFFER_BIT);
@@ -92,7 +92,10 @@ void Renderer::Display()
     }
     glEnd();
     glFlush();
-    m_Image->SaveAsPNG();
+    if (save)
+    {
+        m_Image->Save();
+    }
 }
 
 void Renderer::Render()

@@ -77,7 +77,7 @@ void Image::Resize(uint32_t width, uint32_t height)
   Init();
 }
 
-void Image::SaveAsPNG() const
+void Image::Save() const
 {
   if (Data.empty())
   {
