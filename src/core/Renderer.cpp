@@ -92,7 +92,7 @@ void Renderer::Render()
 
     std::cout << "Rendering...\n";
     m_Timer.Start();
-#define TP 0
+#define TP 1
 #if TP
     std::vector<std::future<void>> futures;
     for (uint32_t y = 0; y < m_Image->Height; y += m_TileSize)
@@ -102,7 +102,21 @@ void Renderer::Render()
             futures.emplace_back(m_ThreadPool.Enqueue(
                 [this](uint32_t startX, uint32_t startY)
                 {
-                    this->RenderTile(startX, startY);
+                    for (uint32_t y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
+                    {
+                        for (uint32_t x = startX; x < startX + m_TileSize && x < m_Image->Width; ++x)
+                        {
+                            Color pixelColor = Color();
+                            for (uint32_t sample = 0; sample < m_NumSamples; ++sample)
+                            {
+                                Ray ray = m_Camera->GenerateRay(x, y);
+                                pixelColor += RayColor(ray, m_MaxDepth);
+                            }
+                            pixelColor /= m_NumSamples;
+                            pixelColor = ColorManipulator::GammaCorrection(pixelColor);
+                            m_Image->Data[y][x] = pixelColor;
+                        }
+                    }
                 },
                 x, y));
         }
@@ -133,25 +147,6 @@ void Renderer::Render()
     std::cout << "Done. Time = " << m_Timer.Stop() << std::endl;
 
     m_Image->SaveAsPNG();
-}
-
-void Renderer::RenderTile(uint32_t startX, uint32_t startY)
-{
-    for (uint32_t y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
-    {
-        for (uint32_t x = startX; x < startX + m_TileSize && x < m_Image->Width; ++x)
-        {
-            Color pixelColor = Color();
-            for (uint32_t sample = 0; sample < m_NumSamples; ++sample)
-            {
-                Ray ray = m_Camera->GenerateRay(x, y);
-                pixelColor += RayColor(ray, m_MaxDepth);
-            }
-            pixelColor /= m_NumSamples;
-            pixelColor = ColorManipulator::GammaCorrection(pixelColor);
-            m_Image->Data[y][x] = pixelColor;
-        }
-    }
 }
 
 Color Renderer::RayColor(const Ray &ray, uint32_t depth) const

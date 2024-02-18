@@ -40,5 +40,4 @@ private:
     bool InitWindow();
     Color RayColor(const Ray &ray, uint32_t depth) const;
     void Render();
-    void RenderTile(uint32_t startX, uint32_t startY);
 };
