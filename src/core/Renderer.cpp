@@ -136,8 +136,8 @@ void Renderer::Render()
                     m_Image->Data[y][x] = pixelColor; });
                   });
 #endif
-
-    std::cout << "Done. Time = " << m_Timer.Stop() << std::endl;
+    std::string timeEllapsedStr = m_Timer.Stop();
+    std::cout << "Done. Time = " << timeEllapsedStr << std::endl;
 
     m_Image->SaveAsPNG();
 }
