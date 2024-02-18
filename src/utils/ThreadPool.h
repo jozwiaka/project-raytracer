@@ -15,10 +15,10 @@
 class ThreadPool
 {
 public:
-    explicit ThreadPool(std::size_t numThreads) : m_Stop(false)
+    explicit ThreadPool(uint32_t numThreads) : m_Stop(false)
     {
         m_Workers.reserve(numThreads);
-        for (std::size_t i = 0; i < numThreads; ++i)
+        for (uint32_t i = 0; i < numThreads; ++i)
         {
             m_Workers.emplace_back([this]
                                    {

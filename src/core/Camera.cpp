@@ -38,7 +38,7 @@ void Camera::Init()
     m_DefocusDiskV = m_V * defocusRadius;
 }
 
-Ray Camera::GenerateRay(int i, int j) const
+Ray Camera::GenerateRay(uint32_t i, uint32_t j) const
 {
     auto pixelCenter = m_Pixel00Loc + (static_cast<float>(i) * m_PixelDeltaU) + (static_cast<float>(j) * m_PixelDeltaV);
     auto pixelSample = pixelCenter + PixelSampleSquare();

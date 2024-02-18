@@ -19,7 +19,7 @@ public:
 public:
     Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, float focusDist, std::shared_ptr<Image> image);
     void Init();
-    Ray GenerateRay(int i, int j) const;
+    Ray GenerateRay(uint32_t i, uint32_t j) const;
 
 private:
     Math::Vec3 m_W, m_U, m_V;

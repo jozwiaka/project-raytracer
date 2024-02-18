@@ -20,7 +20,7 @@
 class Renderer
 {
 public:
-    Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize);
+    Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize);
     bool DisplayLoop();
     void Display();
     void ConfigureViewport();
@@ -29,16 +29,16 @@ private:
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Scene> m_Scene;
     std::shared_ptr<Image> m_Image;
-    int m_NumSamples;
-    int m_MaxDepth;
+    uint32_t m_NumSamples;
+    uint32_t m_MaxDepth;
     ThreadPool m_ThreadPool;
-    int m_TileSize;
+    uint32_t m_TileSize;
     Timer m_Timer;
     GLFWwindow *m_Window;
 
 private:
     bool InitWindow();
-    Color RayColor(const Ray &ray, int depth) const;
+    Color RayColor(const Ray &ray, uint32_t depth) const;
     void Render();
-    void RenderTile(int startX, int startY);
+    void RenderTile(uint32_t startX, uint32_t startY);
 };

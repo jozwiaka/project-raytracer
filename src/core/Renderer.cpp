@@ -3,7 +3,7 @@
 #include <execution>
 // #include <GL/glew.h>
 
-Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize)
+Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
     : m_Camera(camera),
       m_Scene(scene),
       m_Image(image),
@@ -74,10 +74,13 @@ void Renderer::Display()
     Render();
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
-    for (const auto &pixel : m_Image->GetPixels())
+    for (uint32_t y = 0; y < m_Image->Height; ++y)
     {
-        glColor3f(pixel.Col.x, pixel.Col.y, pixel.Col.z);
-        glVertex2f(pixel.x, m_Image->Height - 1 - pixel.y);
+        for (uint32_t x = 0; x < m_Image->Width; ++x)
+        {
+            glColor3f(m_Image->Data[y][x].x, m_Image->Data[y][x].y, m_Image->Data[y][x].z);
+            glVertex2f(x, m_Image->Height - 1 - y);
+        }
     }
     glEnd();
     glFlush();
@@ -88,17 +91,16 @@ void Renderer::Render()
     std::cout << "Rendering...\n";
     m_Timer.Start();
     m_Camera->Init();
-    m_Image->Clear();
 
 #define TP 0
 #if TP
     std::vector<std::future<void>> futures;
-    for (int y = 0; y < m_Image->Height; y += m_TileSize)
+    for (uint32_t y = 0; y < m_Image->Height; y += m_TileSize)
     {
-        for (int x = 0; x < m_Image->Width; x += m_TileSize)
+        for (uint32_t x = 0; x < m_Image->Width; x += m_TileSize)
         {
             futures.emplace_back(m_ThreadPool.Enqueue(
-                [this](int startX, int startY)
+                [this](uint32_t startX, uint32_t startY)
                 {
                     this->RenderTile(startX, startY);
                 },
@@ -117,14 +119,14 @@ void Renderer::Render()
                       std::for_each(std::execution::par, m_Image->HorizontalIter.begin(), m_Image->HorizontalIter.end(), [this, y](uint32_t x)
                                     {
                     Color pixelColor = Color();
-                    for (int sample = 0; sample < m_NumSamples; ++sample)
+                    for (uint32_t sample = 0; sample < m_NumSamples; ++sample)
                     {
                         Ray ray = m_Camera->GenerateRay(x, y);
                         pixelColor += RayColor(ray, m_MaxDepth);
                     }
                     pixelColor /= m_NumSamples;
                     pixelColor = ColorManipulator::GammaCorrection(pixelColor);
-                    m_Image->AddPixel(x, y, pixelColor); });
+                    m_Image->Data[y][x] = pixelColor; });
                   });
 #endif
 
@@ -132,26 +134,26 @@ void Renderer::Render()
     m_Image->SaveAsPNG();
 }
 
-void Renderer::RenderTile(int startX, int startY)
+void Renderer::RenderTile(uint32_t startX, uint32_t startY)
 {
-    for (int y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
+    for (uint32_t y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
     {
-        for (int x = startX; x < startX + m_TileSize && x < m_Image->Width; ++x)
+        for (uint32_t x = startX; x < startX + m_TileSize && x < m_Image->Width; ++x)
         {
             Color pixelColor = Color();
-            for (int sample = 0; sample < m_NumSamples; ++sample)
+            for (uint32_t sample = 0; sample < m_NumSamples; ++sample)
             {
                 Ray ray = m_Camera->GenerateRay(x, y);
                 pixelColor += RayColor(ray, m_MaxDepth);
             }
             pixelColor /= m_NumSamples;
             pixelColor = ColorManipulator::GammaCorrection(pixelColor);
-            m_Image->AddPixel(x, y, pixelColor);
+            m_Image->Data[y][x] = pixelColor;
         }
     }
 }
 
-Color Renderer::RayColor(const Ray &ray, int depth) const
+Color Renderer::RayColor(const Ray &ray, uint32_t depth) const
 {
     if (depth <= 0)
     {

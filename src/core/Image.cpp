@@ -5,13 +5,27 @@
 #include <filesystem>
 #include <sstream>
 
-Image::Image(int width, float aspectRatio)
+Image::Image(uint32_t width, float aspectRatio)
     : Width(width),
       AspectRatioIdeal(aspectRatio),
-      Height(static_cast<int>(Width / AspectRatioIdeal)),
+      Height(static_cast<uint32_t>(Width / AspectRatioIdeal)),
       AspectRatioReal(static_cast<float>(Width) / static_cast<float>(Height))
 {
-  m_Pixels.reserve(Width * Height);
+  Resize();
+  if (std::filesystem::exists(m_TmpDir))
+  {
+    std::filesystem::remove_all(m_TmpDir);
+  }
+  std::filesystem::create_directory(m_TmpDir);
+}
+
+void Image::Resize()
+{
+  Data.resize(Height);
+  for (auto &row : Data)
+  {
+    row.resize(Width);
+  }
   HorizontalIter.resize(Width);
   VerticalIter.resize(Height);
   for (uint32_t i = 0; i < Width; ++i)
@@ -22,55 +36,32 @@ Image::Image(int width, float aspectRatio)
   {
     VerticalIter[i] = i;
   }
-  if (std::filesystem::exists(m_TmpDir))
-  {
-    std::filesystem::remove_all(m_TmpDir);
-  }
-  std::filesystem::create_directory(m_TmpDir);
-}
-
-void Image::AddPixel(float x, float y, const Color &color)
-{
-  std::unique_lock<std::mutex> lock(m_Mtx);
-  if (m_Pixels.size() < m_Pixels.capacity())
-  {
-    m_Pixels.emplace_back(x, y, color);
-  }
-}
-
-std::vector<Pixel> Image::GetPixels()
-{
-  std::unique_lock<std::mutex> lock(m_Mtx);
-  return m_Pixels;
-}
-
-void Image::Clear()
-{
-  std::unique_lock<std::mutex> lock(m_Mtx);
-  m_Pixels.clear();
 }
 
 void Image::SaveAsPNG()
 {
-  std::unique_lock<std::mutex> lock(m_Mtx);
-  if (m_Pixels.empty())
+  if (Data.empty())
   {
     return;
   }
 
   std::vector<unsigned char> imageData(Width * Height * m_Channels);
 
-  for (const Pixel &pixel : m_Pixels)
+  uint32_t i = 0;
+  for (const auto &row : Data)
   {
-    int index = (pixel.y * Width + pixel.x) * m_Channels;
-    imageData[index] = static_cast<unsigned char>(pixel.Col.x * 255);
-    imageData[index + 1] = static_cast<unsigned char>(pixel.Col.y * 255);
-    imageData[index + 2] = static_cast<unsigned char>(pixel.Col.z * 255);
+    for (const auto &pixel : row)
+    {
+      uint32_t index = i++ * m_Channels;
+      imageData[index] = static_cast<unsigned char>(pixel.x * 255);
+      imageData[index + 1] = static_cast<unsigned char>(pixel.y * 255);
+      imageData[index + 2] = static_cast<unsigned char>(pixel.z * 255);
+    }
   }
 
-  static size_t i = 0;
+  static size_t frameIndex = 0;
   std::stringstream ss;
-  ss << m_TmpDir << "frame_" << ++i << ".png";
+  ss << m_TmpDir << "frame_" << ++frameIndex << ".png";
   if (!stbi_write_png(ss.str().c_str(), Width, Height, m_Channels, imageData.data(), Width * m_Channels))
   {
     return;

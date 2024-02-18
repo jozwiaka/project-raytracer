@@ -86,7 +86,7 @@ bool ObjectCuboid::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) con
 {
     Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -m_Center), -m_RotationDeg), Math::RotateT(ray.Direction, -m_RotationDeg)};
 
-    for (int i = static_cast<int>(Wall::XY); i <= static_cast<int>(Wall::ZX_Prime); ++i)
+    for (uint32_t i = static_cast<uint32_t>(Wall::XY); i <= static_cast<uint32_t>(Wall::ZX_Prime); ++i)
     {
         if (CheckWall(rayLocal, static_cast<Wall>(i), ray, ray_t, rec))
         {

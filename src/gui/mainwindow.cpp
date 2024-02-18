@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     m_Ui->setupUi(this);
     constexpr float aspectRatio = 16.0f / 9.0f;
-    constexpr int width = 1200;
+    constexpr uint32_t width = 1200;
     auto image = std::make_shared<Image>(width, aspectRatio);
 
     constexpr auto cameraPosition = Math::Vec3(13.0f, 2.0f, 3.0f);
@@ -20,9 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_Scene = std::make_shared<Scene>();
     auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
     m_Scene->AddObject(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
-    // for (int a = -11; a < 11; a++)
+    // for (uint32_t a = -11; a < 11; a++)
     // {
-    //     for (int b = -11; b < 11; b++)
+    //     for (uint32_t b = -11; b < 11; b++)
     //     {
     //         auto chooseMat = Random::RandomFloat();
     //         Math::Vec3 center(a + 0.9f * Random::RandomFloat(), 0.2f, b + 0.9f * Random::RandomFloat());
@@ -62,11 +62,11 @@ MainWindow::MainWindow(QWidget *parent)
     auto material3 = std::make_shared<MaterialMetal>(Color(0.7f, 0.6f, 0.5f), 0.0f);
     m_Scene->AddObject(std::make_unique<ObjectSphere>(Math::Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
 
-    constexpr int numSamples = 10;
-    constexpr int maxDepth = 20;
-    // unsigned int numThreads = std::thread::hardware_concurrency();
-    constexpr unsigned int numThreads = 1000;
-    constexpr int tileSize = 50;
+    constexpr uint32_t numSamples = 10;
+    constexpr uint32_t maxDepth = 20;
+    // uint32_t numThreads = std::thread::hardware_concurrency();
+    constexpr uint32_t numThreads = 1000;
+    constexpr uint32_t tileSize = 50;
     m_Renderer = std::make_shared<Renderer>(m_Camera, m_Scene, image, numSamples, maxDepth, numThreads, tileSize);
 
     // Set up the m_Layout
@@ -109,6 +109,6 @@ void MainWindow::CreateSlider(const QString &labelText, float *value, float minV
     slider->setValue((*value) * 100);
     m_Layout->addWidget(slider);
 
-    connect(slider, &QSlider::valueChanged, this, [value, slider](int newValue)
+    connect(slider, &QSlider::valueChanged, this, [value, slider](uint32_t newValue)
             { *value = newValue / 100.0f; });
 }
