@@ -14,7 +14,6 @@ public:
     virtual ~Object() = default;
     virtual bool Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const = 0;
     std::shared_ptr<Material> GetMaterial();
-    void Move(Math::Vec3 v);
 
 protected:
     Math::Vec3 m_Center;
