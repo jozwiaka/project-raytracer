@@ -12,17 +12,17 @@ void Scene::AddLight(std::unique_ptr<Light> light)
 
 bool Scene::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
-    HitRecord tempRec;
+    HitRecord tmpRec;
     bool hit = false;
     float tClosest = Math::Infinity();
 
     for (const auto &object : Objects)
     {
-        if (object->Intersect(ray, Interval(ray_t.Min, tClosest), tempRec))
+        if (object->Intersect(ray, Interval(ray_t.Min, tClosest), tmpRec))
         {
             hit = true;
-            tClosest = tempRec.t;
-            rec = tempRec;
+            tClosest = tmpRec.t;
+            rec = tmpRec;
         }
     }
 
