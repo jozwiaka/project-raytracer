@@ -13,6 +13,14 @@ Image::Image(uint32_t width, float aspectRatio)
   SetUpTmpDir();
 }
 
+Image::~Image()
+{
+  if (std::filesystem::exists(m_TmpDir))
+  {
+    std::filesystem::remove_all(m_TmpDir);
+  }
+}
+
 uint32_t Image::GetWidth() const
 {
   return m_Width;

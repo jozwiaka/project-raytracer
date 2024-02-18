@@ -11,6 +11,7 @@ public:
 
 public:
     Image(uint32_t width, float aspectRatio);
+    ~Image();
     void Resize(uint32_t width, uint32_t height);
     void SaveAsPNG() const;
     uint32_t GetWidth() const;
