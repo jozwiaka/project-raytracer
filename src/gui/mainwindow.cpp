@@ -31,13 +31,13 @@ MainWindow::MainWindow(QWidget *parent)
     m_Layout = new QVBoxLayout(m_Ui->centralwidget);
 
     // Create sliders for camera settings
-    CreateSlider("Camera Position X", &m_Camera->Pos.x, -20.0f, 20.0f);
-    CreateSlider("Camera Position Y", &m_Camera->Pos.y, -20.0f, 20.0f);
-    CreateSlider("Camera Position Z", &m_Camera->Pos.z, -20.0f, 20.0f);
+    // CreateSlider("Camera Position X", &m_Camera->Pos.x, -20.0f, 20.0f);
+    // CreateSlider("Camera Position Y", &m_Camera->Pos.y, -20.0f, 20.0f);
+    // CreateSlider("Camera Position Z", &m_Camera->Pos.z, -20.0f, 20.0f);
 
-    CreateSlider("Camera Target X", &m_Camera->Target.x, -20.0f, 20.0f);
-    CreateSlider("Camera Target Y", &m_Camera->Target.y, -20.0f, 20.0f);
-    CreateSlider("Camera Target Z", &m_Camera->Target.z, -20.0f, 20.0f);
+    // CreateSlider("Camera Target X", &m_Camera->Target.x, -20.0f, 20.0f);
+    // CreateSlider("Camera Target Y", &m_Camera->Target.y, -20.0f, 20.0f);
+    // CreateSlider("Camera Target Z", &m_Camera->Target.z, -20.0f, 20.0f);
 
     // Create button to trigger rendering
     m_RenderButton = new QPushButton("Display", this);

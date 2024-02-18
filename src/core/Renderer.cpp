@@ -83,8 +83,6 @@ void Renderer::Display()
 
 void Renderer::Render()
 {
-    m_Camera->Update();
-
     std::cout << "Rendering...\n";
     m_Timer.Start();
 #define TP 1

@@ -7,9 +7,6 @@
 class Image
 {
 public:
-    uint32_t m_Width;
-    uint32_t m_Height;
-    float m_AspectRatio;
     std::vector<uint32_t> VerticalIter;
     std::vector<uint32_t> HorizontalIter;
     std::vector<std::vector<Color>> Data;
@@ -24,6 +21,9 @@ public:
     float GetAspectRatio() const;
 
 private:
+    uint32_t m_Width;
+    uint32_t m_Height;
+    float m_AspectRatio;
     std::string m_TmpDir = "../images/rendered/tmp/";
     uint32_t m_Channels = 3;
 };
