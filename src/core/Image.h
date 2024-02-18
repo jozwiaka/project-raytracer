@@ -21,11 +21,12 @@ public:
 
 private:
     void Init();
+    void SetUpTmpDir();
 
 private:
     uint32_t m_Width;
     uint32_t m_Height;
     float m_AspectRatio;
-    std::string m_TmpDir = "../images/rendered/tmp/";
+    std::string m_TmpDir;
     uint32_t m_Channels = 3;
 };

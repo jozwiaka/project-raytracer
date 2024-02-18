@@ -10,11 +10,7 @@ Image::Image(uint32_t width, float aspectRatio)
       m_Height(static_cast<uint32_t>(m_Width / aspectRatio))
 {
   Init();
-  if (std::filesystem::exists(m_TmpDir))
-  {
-    std::filesystem::remove_all(m_TmpDir);
-  }
-  std::filesystem::create_directory(m_TmpDir);
+  SetUpTmpDir();
 }
 
 uint32_t Image::GetWidth() const
@@ -91,4 +87,14 @@ void Image::SaveAsPNG() const
   {
     return;
   }
+}
+
+void Image::SetUpTmpDir()
+{
+  m_TmpDir = "../images/rendered/tmp/";
+  if (std::filesystem::exists(m_TmpDir))
+  {
+    std::filesystem::remove_all(m_TmpDir);
+  }
+  std::filesystem::create_directory(m_TmpDir);
 }
