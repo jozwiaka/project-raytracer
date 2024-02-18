@@ -10,6 +10,7 @@ Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene,
       m_MaxDepth(maxDepth),
       m_ThreadPool(numThreads),
       m_TileSize(tileSize),
+      m_Timer(),
       m_Window(nullptr)
 {
 }
@@ -70,6 +71,7 @@ void Renderer::ConfigureViewport()
 void Renderer::Render()
 {
     std::cout << "Rendering...\n";
+    m_Timer.Start();
     m_Camera->Init();
     WriteImagePixels();
     glClear(GL_COLOR_BUFFER_BIT);
@@ -82,7 +84,7 @@ void Renderer::Render()
     glEnd();
     glFlush();
     m_Image->SaveAsPNG();
-    std::cout << "Done...\n";
+    std::cout << "Done. Time = " << m_Timer.Stop() << std::endl;
 }
 
 void Renderer::WriteImagePixels()

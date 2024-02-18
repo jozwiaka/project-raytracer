@@ -1,21 +1,19 @@
 #pragma once
 
 #include <GLFW/glfw3.h>
+#include "utils.h"
 #include "Material.h"
 #include "Scene.h"
 #include "ObjectSphere.h"
 #include "ObjectCuboid.h"
 #include "Camera.h"
 #include "ObjectCylinder.h"
-#include "Math.h"
 #include "Ray.h"
 #include "HitRecord.h"
 #include "Random.h"
-#include "Interval.h"
 #include "Color.h"
 #include "ColorManipulator.h"
 #include "Image.h"
-#include "ThreadPool.h"
 #include <future>
 #include <thread>
 #include <memory>
@@ -35,6 +33,7 @@ private:
     int m_MaxDepth;
     ThreadPool m_ThreadPool;
     int m_TileSize;
+    Timer m_Timer;
     GLFWwindow *m_Window;
 
 private:
