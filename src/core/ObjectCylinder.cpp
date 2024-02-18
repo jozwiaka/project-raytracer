@@ -10,6 +10,26 @@ ObjectCylinder::ObjectCylinder(const Math::Vec3 &center, float radius, float hei
 {
 }
 
+float ObjectCylinder::GetRadius() const
+{
+    return m_Radius;
+}
+
+void ObjectCylinder::SetRadius(float radius)
+{
+    m_Radius = radius;
+}
+
+float ObjectCylinder::GetHeight() const
+{
+    return m_Height;
+}
+
+void ObjectCylinder::SetHeight(float height)
+{
+    m_Height = height;
+}
+
 bool ObjectCylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -m_Center), -m_RotationDeg), Math::RotateT(ray.Direction, -m_RotationDeg)};

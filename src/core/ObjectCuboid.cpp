@@ -9,6 +9,16 @@ ObjectCuboid::ObjectCuboid(const Math::Vec3 &center, const Math::Vec3 &size, con
 {
 }
 
+Math::Vec3 ObjectCuboid::GetSize() const
+{
+    return m_Size;
+}
+
+void ObjectCuboid::SetSize(const Math::Vec3 &size)
+{
+    m_Size = size;
+}
+
 bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall, const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Math::Vec3 p0;

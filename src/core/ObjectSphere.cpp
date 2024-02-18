@@ -4,6 +4,16 @@ ObjectSphere::ObjectSphere(const Math::Vec3 &center, float radius, std::shared_p
     : Object(center, Math::Vec3(), material),
       m_Radius(radius) {}
 
+float ObjectSphere::GetRadius() const
+{
+    return m_Radius;
+}
+
+void ObjectSphere::SetRadius(float radius)
+{
+    m_Radius = radius;
+}
+
 bool ObjectSphere::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
     Math::Vec3 oc = ray.Origin - m_Center;
