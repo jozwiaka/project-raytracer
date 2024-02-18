@@ -26,6 +26,11 @@ public:
     void ConfigureViewport();
 
 private:
+    bool InitWindow();
+    Color RayColor(const Ray &ray, uint32_t depth) const;
+    void Render();
+
+private:
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Scene> m_Scene;
     std::shared_ptr<Image> m_Image;
@@ -35,9 +40,4 @@ private:
     uint32_t m_TileSize;
     Timer m_Timer;
     GLFWwindow *m_Window;
-
-private:
-    bool InitWindow();
-    Color RayColor(const Ray &ray, uint32_t depth) const;
-    void Render();
 };

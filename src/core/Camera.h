@@ -10,7 +10,6 @@ class Camera
 {
 public:
     Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math::Vec3 &upVector, float defocusAngle, float verticalFOV, float focusDist, std::shared_ptr<Image> image);
-    void Init();
     Ray GenerateRay(uint32_t i, uint32_t j) const;
 
     Math::Vec3 GetPos() const;
@@ -32,6 +31,12 @@ public:
     void SetFocusDist(float newFocusDist);
 
 private:
+    void Init();
+    Math::Vec3 DefocusDiskSample() const;
+    Math::Vec3 PixelSampleSquare() const;
+    Math::Vec3 PixelSampleDisk(float radius) const;
+
+private:
     Math::Vec3 m_Pos;
     Math::Vec3 m_Target;
     Math::Vec3 m_UpVector;
@@ -46,9 +51,4 @@ private:
     Math::Vec3 m_PixelDeltaV;
     Math::Vec3 m_DefocusDiskU;
     Math::Vec3 m_DefocusDiskV;
-
-private:
-    Math::Vec3 DefocusDiskSample() const;
-    Math::Vec3 PixelSampleSquare() const;
-    Math::Vec3 PixelSampleDisk(float radius) const;
 };

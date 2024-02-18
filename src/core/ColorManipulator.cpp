@@ -6,7 +6,6 @@ Color ColorManipulator::GammaCorrection(const Color &color)
     auto g = LinearToGamma(color.y);
     auto b = LinearToGamma(color.z);
     return Color(r, g, b);
-    // static const auto intensity = Interval(0.000, 0.999);
 }
 
 float ColorManipulator::LinearToGamma(float linearComponent)

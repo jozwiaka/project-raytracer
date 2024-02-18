@@ -21,6 +21,9 @@ public:
     float GetAspectRatio() const;
 
 private:
+    void Init();
+
+private:
     uint32_t m_Width;
     uint32_t m_Height;
     float m_AspectRatio;

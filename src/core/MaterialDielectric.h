@@ -11,8 +11,8 @@ public:
     bool Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const override;
 
 private:
-    float m_IndexOfRefraction;
+    static float Reflectance(float cosine, float refIdx);
 
 private:
-    static float Reflectance(float cosine, float refIdx);
+    float m_IndexOfRefraction;
 };
