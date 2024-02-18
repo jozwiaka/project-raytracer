@@ -85,7 +85,7 @@ void Renderer::Render()
 {
     std::cout << "Rendering...\n";
     m_Timer.Start();
-#define TP 1
+#define TP 0
 #if TP
     std::vector<std::future<void>> futures;
     for (uint32_t y = 0; y < m_Image->GetHeight(); y += m_TileSize)
@@ -120,10 +120,10 @@ void Renderer::Render()
         future.get();
     }
 #else
-    std::for_each(std::execution::par, m_Image->VerticalIter.begin(), m_Image->VerticalIter.end(),
+    std::for_each(std::execution::par, m_Image->GetVerticalIter().begin(), m_Image->GetVerticalIter().end(),
                   [this](uint32_t y)
                   {
-                      std::for_each(std::execution::par, m_Image->HorizontalIter.begin(), m_Image->HorizontalIter.end(), [this, y](uint32_t x)
+                      std::for_each(std::execution::par, m_Image->GetHorizontalIter().begin(), m_Image->GetHorizontalIter().end(), [this, y](uint32_t x)
                                     {
                     Color pixelColor = Color();
                     for (uint32_t sample = 0; sample < m_NumSamples; ++sample)

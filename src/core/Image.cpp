@@ -28,6 +28,16 @@ float Image::GetAspectRatio() const
   return m_AspectRatio;
 }
 
+std::vector<uint32_t> &Image::GetVerticalIter()
+{
+  return m_VerticalIter;
+}
+
+std::vector<uint32_t> &Image::GetHorizontalIter()
+{
+  return m_HorizontalIter;
+}
+
 void Image::Init()
 {
   Data.resize(m_Height);
@@ -35,15 +45,15 @@ void Image::Init()
   {
     row.resize(m_Width);
   }
-  HorizontalIter.resize(m_Width);
-  VerticalIter.resize(m_Height);
+  m_HorizontalIter.resize(m_Width);
+  m_VerticalIter.resize(m_Height);
   for (uint32_t i = 0; i < m_Width; ++i)
   {
-    HorizontalIter[i] = i;
+    m_HorizontalIter[i] = i;
   }
   for (uint32_t i = 0; i < m_Height; ++i)
   {
-    VerticalIter[i] = i;
+    m_VerticalIter[i] = i;
   }
   m_AspectRatio = static_cast<float>(m_Width) / static_cast<float>(m_Height);
 }

@@ -7,8 +7,6 @@
 class Image
 {
 public:
-    std::vector<uint32_t> VerticalIter;
-    std::vector<uint32_t> HorizontalIter;
     std::vector<std::vector<Color>> Data;
 
 public:
@@ -18,6 +16,8 @@ public:
     uint32_t GetWidth() const;
     uint32_t GetHeight() const;
     float GetAspectRatio() const;
+    std::vector<uint32_t> &GetVerticalIter();
+    std::vector<uint32_t> &GetHorizontalIter();
 
 private:
     void Init();
@@ -27,6 +27,8 @@ private:
     uint32_t m_Width;
     uint32_t m_Height;
     float m_AspectRatio;
+    std::vector<uint32_t> m_VerticalIter;
+    std::vector<uint32_t> m_HorizontalIter;
     std::string m_TmpDir;
     uint32_t m_Channels = 3;
 };
