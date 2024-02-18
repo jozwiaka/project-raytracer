@@ -64,7 +64,7 @@ int main()
     constexpr uint32_t maxDepth = 20;
     // uint32_t numThreads = std::thread::hardware_concurrency();
     constexpr uint32_t numThreads = 1000;
-    constexpr uint32_t tileSize = 50;
+    constexpr uint32_t tileSize = 10;
     auto renderer = std::make_shared<Renderer>(camera, scene, image, numSamples, maxDepth, numThreads, tileSize);
 
     if (!renderer->DisplayLoop())

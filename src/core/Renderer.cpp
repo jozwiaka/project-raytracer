@@ -1,7 +1,6 @@
 #include "Renderer.h"
 #include <iostream>
 #include <execution>
-// #include <GL/glew.h>
 
 Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
     : m_Camera(camera),
@@ -28,8 +27,6 @@ bool Renderer::DisplayLoop()
     while (!glfwWindowShouldClose(m_Window))
     {
         Display();
-        glfwSwapBuffers(m_Window);
-        glfwPollEvents();
     }
 
     glfwTerminate();
@@ -51,11 +48,7 @@ bool Renderer::InitWindow()
     }
 
     glfwMakeContextCurrent(m_Window);
-    // if (glewInit() != GLEW_OK)
-    // {
-    //     glfwTerminate();
-    //     return false;
-    // }
+
     return true;
 }
 
@@ -84,6 +77,8 @@ void Renderer::Display()
     }
     glEnd();
     glFlush();
+    glfwSwapBuffers(m_Window);
+    glfwPollEvents();
 }
 
 void Renderer::Render()
