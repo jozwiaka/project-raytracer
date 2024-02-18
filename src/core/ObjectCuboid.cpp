@@ -5,18 +5,8 @@
 
 ObjectCuboid::ObjectCuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
-      m_Size(size)
+      Size(size)
 {
-}
-
-Math::Vec3 ObjectCuboid::GetSize() const
-{
-    return m_Size;
-}
-
-void ObjectCuboid::SetSize(const Math::Vec3 &size)
-{
-    m_Size = size;
 }
 
 bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall, const Ray &ray, Interval ray_t, HitRecord &rec) const
@@ -30,17 +20,17 @@ bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall
     {
     case Wall::XY:
     case Wall::XY_Prime:
-        p0 = Math::Vec3(0.0f, 0.0f, (wall == Wall::XY ? 1.0f : -1.0f) * m_Size.z / 2.0f);
+        p0 = Math::Vec3(0.0f, 0.0f, (wall == Wall::XY ? 1.0f : -1.0f) * Size.z / 2.0f);
         n = Math::Vec3(0.0f, 0.0f, 1.0f);
         break;
     case Wall::YZ:
     case Wall::YZ_Prime:
-        p0 = Math::Vec3((wall == Wall::YZ ? 1.0f : -1.0f) * m_Size.x / 2.0f, 0.0f, 0.0f);
+        p0 = Math::Vec3((wall == Wall::YZ ? 1.0f : -1.0f) * Size.x / 2.0f, 0.0f, 0.0f);
         n = Math::Vec3(1.0f, 0.0f, 0.0f);
         break;
     case Wall::ZX:
     case Wall::ZX_Prime:
-        p0 = Math::Vec3(0.0f, (wall == Wall::ZX ? 1.0f : -1.0f) * m_Size.y / 2.0f, 0.0f);
+        p0 = Math::Vec3(0.0f, (wall == Wall::ZX ? 1.0f : -1.0f) * Size.y / 2.0f, 0.0f);
         n = Math::Vec3(0.0f, 1.0f, 0.0f);
         break;
     default:
@@ -61,18 +51,18 @@ bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall
     {
     case Wall::XY:
     case Wall::XY_Prime:
-        range1 = Math::IsWithinRange(p.x, 0.0f, m_Size.x / 2.0f);
-        range2 = Math::IsWithinRange(p.y, 0.0f, m_Size.y / 2.0f);
+        range1 = Math::IsWithinRange(p.x, 0.0f, Size.x / 2.0f);
+        range2 = Math::IsWithinRange(p.y, 0.0f, Size.y / 2.0f);
         break;
     case Wall::YZ:
     case Wall::YZ_Prime:
-        range1 = Math::IsWithinRange(p.y, 0.0f, m_Size.y / 2.0f);
-        range2 = Math::IsWithinRange(p.z, 0.0f, m_Size.z / 2.0f);
+        range1 = Math::IsWithinRange(p.y, 0.0f, Size.y / 2.0f);
+        range2 = Math::IsWithinRange(p.z, 0.0f, Size.z / 2.0f);
         break;
     case Wall::ZX:
     case Wall::ZX_Prime:
-        range1 = Math::IsWithinRange(p.x, 0.0f, m_Size.x / 2.0f);
-        range2 = Math::IsWithinRange(p.z, 0.0f, m_Size.z / 2.0f);
+        range1 = Math::IsWithinRange(p.x, 0.0f, Size.x / 2.0f);
+        range2 = Math::IsWithinRange(p.z, 0.0f, Size.z / 2.0f);
         break;
     default:
         break;
@@ -84,9 +74,9 @@ bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall
     {
         rec.t = root;
         rec.Point = ray.At(rec.t);
-        auto outwardNormal = Math::Normalize(rec.Point - m_Center); // TODO
+        auto outwardNormal = Math::Normalize(rec.Point - Center); // TODO
         rec.SetFaceNormal(ray, outwardNormal);
-        rec.Mat = m_Mat;
+        rec.Mat = Mat;
         return true;
     }
     return false;
@@ -94,7 +84,7 @@ bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall
 
 bool ObjectCuboid::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
-    Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -m_Center), -m_RotationDeg), Math::RotateT(ray.Direction, -m_RotationDeg)};
+    Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -Center), -RotationDeg), Math::RotateT(ray.Direction, -RotationDeg)};
 
     for (uint32_t i = static_cast<uint32_t>(Wall::XY); i <= static_cast<uint32_t>(Wall::ZX_Prime); ++i)
     {

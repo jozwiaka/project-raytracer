@@ -2,24 +2,14 @@
 
 ObjectSphere::ObjectSphere(const Math::Vec3 &center, float radius, std::shared_ptr<Material> material)
     : Object(center, Math::Vec3(), material),
-      m_Radius(radius) {}
-
-float ObjectSphere::GetRadius() const
-{
-    return m_Radius;
-}
-
-void ObjectSphere::SetRadius(float radius)
-{
-    m_Radius = radius;
-}
+      Radius(radius) {}
 
 bool ObjectSphere::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
-    Math::Vec3 oc = ray.Origin - m_Center;
+    Math::Vec3 oc = ray.Origin - Center;
     float a = Math::Dot(ray.Direction, ray.Direction);
     float half_b = Math::Dot(oc, ray.Direction);
-    float c = Math::Dot(oc, oc) - m_Radius * m_Radius;
+    float c = Math::Dot(oc, oc) - Radius * Radius;
     float discriminant = half_b * half_b - a * c;
 
     if (discriminant < 0.0f)
@@ -37,9 +27,9 @@ bool ObjectSphere::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) con
 
     rec.t = root;
     rec.Point = ray.At(rec.t);
-    auto outwardNormal = Math::Normalize(rec.Point - m_Center);
+    auto outwardNormal = Math::Normalize(rec.Point - Center);
     rec.SetFaceNormal(ray, outwardNormal);
-    rec.Mat = m_Mat;
+    rec.Mat = Mat;
 
     return true;
 }

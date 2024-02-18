@@ -5,34 +5,14 @@
 
 ObjectCylinder::ObjectCylinder(const Math::Vec3 &center, float radius, float height, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
-      m_Radius(radius),
-      m_Height(height)
+      Radius(radius),
+      Height(height)
 {
-}
-
-float ObjectCylinder::GetRadius() const
-{
-    return m_Radius;
-}
-
-void ObjectCylinder::SetRadius(float radius)
-{
-    m_Radius = radius;
-}
-
-float ObjectCylinder::GetHeight() const
-{
-    return m_Height;
-}
-
-void ObjectCylinder::SetHeight(float height)
-{
-    m_Height = height;
 }
 
 bool ObjectCylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
-    Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -m_Center), -m_RotationDeg), Math::RotateT(ray.Direction, -m_RotationDeg)};
+    Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -Center), -RotationDeg), Math::RotateT(ray.Direction, -RotationDeg)};
     // (p-C-((p-C)*v)*v)^2.0f=r^2.0f
     // p=P=O+tD
     auto v = Math::Vec3(0.0f, 1.0f, 0.0f);
@@ -41,7 +21,7 @@ bool ObjectCylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) c
 
     float a = Math::Dot(dxz, dxz);
     float half_b = Math::Dot(oxz, dxz);
-    float c = Math::Dot(oxz, oxz) - m_Radius * m_Radius;
+    float c = Math::Dot(oxz, oxz) - Radius * Radius;
 
     float discriminant = half_b * half_b - a * c;
 
@@ -61,15 +41,15 @@ bool ObjectCylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) c
         }
     }
     auto p = rayLocal.At(root);
-    if (!Math::IsWithinRange(p.y, 0.0f, m_Height / 2.0f))
+    if (!Math::IsWithinRange(p.y, 0.0f, Height / 2.0f))
     {
         return false;
     }
 
     rec.t = root;
     rec.Point = ray.At(rec.t);
-    auto outwardNormal = Math::Normalize(rec.Point - m_Center);
+    auto outwardNormal = Math::Normalize(rec.Point - Center);
     rec.SetFaceNormal(ray, outwardNormal);
-    rec.Mat = m_Mat;
+    rec.Mat = Mat;
     return true;
 }

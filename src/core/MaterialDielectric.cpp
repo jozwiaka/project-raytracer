@@ -2,12 +2,12 @@
 #include <cmath>
 #include "Random.h"
 
-MaterialDielectric::MaterialDielectric(float indexOfRefraction) : m_IndexOfRefraction(indexOfRefraction) {}
+MaterialDielectric::MaterialDielectric(float indexOfRefraction) : IndexOfRefraction(indexOfRefraction) {}
 
 bool MaterialDielectric::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
 {
     attenuation = Color(1.0f, 1.0f, 1.0f);
-    float refractionRatio = rec.FrontFace ? (1.0f / m_IndexOfRefraction) : m_IndexOfRefraction;
+    float refractionRatio = rec.FrontFace ? (1.0f / IndexOfRefraction) : IndexOfRefraction;
     auto unitDirection = Math::Normalize(ray.Direction);
     float cosTheta = std::fmin(Math::Dot(-unitDirection, rec.Normal), 1.0f);
     float sinTheta = std::sqrt(1.0f - cosTheta * cosTheta);

@@ -1,6 +1,6 @@
 #include "MaterialLambertian.h"
 
-MaterialLambertian::MaterialLambertian(const Color &albedo) : m_Albedo(albedo) {}
+MaterialLambertian::MaterialLambertian(const Color &albedo) : Albedo(albedo) {}
 
 bool MaterialLambertian::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
 {
@@ -12,6 +12,6 @@ bool MaterialLambertian::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec
     }
 
     scattered = Ray(rec.Point, scatterDirection);
-    attenuation = m_Albedo;
+    attenuation = Albedo;
     return true;
 }

@@ -7,10 +7,10 @@
 class MaterialMetal : public Material
 {
 public:
+    Color Albedo;
+    float Fuzz;
+
+public:
     MaterialMetal(const Color &albedo, float fuzz);
     bool Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const override;
-
-private:
-    Color m_Albedo;
-    float m_Fuzz;
 };
