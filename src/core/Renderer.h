@@ -21,7 +21,7 @@ class Renderer
 {
 public:
     Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize);
-    bool DisplayLoop();
+    bool CreateWindowAndDisplayInLoop();
     void Display();
     void Render();
     void ConfigureViewport();

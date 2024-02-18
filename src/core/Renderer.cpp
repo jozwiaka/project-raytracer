@@ -15,7 +15,7 @@ Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene,
 {
 }
 
-bool Renderer::DisplayLoop()
+bool Renderer::CreateWindowAndDisplayInLoop()
 {
     if (!InitWindow())
     {
@@ -92,6 +92,7 @@ void Renderer::Display()
     }
     glEnd();
     glFlush();
+    m_Image->SaveAsPNG();
 }
 
 void Renderer::Render()
@@ -136,8 +137,6 @@ void Renderer::Render()
 
     std::string timeEllapsedStr = m_Timer.Stop();
     std::cout << "Done. Time = " << timeEllapsedStr << std::endl;
-
-    m_Image->SaveAsPNG();
 }
 
 void Renderer::PerPixel(uint32_t x, uint32_t y)
