@@ -42,7 +42,7 @@ bool Renderer::InitWindow()
         return false;
     }
 
-    m_Window = glfwCreateWindow(m_Image->Width, m_Image->Height, "Raytracer", NULL, NULL);
+    m_Window = glfwCreateWindow(m_Image->GetWidth(), m_Image->GetHeight(), "Raytracer", NULL, NULL);
     if (!m_Window)
     {
         glfwTerminate();
@@ -56,10 +56,10 @@ bool Renderer::InitWindow()
 
 void Renderer::ConfigureViewport()
 {
-    glViewport(0, 0, m_Image->Width, m_Image->Height);
+    glViewport(0, 0, m_Image->GetWidth(), m_Image->GetHeight());
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, m_Image->Width, 0, m_Image->Height, -1.0, 1.0);
+    glOrtho(0, m_Image->GetWidth(), 0, m_Image->GetHeight(), -1.0, 1.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -69,12 +69,12 @@ void Renderer::Display()
     Render();
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
-    for (uint32_t y = 0; y < m_Image->Height; ++y)
+    for (uint32_t y = 0; y < m_Image->GetHeight(); ++y)
     {
-        for (uint32_t x = 0; x < m_Image->Width; ++x)
+        for (uint32_t x = 0; x < m_Image->GetWidth(); ++x)
         {
             glColor3f(m_Image->Data[y][x].x, m_Image->Data[y][x].y, m_Image->Data[y][x].z);
-            glVertex2f(x, m_Image->Height - 1 - y);
+            glVertex2f(x, m_Image->GetHeight() - 1 - y);
         }
     }
     glEnd();
@@ -91,16 +91,16 @@ void Renderer::Render()
 #define TP 1
 #if TP
     std::vector<std::future<void>> futures;
-    for (uint32_t y = 0; y < m_Image->Height; y += m_TileSize)
+    for (uint32_t y = 0; y < m_Image->GetHeight(); y += m_TileSize)
     {
-        for (uint32_t x = 0; x < m_Image->Width; x += m_TileSize)
+        for (uint32_t x = 0; x < m_Image->GetWidth(); x += m_TileSize)
         {
             futures.emplace_back(m_ThreadPool.Enqueue(
                 [this](uint32_t startX, uint32_t startY)
                 {
-                    for (uint32_t y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
+                    for (uint32_t y = startY; y < startY + m_TileSize && y < m_Image->GetHeight(); ++y)
                     {
-                        for (uint32_t x = startX; x < startX + m_TileSize && x < m_Image->Width; ++x)
+                        for (uint32_t x = startX; x < startX + m_TileSize && x < m_Image->GetWidth(); ++x)
                         {
                             Color pixelColor = Color();
                             for (uint32_t sample = 0; sample < m_NumSamples; ++sample)

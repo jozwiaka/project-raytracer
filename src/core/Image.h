@@ -7,17 +7,22 @@
 class Image
 {
 public:
-    uint32_t Width;
-    uint32_t Height;
-    float AspectRatio;
+    uint32_t m_Width;
+    uint32_t m_Height;
+    float m_AspectRatio;
     std::vector<uint32_t> VerticalIter;
     std::vector<uint32_t> HorizontalIter;
     std::vector<std::vector<Color>> Data;
 
 public:
+    // Image();
     Image(uint32_t width, float aspectRatio);
-    void Resize();
-    void SaveAsPNG();
+    void Resize(uint32_t width, uint32_t height);
+    void Init();
+    void SaveAsPNG() const;
+    uint32_t GetWidth() const;
+    uint32_t GetHeight() const;
+    float GetAspectRatio() const;
 
 private:
     std::string m_TmpDir = "../images/rendered/tmp/";

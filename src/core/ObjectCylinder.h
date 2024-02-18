@@ -9,5 +9,5 @@ public:
 
 private:
     float m_Radius;
-    float Height;
+    float GetHeight();
 };

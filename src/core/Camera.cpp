@@ -22,13 +22,13 @@ void Camera::Update()
     auto theta = Math::Radians(VerticalFOV);
     auto h = std::tan(theta / 2.0f);
     auto viewportHeight = 2.0f * h * FocusDist;
-    auto viewportWidth = viewportHeight * m_Image->AspectRatio;
+    auto viewportWidth = viewportHeight * m_Image->GetAspectRatio();
 
     Math::Vec3 viewportU = viewportWidth * m_U;
     Math::Vec3 viewportV = viewportHeight * -m_V;
 
-    m_PixelDeltaU = viewportU / static_cast<float>(m_Image->Width);
-    m_PixelDeltaV = viewportV / static_cast<float>(m_Image->Height);
+    m_PixelDeltaU = viewportU / static_cast<float>(m_Image->GetWidth());
+    m_PixelDeltaV = viewportV / static_cast<float>(m_Image->GetHeight());
 
     auto viewportVperLeft = Pos - (FocusDist * m_W) - viewportU / 2.0f - viewportV / 2.0f;
     m_Pixel00Loc = viewportVperLeft + 0.5f * (m_PixelDeltaU + m_PixelDeltaV);
