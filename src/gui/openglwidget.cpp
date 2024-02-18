@@ -17,11 +17,15 @@ void OpenGLWidget::initializeGL()
     m_Renderer->ConfigureViewport();
 }
 
+void OpenGLWidget::resizeGL(int width, int height)
+{
+    m_Renderer->ResizeViewport(width, height);
+}
+
 void OpenGLWidget::resizeEvent(QResizeEvent *event)
 {
-    m_Renderer->ResizeViewport(event->size().width(), event->size().height());
     QWidget::resizeEvent(event);
-    m_Renderer->Display();
+    resizeGL(event->size().width(), event->size().height());
 }
 
 void OpenGLWidget::paintGL()
