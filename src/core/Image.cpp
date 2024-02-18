@@ -21,6 +21,12 @@ Image::Image(uint32_t width, float aspectRatio)
 
 void Image::Resize()
 {
+  for (auto &row : Data)
+  {
+    row.clear();
+  }
+  Data.clear();
+
   Data.resize(Height);
   for (auto &row : Data)
   {
