@@ -10,10 +10,10 @@ Camera::Camera(const Math::Vec3 &position, const Math::Vec3 &target, const Math:
       FocusDist(focusDist <= 0 ? Math::Length(target - position) : focusDist),
       m_Image(image)
 {
-    Init();
+    Update();
 }
 
-void Camera::Init()
+void Camera::Update()
 {
     m_W = Math::Normalize(Pos - Target);
     m_U = Math::Normalize(Math::Cross(UpVector, m_W));

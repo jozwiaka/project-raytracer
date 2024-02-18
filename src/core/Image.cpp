@@ -7,8 +7,7 @@
 
 Image::Image(uint32_t width, float aspectRatio)
     : Width(width),
-      Height(static_cast<uint32_t>(Width / aspectRatio)),
-      AspectRatio(static_cast<float>(Width) / static_cast<float>(Height))
+      Height(static_cast<uint32_t>(Width / aspectRatio))
 {
   Resize();
   if (std::filesystem::exists(m_TmpDir))
@@ -20,12 +19,6 @@ Image::Image(uint32_t width, float aspectRatio)
 
 void Image::Resize()
 {
-  for (auto &row : Data)
-  {
-    row.clear();
-  }
-  Data.clear();
-
   Data.resize(Height);
   for (auto &row : Data)
   {

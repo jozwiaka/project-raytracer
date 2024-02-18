@@ -88,7 +88,7 @@ void Renderer::Display()
 
 void Renderer::Render()
 {
-    m_Camera->Init();
+    m_Camera->Update();
     m_Image->Resize();
 
     std::cout << "Rendering...\n";
