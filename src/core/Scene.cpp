@@ -35,7 +35,7 @@ bool Scene::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
     return hit;
 }
 
-void Scene::Default()
+void Scene::SetUpExampleScene()
 {
     auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
     AddObject(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMat));

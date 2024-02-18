@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_Camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
 
     m_Scene = std::make_shared<Scene>();
-    m_Scene->Default();
+    m_Scene->SetUpExampleScene();
 
     constexpr uint32_t numSamples = 10;
     constexpr uint32_t maxDepth = 20;

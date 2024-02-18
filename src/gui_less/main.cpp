@@ -16,7 +16,7 @@ int main()
     auto camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
 
     auto scene = std::make_shared<Scene>();
-    scene->Default();
+    scene->SetUpExampleScene();
 
     constexpr uint32_t numSamples = 10;
     constexpr uint32_t maxDepth = 20;
