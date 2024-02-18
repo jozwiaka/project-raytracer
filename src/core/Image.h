@@ -11,6 +11,8 @@ public:
     float AspectRatioIdeal;
     int Height;
     float AspectRatioReal;
+    std::vector<uint32_t> VerticalIter;
+    std::vector<uint32_t> HorizontalIter;
 
 public:
     Image(int width, float aspectRatio);

@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include <iostream>
+#include <execution>
 // #include <GL/glew.h>
 
 Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize)
@@ -15,7 +16,7 @@ Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene,
 {
 }
 
-bool Renderer::RenderLoop()
+bool Renderer::DisplayLoop()
 {
     if (!InitWindow())
     {
@@ -26,7 +27,7 @@ bool Renderer::RenderLoop()
 
     while (!glfwWindowShouldClose(m_Window))
     {
-        Render();
+        Display();
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
     }
@@ -68,12 +69,9 @@ void Renderer::ConfigureViewport()
     glLoadIdentity();
 }
 
-void Renderer::Render()
+void Renderer::Display()
 {
-    std::cout << "Rendering...\n";
-    m_Timer.Start();
-    m_Camera->Init();
-    WriteImagePixels();
+    Render();
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
     for (const auto &pixel : m_Image->GetPixels())
@@ -83,13 +81,17 @@ void Renderer::Render()
     }
     glEnd();
     glFlush();
-    m_Image->SaveAsPNG();
-    std::cout << "Done. Time = " << m_Timer.Stop() << std::endl;
 }
 
-void Renderer::WriteImagePixels()
+void Renderer::Render()
 {
+    std::cout << "Rendering...\n";
+    m_Timer.Start();
+    m_Camera->Init();
     m_Image->Clear();
+
+#define TP 0
+#if TP
     std::vector<std::future<void>> futures;
     for (int y = 0; y < m_Image->Height; y += m_TileSize)
     {
@@ -98,7 +100,7 @@ void Renderer::WriteImagePixels()
             futures.emplace_back(m_ThreadPool.Enqueue(
                 [this](int startX, int startY)
                 {
-                    this->WriteTilePixels(startX, startY);
+                    this->RenderTile(startX, startY);
                 },
                 x, y));
         }
@@ -108,9 +110,29 @@ void Renderer::WriteImagePixels()
     {
         future.get();
     }
+#else
+    std::for_each(std::execution::par, m_Image->VerticalIter.begin(), m_Image->VerticalIter.end(),
+                  [this](uint32_t y)
+                  {
+                      std::for_each(std::execution::par, m_Image->HorizontalIter.begin(), m_Image->HorizontalIter.end(), [this, y](uint32_t x)
+                                    {
+                    Color pixelColor = Color();
+                    for (int sample = 0; sample < m_NumSamples; ++sample)
+                    {
+                        Ray ray = m_Camera->GenerateRay(x, y);
+                        pixelColor += RayColor(ray, m_MaxDepth);
+                    }
+                    pixelColor /= m_NumSamples;
+                    pixelColor = ColorManipulator::GammaCorrection(pixelColor);
+                    m_Image->AddPixel(x, y, pixelColor); });
+                  });
+#endif
+
+    std::cout << "Done. Time = " << m_Timer.Stop() << std::endl;
+    m_Image->SaveAsPNG();
 }
 
-void Renderer::WriteTilePixels(int startX, int startY)
+void Renderer::RenderTile(int startX, int startY)
 {
     for (int y = startY; y < startY + m_TileSize && y < m_Image->Height; ++y)
     {

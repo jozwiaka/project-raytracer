@@ -21,8 +21,8 @@ class Renderer
 {
 public:
     Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, int numSamples, int maxDepth, unsigned int numThreads, int tileSize);
-    bool RenderLoop();
-    void Render();
+    bool DisplayLoop();
+    void Display();
     void ConfigureViewport();
 
 private:
@@ -39,6 +39,6 @@ private:
 private:
     bool InitWindow();
     Color RayColor(const Ray &ray, int depth) const;
-    void WriteImagePixels();
-    void WriteTilePixels(int startX, int startY);
+    void Render();
+    void RenderTile(int startX, int startY);
 };

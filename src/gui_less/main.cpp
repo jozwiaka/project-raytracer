@@ -67,7 +67,7 @@ int main()
     constexpr int tileSize = 50;
     auto renderer = std::make_shared<Renderer>(camera, scene, image, numSamples, maxDepth, numThreads, tileSize);
 
-    if (!renderer->RenderLoop())
+    if (!renderer->DisplayLoop())
     {
         return -1;
     }

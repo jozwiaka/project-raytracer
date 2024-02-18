@@ -18,5 +18,5 @@ void OpenGLWidget::initializeGL()
 
 void OpenGLWidget::paintGL()
 {
-    m_Renderer->Render();
+    m_Renderer->Display();
 }

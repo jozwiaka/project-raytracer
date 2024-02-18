@@ -12,6 +12,16 @@ Image::Image(int width, float aspectRatio)
       AspectRatioReal(static_cast<float>(Width) / static_cast<float>(Height))
 {
   m_Pixels.reserve(Width * Height);
+  HorizontalIter.resize(Width);
+  VerticalIter.resize(Height);
+  for (uint32_t i = 0; i < Width; ++i)
+  {
+    HorizontalIter[i] = i;
+  }
+  for (uint32_t i = 0; i < Height; ++i)
+  {
+    VerticalIter[i] = i;
+  }
   if (std::filesystem::exists(m_TmpDir))
   {
     std::filesystem::remove_all(m_TmpDir);

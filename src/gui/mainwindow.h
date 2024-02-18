@@ -26,7 +26,7 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
-    void Render();
+    void Display();
 
 private:
     std::unique_ptr<Ui::MainWindow> m_Ui;

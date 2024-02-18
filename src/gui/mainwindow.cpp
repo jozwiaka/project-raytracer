@@ -82,16 +82,16 @@ MainWindow::MainWindow(QWidget *parent)
     CreateSlider("Camera Target Z", &m_Camera->Target.z, -20.0f, 20.0f);
 
     // Create button to trigger rendering
-    m_RenderButton = new QPushButton("Render", this);
+    m_RenderButton = new QPushButton("Display", this);
     m_Layout->addWidget(m_RenderButton);
-    connect(m_RenderButton, &QPushButton::clicked, this, &MainWindow::Render);
+    connect(m_RenderButton, &QPushButton::clicked, this, &MainWindow::Display);
     m_OpenGLWidget = new OpenGLWidget(m_Renderer, this);
     m_Layout->addWidget(m_OpenGLWidget);
 }
 
-void MainWindow::Render()
+void MainWindow::Display()
 {
-    m_Renderer->Render();
+    m_Renderer->Display();
     m_OpenGLWidget->update();
 }
 
