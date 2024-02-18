@@ -29,6 +29,7 @@ public:
 
 private:
     Color RayColor(const Ray &ray, uint32_t depth) const;
+    void PerPixel(uint32_t x, uint32_t y);
 
 private:
     std::shared_ptr<Camera> m_Camera;
