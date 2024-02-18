@@ -27,6 +27,8 @@ bool Renderer::DisplayLoop()
     while (!glfwWindowShouldClose(m_Window))
     {
         Display();
+        glfwSwapBuffers(m_Window);
+        glfwPollEvents();
     }
 
     glfwTerminate();
@@ -77,8 +79,6 @@ void Renderer::Display()
     }
     glEnd();
     glFlush();
-    glfwSwapBuffers(m_Window);
-    glfwPollEvents();
 }
 
 void Renderer::Render()

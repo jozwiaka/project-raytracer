@@ -20,9 +20,9 @@ MainWindow::MainWindow(QWidget *parent)
     m_Scene = std::make_shared<Scene>();
     auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
     m_Scene->AddObject(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
-    // for (uint32_t a = -11; a < 11; a++)
+    // for (int a = -11; a < 11; a++)
     // {
-    //     for (uint32_t b = -11; b < 11; b++)
+    //     for (int b = -11; b < 11; b++)
     //     {
     //         auto chooseMat = Random::RandomFloat();
     //         Math::Vec3 center(a + 0.9f * Random::RandomFloat(), 0.2f, b + 0.9f * Random::RandomFloat());
