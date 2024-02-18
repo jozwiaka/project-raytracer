@@ -15,7 +15,6 @@ public:
     std::vector<std::vector<Color>> Data;
 
 public:
-    // Image();
     Image(uint32_t width, float aspectRatio);
     void Resize(uint32_t width, uint32_t height);
     void Init();

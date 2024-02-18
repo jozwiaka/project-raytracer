@@ -5,10 +5,6 @@
 #include <filesystem>
 #include <sstream>
 
-// Image::Image()
-//     : m_Width(1200),
-//       m_Height(static_cast<uint32_t>(m_Width / (16.0f / 9.0f))) {}
-
 Image::Image(uint32_t width, float aspectRatio)
     : m_Width(width),
       m_Height(static_cast<uint32_t>(m_Width / aspectRatio))
@@ -62,6 +58,8 @@ void Image::Resize(uint32_t width, uint32_t height)
   {
     return;
   }
+  m_Width = width;
+  m_Height = height;
   Init();
 }
 
