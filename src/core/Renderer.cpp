@@ -88,10 +88,10 @@ void Renderer::Display()
 
 void Renderer::Render()
 {
-    std::cout << "Rendering...\n";
-    m_Timer.Start();
     m_Camera->Init();
 
+    std::cout << "Rendering...\n";
+    m_Timer.Start();
 #define TP 0
 #if TP
     std::vector<std::future<void>> futures;
@@ -131,6 +131,7 @@ void Renderer::Render()
 #endif
 
     std::cout << "Done. Time = " << m_Timer.Stop() << std::endl;
+
     m_Image->SaveAsPNG();
 }
 
