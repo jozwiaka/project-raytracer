@@ -30,8 +30,8 @@ Math::Vec3 Random::RandomInUnitSphere()
 {
     while (true)
     {
-        auto p = RandomVector(-1, 1);
-        if (Math::Dot(p, p) < 1)
+        auto p = RandomVector(-1.0f, 1.0f);
+        if (Math::Dot(p, p) < 1.0f)
         {
             return p;
         }
@@ -61,7 +61,7 @@ Math::Vec3 Random::RandomInUnitDisk()
     while (true)
     {
         auto p = Math::Vec3(RandomFloat(-1.0f, 1.0f), RandomFloat(-1.0f, 1.0f), 0.0f);
-        if (Math::Dot(p, p) < 1)
+        if (Math::Dot(p, p) < 1.0f)
             return p;
     }
 }
