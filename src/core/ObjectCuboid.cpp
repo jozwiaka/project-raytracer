@@ -3,7 +3,7 @@
 #include <limits>
 #include "Math.h"
 
-ObjectCuboid::ObjectCuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
+ObjectCuboid::ObjectCuboid(const Vec3 &center, const Vec3 &size, const Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       Size(size)
 {
@@ -11,8 +11,8 @@ ObjectCuboid::ObjectCuboid(const Math::Vec3 &center, const Math::Vec3 &size, con
 
 bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall, const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
-    Math::Vec3 p0;
-    Math::Vec3 n;
+    Vec3 p0;
+    Vec3 n;
     bool range1 = false;
     bool range2 = false;
 
@@ -20,18 +20,18 @@ bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall
     {
     case Wall::XY:
     case Wall::XY_Prime:
-        p0 = Math::Vec3(0.0f, 0.0f, (wall == Wall::XY ? 1.0f : -1.0f) * Size.z / 2.0f);
-        n = Math::Vec3(0.0f, 0.0f, 1.0f);
+        p0 = Vec3(0.0f, 0.0f, (wall == Wall::XY ? 1.0f : -1.0f) * Size.z / 2.0f);
+        n = Vec3(0.0f, 0.0f, 1.0f);
         break;
     case Wall::YZ:
     case Wall::YZ_Prime:
-        p0 = Math::Vec3((wall == Wall::YZ ? 1.0f : -1.0f) * Size.x / 2.0f, 0.0f, 0.0f);
-        n = Math::Vec3(1.0f, 0.0f, 0.0f);
+        p0 = Vec3((wall == Wall::YZ ? 1.0f : -1.0f) * Size.x / 2.0f, 0.0f, 0.0f);
+        n = Vec3(1.0f, 0.0f, 0.0f);
         break;
     case Wall::ZX:
     case Wall::ZX_Prime:
-        p0 = Math::Vec3(0.0f, (wall == Wall::ZX ? 1.0f : -1.0f) * Size.y / 2.0f, 0.0f);
-        n = Math::Vec3(0.0f, 1.0f, 0.0f);
+        p0 = Vec3(0.0f, (wall == Wall::ZX ? 1.0f : -1.0f) * Size.y / 2.0f, 0.0f);
+        n = Vec3(0.0f, 1.0f, 0.0f);
         break;
     default:
         break;

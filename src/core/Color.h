@@ -2,4 +2,4 @@
 
 #include "Math.h"
 
-using Color = Math::Vec3;
+using Color = Vec3;

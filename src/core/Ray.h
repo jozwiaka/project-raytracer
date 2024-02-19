@@ -3,11 +3,11 @@
 class Ray
 {
 public:
-    Math::Vec3 Origin;
-    Math::Vec3 Direction;
+    Vec3 Origin;
+    Vec3 Direction;
 
 public:
     Ray() = default;
-    Ray(const Math::Vec3 &origin, const Math::Vec3 &direction);
-    Math::Vec3 At(float t) const;
+    Ray(const Vec3 &origin, const Vec3 &direction);
+    Vec3 At(float t) const;
 };

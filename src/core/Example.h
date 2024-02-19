@@ -16,6 +16,7 @@
 #include "ObjectSphere.h"
 #include "ObjectCuboid.h"
 #include "ObjectCylinder.h"
+#include "MaterialDiffuseLight.h"
 
 class Example
 {
@@ -67,9 +68,9 @@ private:
         constexpr uint32_t width = 1200;
         image = std::make_shared<Image>(width, aspectRatio);
 
-        constexpr auto cameraPosition = Math::Vec3(0.0f, 0.0f, 0.0f);
-        constexpr auto cameraTarget = Math::Vec3(0.0f, 0.0f, -1.0f);
-        constexpr auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
+        constexpr auto cameraPosition = Vec3(0.0f, 0.0f, 0.0f);
+        constexpr auto cameraTarget = Vec3(0.0f, 0.0f, -1.0f);
+        constexpr auto cameraUpVector = Vec3(0.0f, 1.0f, 0.0f);
         constexpr float defocusAngle = 0.0f;
         constexpr float verticalFOV = 90.0f;
         constexpr float focusDist = 1.0f;
@@ -86,10 +87,10 @@ private:
         auto materialLeft = std::make_shared<MaterialDielectric>(1.5f);
         auto materialRight = std::make_shared<MaterialDielectric>(1.5f);
 #endif
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -100.5f, -1.0f), 100.0f, materialGround));
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, 0.0f, -1.0f), 0.5f, materialCenter));
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(-1.0f, 0.0f, -1.0f), 0.5f, materialLeft));
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(1.0f, 0.0f, -1.0f), 0.5f, materialRight));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, -100.5f, -1.0f), 100.0f, materialGround));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, 0.0f, -1.0f), 0.5f, materialCenter));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(-1.0f, 0.0f, -1.0f), 0.5f, materialLeft));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(1.0f, 0.0f, -1.0f), 0.5f, materialRight));
     }
 
     static void SetUpComplex(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene)
@@ -98,9 +99,9 @@ private:
         constexpr uint32_t width = 1200;
         image = std::make_shared<Image>(width, aspectRatio);
 
-        constexpr auto cameraPosition = Math::Vec3(13.0f, 2.0f, 3.0f);
-        constexpr auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
-        constexpr auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
+        constexpr auto cameraPosition = Vec3(13.0f, 2.0f, 3.0f);
+        constexpr auto cameraTarget = Vec3(0.0f, 0.0f, 0.0f);
+        constexpr auto cameraUpVector = Vec3(0.0f, 1.0f, 0.0f);
         constexpr float defocusAngle = 0.6f;
         constexpr float verticalFOV = 20.0f;
         constexpr float focusDist = 10.0f;
@@ -108,15 +109,15 @@ private:
 
         scene = std::make_shared<Scene>();
         auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
         for (int a = -11; a < 11; a++)
         {
             for (int b = -11; b < 11; b++)
             {
                 auto chooseMat = Random::RandomFloat();
-                Math::Vec3 center(a + 0.9f * Random::RandomFloat(), 0.2f, b + 0.9f * Random::RandomFloat());
+                Vec3 center(a + 0.9f * Random::RandomFloat(), 0.2f, b + 0.9f * Random::RandomFloat());
 
-                if (Math::Length(center - Math::Vec3(4.0f, 0.2f, 0.0f)) > 0.9f)
+                if (Math::Length(center - Vec3(4.0f, 0.2f, 0.0f)) > 0.9f)
                 {
                     std::shared_ptr<Material> sphereMat;
 
@@ -145,10 +146,10 @@ private:
             }
         }
         auto material1 = std::make_shared<MaterialDielectric>(1.5f);
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, 1.0f, 0.0f), 1.0f, material1));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, 1.0f, 0.0f), 1.0f, material1));
         auto material2 = std::make_shared<MaterialLambertian>(Color(0.4f, 0.2f, 0.1f));
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(-4.0f, 1.0f, 0.0f), 1.0f, material2));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(-4.0f, 1.0f, 0.0f), 1.0f, material2));
         auto material3 = std::make_shared<MaterialMetal>(Color(0.7f, 0.6f, 0.5f), 0.0f);
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
     }
 };

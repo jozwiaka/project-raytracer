@@ -22,7 +22,7 @@ float Math::Dot(const Vec3 &v1, const Vec3 &v2) noexcept
     return glm::dot(v1, v2);
 }
 
-Math::Vec3 Math::Cross(const Vec3 &v1, const Vec3 &v2) noexcept
+Vec3 Math::Cross(const Vec3 &v1, const Vec3 &v2) noexcept
 {
     return glm::cross(v1, v2);
 }
@@ -32,12 +32,12 @@ float Math::Length(const Vec3 &v) noexcept
     return glm::length(v);
 }
 
-Math::Vec3 Math::Normalize(const Vec3 &v) noexcept
+Vec3 Math::Normalize(const Vec3 &v) noexcept
 {
     return glm::normalize(v);
 }
 
-Math::Vec3 Math::Rotate(const Vec3 &v, const Vec3 &rotationDeg) noexcept
+Vec3 Math::Rotate(const Vec3 &v, const Vec3 &rotationDeg) noexcept
 {
     float roll = glm::radians(rotationDeg.x);
     float pitch = glm::radians(rotationDeg.y);
@@ -49,7 +49,7 @@ Math::Vec3 Math::Rotate(const Vec3 &v, const Vec3 &rotationDeg) noexcept
     return Vec3(rotationMatrix * glm::vec4(v, 1.0f));
 }
 
-Math::Vec3 Math::RotateT(const Vec3 &v, const Vec3 &rotationDeg) noexcept
+Vec3 Math::RotateT(const Vec3 &v, const Vec3 &rotationDeg) noexcept
 {
     float roll = glm::radians(-rotationDeg.x);
     float pitch = glm::radians(-rotationDeg.y);
@@ -61,7 +61,7 @@ Math::Vec3 Math::RotateT(const Vec3 &v, const Vec3 &rotationDeg) noexcept
     return Vec3(rotationMatrix * glm::vec4(v, 1.0f));
 }
 
-Math::Vec3 Math::Translate(const Vec3 &v, const Vec3 &translation) noexcept
+Vec3 Math::Translate(const Vec3 &v, const Vec3 &translation) noexcept
 {
     return v + translation;
 }
@@ -81,12 +81,12 @@ bool Math::IsWithinRange(float val, float center, float radius) noexcept
     return val >= center - radius && val <= center + radius;
 }
 
-Math::Vec3 Math::Reflect(const Vec3 &v, const Vec3 &n) noexcept
+Vec3 Math::Reflect(const Vec3 &v, const Vec3 &n) noexcept
 {
     return v - 2 * Dot(v, n) * n;
 }
 
-Math::Vec3 Math::Refract(const Vec3 &uv, const Vec3 &n, float etaiOverEtat) noexcept
+Vec3 Math::Refract(const Vec3 &uv, const Vec3 &n, float etaiOverEtat) noexcept
 {
     float cosTheta = std::fmin(Dot(-uv, n), 1.0f);
     Vec3 rOutPerp = etaiOverEtat * (uv + cosTheta * n);

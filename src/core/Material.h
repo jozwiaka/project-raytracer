@@ -8,11 +8,12 @@
 class Material
 {
 public:
-    Math::Vec3 Col;
+    Vec3 Col;
 
 public:
     Material() = default;
     Material(const Color &color);
     virtual ~Material() = default;
-    virtual bool Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const = 0;
+    virtual bool Scatter(const Ray &ray, const HitRecord &rec, Vec3 &attenuation, Ray &scattered) const = 0;
+    virtual Color Emitted(float u, float v, const Vec3 &p) const;
 };

@@ -15,10 +15,10 @@ public:
     };
 
 public:
-    Math::Vec3 Size;
+    Vec3 Size;
 
 public:
-    ObjectCuboid(const Math::Vec3 &center, const Math::Vec3 &size, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material);
+    ObjectCuboid(const Vec3 &center, const Vec3 &size, const Vec3 &rotationDeg, std::shared_ptr<Material> material);
 
     bool Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const override;
 

@@ -17,16 +17,16 @@ float Random::RandomFloat(float min, float max)
     return dis(gen);
 }
 
-Math::Vec3 Random::RandomVector()
+Vec3 Random::RandomVector()
 {
-    return Math::Vec3(RandomFloat(), RandomFloat(), RandomFloat());
+    return Vec3(RandomFloat(), RandomFloat(), RandomFloat());
 }
-Math::Vec3 Random::RandomVector(float min, float max)
+Vec3 Random::RandomVector(float min, float max)
 {
-    return Math::Vec3(RandomFloat(min, max), RandomFloat(min, max), RandomFloat(min, max));
+    return Vec3(RandomFloat(min, max), RandomFloat(min, max), RandomFloat(min, max));
 }
 
-Math::Vec3 Random::RandomInUnitSphere()
+Vec3 Random::RandomInUnitSphere()
 {
     while (true)
     {
@@ -38,12 +38,12 @@ Math::Vec3 Random::RandomInUnitSphere()
     }
 }
 
-Math::Vec3 Random::RandomUnitVector()
+Vec3 Random::RandomUnitVector()
 {
     return Math::Normalize(RandomInUnitSphere());
 }
 
-Math::Vec3 Random::RandomOnHemisphere(const Math::Vec3 &normal)
+Vec3 Random::RandomOnHemisphere(const Vec3 &normal)
 {
     auto onUnitSphere = RandomUnitVector();
     if (Math::Dot(onUnitSphere, normal) > 0.0f)
@@ -56,11 +56,11 @@ Math::Vec3 Random::RandomOnHemisphere(const Math::Vec3 &normal)
     }
 }
 
-Math::Vec3 Random::RandomInUnitDisk()
+Vec3 Random::RandomInUnitDisk()
 {
     while (true)
     {
-        auto p = Math::Vec3(RandomFloat(-1.0f, 1.0f), RandomFloat(-1.0f, 1.0f), 0.0f);
+        auto p = Vec3(RandomFloat(-1.0f, 1.0f), RandomFloat(-1.0f, 1.0f), 0.0f);
         if (Math::Dot(p, p) < 1.0f)
             return p;
     }

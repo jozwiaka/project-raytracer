@@ -4,7 +4,7 @@
 
 MaterialDielectric::MaterialDielectric(float indexOfRefraction) : IndexOfRefraction(indexOfRefraction) {}
 
-bool MaterialDielectric::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
+bool MaterialDielectric::Scatter(const Ray &ray, const HitRecord &rec, Vec3 &attenuation, Ray &scattered) const
 {
     attenuation = Color(1.0f, 1.0f, 1.0f);
     float refractionRatio = rec.FrontFace ? (1.0f / IndexOfRefraction) : IndexOfRefraction;
@@ -13,7 +13,7 @@ bool MaterialDielectric::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec
     float sinTheta = std::sqrt(1.0f - cosTheta * cosTheta);
 
     bool cannotRefract = refractionRatio * sinTheta > 1.0f;
-    Math::Vec3 direction;
+    Vec3 direction;
 
     if (cannotRefract || Reflectance(cosTheta, refractionRatio) > Random::RandomFloat())
     {

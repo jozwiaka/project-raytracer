@@ -3,7 +3,7 @@
 #include <limits>
 #include "Math.h"
 
-ObjectCylinder::ObjectCylinder(const Math::Vec3 &center, float radius, float height, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material)
+ObjectCylinder::ObjectCylinder(const Vec3 &center, float radius, float height, const Vec3 &rotationDeg, std::shared_ptr<Material> material)
     : Object(center, rotationDeg, material),
       Radius(radius),
       Height(height)
@@ -15,7 +15,7 @@ bool ObjectCylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) c
     Ray rayLocal{Math::RotateT(Math::Translate(ray.Origin, -Center), -RotationDeg), Math::RotateT(ray.Direction, -RotationDeg)};
     // (p-C-((p-C)*v)*v)^2.0f=r^2.0f
     // p=P=O+tD
-    auto v = Math::Vec3(0.0f, 1.0f, 0.0f);
+    auto v = Vec3(0.0f, 1.0f, 0.0f);
     auto oxz = rayLocal.Origin - (v * Math::Dot(rayLocal.Origin, v));
     auto dxz = rayLocal.Direction - (v * Math::Dot(rayLocal.Direction, v));
 

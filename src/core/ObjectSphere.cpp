@@ -1,12 +1,12 @@
 #include "ObjectSphere.h"
 
-ObjectSphere::ObjectSphere(const Math::Vec3 &center, float radius, std::shared_ptr<Material> material)
-    : Object(center, Math::Vec3(), material),
+ObjectSphere::ObjectSphere(const Vec3 &center, float radius, std::shared_ptr<Material> material)
+    : Object(center, Vec3(), material),
       Radius(radius) {}
 
 bool ObjectSphere::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
 {
-    Math::Vec3 oc = ray.Origin - Center;
+    Vec3 oc = ray.Origin - Center;
     float a = Math::Dot(ray.Direction, ray.Direction);
     float half_b = Math::Dot(oc, ray.Direction);
     float c = Math::Dot(oc, oc) - Radius * Radius;

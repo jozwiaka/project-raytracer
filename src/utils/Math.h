@@ -6,11 +6,11 @@
 #include <glm/gtc/quaternion.hpp>
 #include <glm/gtx/quaternion.hpp>
 #include <limits>
+
+using Vec3 = glm::vec3;
+
 class Math
 {
-public:
-    using Vec3 = glm::vec3;
-
 public:
     static float Infinity() noexcept;
     static float Epsilon() noexcept;

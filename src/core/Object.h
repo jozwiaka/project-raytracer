@@ -10,12 +10,12 @@
 class Object
 {
 public:
-    Math::Vec3 Center;
-    Math::Vec3 RotationDeg;
+    Vec3 Center;
+    Vec3 RotationDeg;
     std::shared_ptr<Material> Mat;
 
 public:
-    Object(const Math::Vec3 &center, const Math::Vec3 &rotationDeg, std::shared_ptr<Material> material);
+    Object(const Vec3 &center, const Vec3 &rotationDeg, std::shared_ptr<Material> material);
     virtual ~Object() = default;
     virtual bool Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const = 0;
 };

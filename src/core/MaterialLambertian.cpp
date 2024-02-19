@@ -2,7 +2,7 @@
 
 MaterialLambertian::MaterialLambertian(const Color &albedo) : Albedo(albedo) {}
 
-bool MaterialLambertian::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const
+bool MaterialLambertian::Scatter(const Ray &ray, const HitRecord &rec, Vec3 &attenuation, Ray &scattered) const
 {
     auto scatterDirection = rec.Normal + Random::RandomUnitVector();
 

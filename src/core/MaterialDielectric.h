@@ -11,7 +11,7 @@ public:
 
 public:
     MaterialDielectric(float indexOfRefraction);
-    bool Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &attenuation, Ray &scattered) const override;
+    bool Scatter(const Ray &ray, const HitRecord &rec, Vec3 &attenuation, Ray &scattered) const override;
 
 private:
     static float Reflectance(float cosine, float refIdx);
