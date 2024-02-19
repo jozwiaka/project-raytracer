@@ -25,7 +25,6 @@ public:
         SetUpComplex(image, camera, scene);
         constexpr uint32_t numSamples = 500;
         constexpr uint32_t maxDepth = 50;
-        // uint32_t numThreads = std::thread::hardware_concurrency();
         constexpr uint32_t numThreads = 1200;
         constexpr uint32_t tileSize = 1;
         renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
@@ -36,7 +35,6 @@ public:
         SetUpComplex(image, camera, scene);
         constexpr uint32_t numSamples = 20;
         constexpr uint32_t maxDepth = 10;
-        // uint32_t numThreads = std::thread::hardware_concurrency();
         constexpr uint32_t numThreads = 1000;
         constexpr uint32_t tileSize = 20;
         renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
