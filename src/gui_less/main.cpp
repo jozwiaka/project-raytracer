@@ -18,11 +18,11 @@ int main()
     auto scene = std::make_shared<Scene>();
     scene->SetUpExampleScene();
 
-    constexpr uint32_t numSamples = 10;
-    constexpr uint32_t maxDepth = 20;
+    constexpr uint32_t numSamples = 500;
+    constexpr uint32_t maxDepth = 50;
     // uint32_t numThreads = std::thread::hardware_concurrency();
-    constexpr uint32_t numThreads = 1000;
-    constexpr uint32_t tileSize = 20;
+    constexpr uint32_t numThreads = 1200;
+    constexpr uint32_t tileSize = 1;
     auto renderer = std::make_shared<Renderer>(camera, scene, image, numSamples, maxDepth, numThreads, tileSize);
 
     if (!renderer->CreateWindowAndDisplayInLoop())
