@@ -17,7 +17,7 @@ bool Scene::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const
         if (object->Intersect(ray, Interval(ray_t.Min, tClosest), tmpRec))
         {
             hit = true;
-            tClosest = tmpRec.t;
+            tClosest = tmpRec.T;
             rec = tmpRec;
         }
     }

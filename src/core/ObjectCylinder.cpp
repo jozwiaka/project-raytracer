@@ -46,8 +46,8 @@ bool ObjectCylinder::Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) c
         return false;
     }
 
-    rec.t = root;
-    rec.Point = ray.At(rec.t);
+    rec.T = root;
+    rec.Point = ray.At(rec.T);
     auto outwardNormal = Math::Normalize(rec.Point - Center);
     rec.SetFaceNormal(ray, outwardNormal);
     rec.Mat = Mat;

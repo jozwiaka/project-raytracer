@@ -72,8 +72,8 @@ bool ObjectCuboid::CheckWall(const Ray &rayLocal, const ObjectCuboid::Wall &wall
         range1 &&
         range2)
     {
-        rec.t = root;
-        rec.Point = ray.At(rec.t);
+        rec.T = root;
+        rec.Point = ray.At(rec.T);
         auto outwardNormal = Math::Normalize(rec.Point - Center); // TODO
         rec.SetFaceNormal(ray, outwardNormal);
         rec.Mat = Mat;

@@ -12,7 +12,9 @@ public:
     Vec3 Point;
     Vec3 Normal;
     std::shared_ptr<Material> Mat;
-    float t;
+    float T;
+    float U;
+    float V;
     bool FrontFace;
 
 public:
