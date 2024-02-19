@@ -20,6 +20,16 @@
 class Example
 {
 public:
+    static void Example_SimpleTest(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
+    {
+        SetUpSimple(image, camera, scene);
+        constexpr uint32_t numSamples = 20;
+        constexpr uint32_t maxDepth = 10;
+        constexpr uint32_t numThreads = 1000;
+        constexpr uint32_t tileSize = 20;
+        renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
+    }
+
     static void Example_ComplexFinal(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
     {
         SetUpComplex(image, camera, scene);
@@ -33,16 +43,6 @@ public:
     static void Example_ComplexTest(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
     {
         SetUpComplex(image, camera, scene);
-        constexpr uint32_t numSamples = 20;
-        constexpr uint32_t maxDepth = 10;
-        constexpr uint32_t numThreads = 1000;
-        constexpr uint32_t tileSize = 20;
-        renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
-    }
-
-    static void Example_SimpleTest(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
-    {
-        SetUpSimple(image, camera, scene);
         constexpr uint32_t numSamples = 20;
         constexpr uint32_t maxDepth = 10;
         constexpr uint32_t numThreads = 1000;
