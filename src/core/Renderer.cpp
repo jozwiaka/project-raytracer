@@ -2,10 +2,10 @@
 #include <iostream>
 #include <execution>
 
-Renderer::Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
-    : m_Camera(camera),
+Renderer::Renderer(std::shared_ptr<Image> image, std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
+    : m_Image(image),
+      m_Camera(camera),
       m_Scene(scene),
-      m_Image(image),
       m_NumSamples(numSamples),
       m_MaxDepth(maxDepth),
       m_ThreadPool(numThreads),

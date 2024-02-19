@@ -20,7 +20,7 @@
 class Renderer
 {
 public:
-    Renderer(std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize);
+    Renderer(std::shared_ptr<Image> image, std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize);
     bool CreateWindowAndDisplayInLoop(bool save = true);
     void Display(bool save = true);
     void Render();
@@ -34,9 +34,9 @@ private:
     Color RayColor(const Ray &ray, uint32_t depth) const;
 
 private:
+    std::shared_ptr<Image> m_Image;
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Scene> m_Scene;
-    std::shared_ptr<Image> m_Image;
     uint32_t m_NumSamples;
     uint32_t m_MaxDepth;
     ThreadPool m_ThreadPool;
