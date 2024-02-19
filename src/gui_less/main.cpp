@@ -8,7 +8,7 @@ int main()
     std::shared_ptr<Scene> scene;
     std::shared_ptr<Renderer> renderer;
 
-    Example::Example_ComplexTest(image, camera, scene, renderer);
+    Example::Example_SimpleTest(image, camera, scene, renderer);
 
     if (!renderer->CreateWindowAndDisplayInLoop())
     {
