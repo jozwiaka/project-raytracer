@@ -45,6 +45,18 @@ public:
 private:
     static void SetUpComplex(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene)
     {
+        constexpr float aspectRatio = 16.0f / 9.0f;
+        constexpr uint32_t width = 1200;
+        image = std::make_shared<Image>(width, aspectRatio);
+
+        constexpr auto cameraPosition = Math::Vec3(13.0f, 2.0f, 3.0f);
+        constexpr auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
+        constexpr auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
+        constexpr float defocusAngle = 0.6f;
+        constexpr float verticalFOV = 20.0f;
+        constexpr float focusDist = 10.0f;
+        camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
+
         scene = std::make_shared<Scene>();
         auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
