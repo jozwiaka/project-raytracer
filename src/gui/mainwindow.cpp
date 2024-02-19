@@ -5,27 +5,9 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_Ui(std::make_unique<Ui::MainWindow>())
 {
     m_Ui->setupUi(this);
-    constexpr float aspectRatio = 16.0f / 9.0f;
-    constexpr uint32_t width = 1200;
-    auto image = std::make_shared<Image>(width, aspectRatio);
+    std::shared_ptr<Image> image;
 
-    constexpr auto cameraPosition = Math::Vec3(13.0f, 2.0f, 3.0f);
-    constexpr auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
-    constexpr auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
-    constexpr float defocusAngle = 0.6f;
-    constexpr float verticalFOV = 20.0f;
-    constexpr float focusDist = 10.0f;
-    m_Camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
-
-    m_Scene = std::make_shared<Scene>();
-    m_Scene->SetUpExampleScene();
-
-    constexpr uint32_t numSamples = 10;
-    constexpr uint32_t maxDepth = 20;
-    // uint32_t numThreads = std::thread::hardware_concurrency();
-    constexpr uint32_t numThreads = 1000;
-    constexpr uint32_t tileSize = 50;
-    m_Renderer = std::make_shared<Renderer>(m_Camera, m_Scene, image, numSamples, maxDepth, numThreads, tileSize);
+    Example::Example_ComplexTest(image, m_Camera, m_Scene, m_Renderer);
 
     // Set up the m_Layout
     m_Layout = new QVBoxLayout(m_Ui->centralwidget);

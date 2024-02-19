@@ -18,5 +18,4 @@ public:
 
 public:
     bool Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const;
-    void SetUpExampleScene();
 };

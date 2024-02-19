@@ -15,3 +15,4 @@
 #include "ObjectSphere.h"
 #include "ObjectCuboid.h"
 #include "ObjectCylinder.h"
+#include "Example.h"
