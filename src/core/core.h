@@ -16,4 +16,5 @@
 #include "ObjectCuboid.h"
 #include "ObjectCylinder.h"
 #include "MaterialDiffuseLight.h"
+#include "TextureSolidColor.h"
 #include "Example.h"
