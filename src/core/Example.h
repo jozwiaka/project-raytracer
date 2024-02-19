@@ -68,7 +68,7 @@ private:
         scene = std::make_shared<Scene>();
         auto materialGround = std::make_shared<MaterialLambertian>(Color(0.8f, 0.8f, 0.0f));
         auto materialCenter = std::make_shared<MaterialLambertian>(Color(0.7f, 0.3f, 0.3f));
-        auto materialLeft = std::make_shared<MaterialMetal>(Color(0.8f, 0.8f, 0.8f), 0.3f);
+        auto materialLeft = std::make_shared<MaterialMetal>(Color(0.8f, 0.8f, 0.8f), 0.0f);
         auto materialRight = std::make_shared<MaterialMetal>(Color(0.8f, 0.6f, 0.2f), 1.0f);
 
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -100.5f, -1.0f), 100.0f, materialGround));
