@@ -7,5 +7,5 @@ bool MaterialMetal::Scatter(const Ray &ray, const HitRecord &rec, Math::Vec3 &at
     auto reflected = Math::Reflect(Math::Normalize(ray.Direction), rec.Normal);
     scattered = Ray(rec.Point, reflected + Fuzz * Random::RandomInUnitSphere());
     attenuation = Albedo;
-    return (Math::Dot(scattered.Direction, rec.Normal) > 0);
+    return (Math::Dot(scattered.Direction, rec.Normal) > 0.0f);
 }
