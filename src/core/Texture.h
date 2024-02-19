@@ -6,5 +6,5 @@
 class Texture
 {
 public:
-private:
+    virtual Color Value(float u, float v, const Vec3 &p) const = 0;
 };
