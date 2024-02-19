@@ -23,10 +23,10 @@ public:
     static void Example_SimpleTest(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
     {
         SetUpSimple(image, camera, scene);
-        constexpr uint32_t numSamples = 20;
-        constexpr uint32_t maxDepth = 10;
+        constexpr uint32_t numSamples = 100;
+        constexpr uint32_t maxDepth = 50;
         constexpr uint32_t numThreads = 1000;
-        constexpr uint32_t tileSize = 20;
+        constexpr uint32_t tileSize = 2;
         renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
     }
 
@@ -57,24 +57,24 @@ private:
         constexpr uint32_t width = 1200;
         image = std::make_shared<Image>(width, aspectRatio);
 
-        constexpr auto cameraPosition = Math::Vec3(13.0f, 2.0f, 3.0f);
-        constexpr auto cameraTarget = Math::Vec3(0.0f, 0.0f, 0.0f);
+        constexpr auto cameraPosition = Math::Vec3(0.0f, 0.0f, 0.0f);
+        constexpr auto cameraTarget = Math::Vec3(0.0f, 0.0f, -1.0f);
         constexpr auto cameraUpVector = Math::Vec3(0.0f, 1.0f, 0.0f);
-        constexpr float defocusAngle = 0.6f;
-        constexpr float verticalFOV = 20.0f;
-        constexpr float focusDist = 10.0f;
+        constexpr float defocusAngle = 0.0f;
+        constexpr float verticalFOV = 90.0f;
+        constexpr float focusDist = 1.0f;
         camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
 
         scene = std::make_shared<Scene>();
-        auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
+        auto materialGround = std::make_shared<MaterialLambertian>(Color(0.8f, 0.8f, 0.0f));
+        auto materialCenter = std::make_shared<MaterialLambertian>(Color(0.7f, 0.3f, 0.3f));
+        auto materialLeft = std::make_shared<MaterialMetal>(Color(0.8f, 0.8f, 0.8f), 0.3f);
+        auto materialRight = std::make_shared<MaterialMetal>(Color(0.8f, 0.6f, 0.2f), 1.0f);
 
-        auto material1 = std::make_shared<MaterialDielectric>(1.5f);
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, 1.0f, 0.0f), 1.0f, material1));
-        auto material2 = std::make_shared<MaterialLambertian>(Color(0.4f, 0.2f, 0.1f));
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(-4.0f, 1.0f, 0.0f), 1.0f, material2));
-        auto material3 = std::make_shared<MaterialMetal>(Color(0.7f, 0.6f, 0.5f), 0.0f);
-        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, -100.5f, -1.0f), 100.0f, materialGround));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(0.0f, 0.0f, -1.0f), 0.5f, materialCenter));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(-1.0f, 0.0f, -1.0f), 0.5f, materialLeft));
+        scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Math::Vec3(1.0f, 0.0f, -1.0f), 0.5f, materialRight));
     }
 
     static void SetUpComplex(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene)
