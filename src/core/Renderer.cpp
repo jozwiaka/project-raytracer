@@ -167,11 +167,14 @@ Color Renderer::RayColor(const Ray &ray, uint32_t depth) const
     {
         Ray scattered;
         Color attenuation;
-        if (rec.Mat->Scatter(ray, rec, attenuation, scattered))
+        Color colorFromEmission = rec.Mat->Emitted(rec.U, rec.V, rec.Point);
+        if (!rec.Mat->Scatter(ray, rec, attenuation, scattered))
         {
-            return attenuation * RayColor(scattered, depth - 1);
+            return colorFromEmission;
         }
-        return Color();
+
+        Color colorFromScatter = attenuation * RayColor(scattered, depth - 1);
+        return colorFromEmission + colorFromScatter;
     }
 
     // Background
