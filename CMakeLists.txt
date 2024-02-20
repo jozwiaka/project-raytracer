@@ -20,8 +20,8 @@ set(CPACK_GENERATOR "DEB")
 set(CPACK_PACKAGE_NAME "raytracer")
 set(CPACK_PACKAGE_VERSION "1.0.0")
 set(CPACK_PACKAGE_RELEASE 1)
-set(CPACK_PACKAGE_CONTACT "Your Name <your.email@example.com>")
-set(CPACK_PACKAGE_DESCRIPTION "Your Raytracer Project Description")
+set(CPACK_PACKAGE_CONTACT "Name <user.email@example.com>")
+set(CPACK_PACKAGE_DESCRIPTION "Project Description")
 
 include(CPack)
 
