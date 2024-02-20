@@ -24,13 +24,13 @@ run_gui:
 	cd build && ./src/gui/exe_gui
 callgrind:
 	cd build && valgrind --tool=callgrind ./exe && kcachegrin callgrind.out.*
-package: build
+all: prepare conan configure build test run
+
+package:
 	cd build && cpack
 install:
 	dpkg -i build/raytracer-1.0.0-Linux.deb
-r:
+run_installed:
 	/usr/bin/exe
 uninstall:
 	dpkg -r raytracer
-
-all: prepare conan configure build test run
