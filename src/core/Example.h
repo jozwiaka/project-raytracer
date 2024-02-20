@@ -17,56 +17,37 @@
 #include "ObjectCuboid.h"
 #include "ObjectCylinder.h"
 #include "MaterialDiffuseLight.h"
+#include <tuple>
 
 class Example
 {
 public:
-    static void Example_SimpleTest(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
-    {
-        SetUpSimple(image, camera, scene);
-        constexpr uint32_t numSamples = 20;
-        constexpr uint32_t maxDepth = 10;
-        constexpr uint32_t numThreads = 1000;
-        constexpr uint32_t tileSize = 100;
-        renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
-    }
+    using Tuple = std::tuple<std::shared_ptr<Image>, std::shared_ptr<Camera>, std::shared_ptr<Scene>, std::shared_ptr<Renderer>>;
 
-    static void Example_ComplexTest(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
+public:
+    static Tuple SetUp(int id)
     {
-        SetUpComplex(image, camera, scene);
-        constexpr uint32_t numSamples = 20;
-        constexpr uint32_t maxDepth = 10;
-        constexpr uint32_t numThreads = 1000;
-        constexpr uint32_t tileSize = 100;
-        renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
-    }
-
-    static void Example_SimpleFinal(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
-    {
-        SetUpSimple(image, camera, scene);
-        constexpr uint32_t numSamples = 500;
-        constexpr uint32_t maxDepth = 50;
-        constexpr uint32_t numThreads = 1200;
-        constexpr uint32_t tileSize = 1;
-        renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
-    }
-
-    static void Example_ComplexFinal(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene, std::shared_ptr<Renderer> &renderer)
-    {
-        SetUpComplex(image, camera, scene);
-        constexpr uint32_t numSamples = 500;
-        constexpr uint32_t maxDepth = 50;
-        constexpr uint32_t numThreads = 1200;
-        constexpr uint32_t tileSize = 1;
-        renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
+        switch (id)
+        {
+        case 1:
+            return ThreeSpheres(20, 10, 1000, 100);
+        case 2:
+            return RandomSpheres(20, 10, 1000, 100);
+        case 3:
+            return ThreeSpheres(500, 50, 1200, 1);
+        case 4:
+            return RandomSpheres(500, 50, 1200, 1);
+        default:
+            throw std::invalid_argument("Invalid scene ID.");
+        }
     }
 
 private:
-    static void SetUpSimple(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene)
+    static Tuple ThreeSpheres(uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
     {
         constexpr float aspectRatio = 16.0f / 9.0f;
         constexpr uint32_t width = 1200;
-        image = std::make_shared<Image>(width, aspectRatio);
+        auto image = std::make_shared<Image>(width, aspectRatio);
 
         constexpr auto cameraPosition = Vec3(0.0f, 0.0f, 0.0f);
         constexpr auto cameraTarget = Vec3(0.0f, 0.0f, -1.0f);
@@ -74,9 +55,9 @@ private:
         constexpr float defocusAngle = 0.0f;
         constexpr float verticalFOV = 90.0f;
         constexpr float focusDist = 1.0f;
-        camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
+        auto camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
 
-        scene = std::make_shared<Scene>();
+        auto scene = std::make_shared<Scene>();
         auto materialGround = std::make_shared<MaterialLambertian>(Color(0.8f, 0.8f, 0.0f));
         auto materialCenter = std::make_shared<MaterialLambertian>(Color(0.7f, 0.3f, 0.3f));
 #define METAL 1
@@ -94,13 +75,15 @@ private:
 
         auto difflight = std::make_shared<MaterialDiffuseLight>(Color(4.0f, 4.0f, 4.0f));
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, 5.0f, 0.0f), 2.0f, difflight));
+        auto renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
+        return std::make_tuple(image, camera, scene, renderer);
     }
 
-    static void SetUpComplex(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene)
+    static Tuple RandomSpheres(uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
     {
         constexpr float aspectRatio = 16.0f / 9.0f;
         constexpr uint32_t width = 1200;
-        image = std::make_shared<Image>(width, aspectRatio);
+        auto image = std::make_shared<Image>(width, aspectRatio);
 
         constexpr auto cameraPosition = Vec3(13.0f, 2.0f, 3.0f);
         constexpr auto cameraTarget = Vec3(0.0f, 0.0f, 0.0f);
@@ -108,9 +91,9 @@ private:
         constexpr float defocusAngle = 0.6f;
         constexpr float verticalFOV = 20.0f;
         constexpr float focusDist = 10.0f;
-        camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
+        auto camera = std::make_shared<Camera>(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, image);
 
-        scene = std::make_shared<Scene>();
+        auto scene = std::make_shared<Scene>();
         auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
         for (int a = -11; a < 11; a++)
@@ -154,5 +137,7 @@ private:
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(-4.0f, 1.0f, 0.0f), 1.0f, material2));
         auto material3 = std::make_shared<MaterialMetal>(Color(0.7f, 0.6f, 0.5f), 0.0f);
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
+        auto renderer = std::make_shared<Renderer>(image, camera, scene, numSamples, maxDepth, numThreads, tileSize);
+        return std::make_tuple(image, camera, scene, renderer);
     }
 };

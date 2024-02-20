@@ -33,9 +33,10 @@ private:
     QVBoxLayout *m_Layout;
     QPushButton *m_RenderButton;
     OpenGLWidget *m_OpenGLWidget;
-    std::shared_ptr<Renderer> m_Renderer;
+    std::shared_ptr<Image> m_Image;
     std::shared_ptr<Camera> m_Camera;
     std::shared_ptr<Scene> m_Scene;
+    std::shared_ptr<Renderer> m_Renderer;
 
 private:
     void CreateSlider(const QString &labelText, float *value, float minValue, float maxValue);

@@ -1,13 +1,13 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include <tuple>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), m_Ui(std::make_unique<Ui::MainWindow>())
 {
     m_Ui->setupUi(this);
-    std::shared_ptr<Image> image;
 
-    Example::Example_ComplexTest(image, m_Camera, m_Scene, m_Renderer);
+    std::tie(m_Image, m_Camera, m_Scene, m_Renderer) = Example::SetUp(1);
 
     // Set up the m_Layout
     m_Layout = new QVBoxLayout(m_Ui->centralwidget);
