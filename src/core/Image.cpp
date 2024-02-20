@@ -114,5 +114,5 @@ void Image::SetUpTmpDir()
   {
     std::filesystem::remove_all(m_TmpDir);
   }
-  std::filesystem::create_directory(m_TmpDir);
+  std::filesystem::create_directories(m_TmpDir);
 }

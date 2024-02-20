@@ -15,3 +15,16 @@ target_compile_options(exe_flags INTERFACE
 add_subdirectory(external)
 add_subdirectory(src)
 add_subdirectory(tests)
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_PACKAGE_NAME "raytracer")
+set(CPACK_PACKAGE_VERSION "1.0.0")
+set(CPACK_PACKAGE_RELEASE 1)
+set(CPACK_PACKAGE_CONTACT "Your Name <your.email@example.com>")
+set(CPACK_PACKAGE_DESCRIPTION "Your Raytracer Project Description")
+
+set(CPACK_RPM_PACKAGE_REQUIRES "gcc, libstdc++6, libc6, libglfw3, libglfw3-dev, libglm-dev")
+
+include(CPack)
+
+install(TARGETS exe DESTINATION bin)
