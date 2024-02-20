@@ -23,13 +23,13 @@ public:
     Renderer(std::shared_ptr<Image> image, std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize);
     bool CreateWindowAndDisplayInLoop(bool save = true);
     void Display(bool save = true);
-    void Render();
     void ConfigureViewport();
-    bool InitWindow();
     void ResizeViewport(uint32_t width, uint32_t height);
     void ResizeWindow(uint32_t width, uint32_t height);
 
 private:
+    bool InitWindow();
+    void Render();
     void PerPixel(uint32_t x, uint32_t y);
     Color RayColor(const Ray &ray, uint32_t depth) const;
 
