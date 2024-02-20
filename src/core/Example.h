@@ -91,6 +91,9 @@ private:
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, 0.0f, -1.0f), 0.5f, materialCenter));
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(-1.0f, 0.0f, -1.0f), 0.5f, materialLeft));
         scene->Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(1.0f, 0.0f, -1.0f), 0.5f, materialRight));
+
+        auto difflight = std::make_shared<MaterialDiffuseLight>(Color(4.0f, 4.0f, 4.0f));
+        scene->Objects.emplace_back(std::make_shared<ObjectSphere>(Vec3(0.0f, 5.0f, 0.0f), 2.0f, difflight));
     }
 
     static void SetUpComplex(std::shared_ptr<Image> &image, std::shared_ptr<Camera> &camera, std::shared_ptr<Scene> &scene)
