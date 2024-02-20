@@ -88,7 +88,7 @@ void Image::Save() const
 
   std::vector<unsigned char> imageData(m_Width * m_Height * m_Channels);
 
-    uint32_t i = 0;
+  uint32_t i = 0;
   for (const auto &row : Data)
   {
     for (const auto &pixel : row)
