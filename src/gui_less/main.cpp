@@ -2,7 +2,7 @@
 
 int main()
 {
-    auto [image, camera, scene, renderer] = Example::ThreeSpheresTest();
+    auto [image, camera, scene, renderer] = Initializer::ThreeSpheresTest();
 
     if (!renderer->CreateWindowAndDisplayInLoop())
     {

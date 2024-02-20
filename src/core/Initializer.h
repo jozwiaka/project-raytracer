@@ -19,7 +19,7 @@
 #include "MaterialDiffuseLight.h"
 #include <tuple>
 
-class Example
+class Initializer
 {
 public:
     using Tuple = std::tuple<std::shared_ptr<Image>, std::shared_ptr<Camera>, std::shared_ptr<Scene>, std::shared_ptr<Renderer>>;

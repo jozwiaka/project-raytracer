@@ -18,4 +18,4 @@
 #include "MaterialDiffuseLight.h"
 #include "TextureSolidColor.h"
 #include "MaterialIsotropic.h"
-#include "Example.h"
+#include "Initializer.h"
