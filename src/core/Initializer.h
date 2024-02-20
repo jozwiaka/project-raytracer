@@ -22,17 +22,17 @@
 class Initializer
 {
 public:
-    using Tuple = std::tuple<std::shared_ptr<Image>, std::shared_ptr<Camera>, std::shared_ptr<Scene>, std::shared_ptr<Renderer>>;
+    using SetupTuple = std::tuple<std::shared_ptr<Image>, std::shared_ptr<Camera>, std::shared_ptr<Scene>, std::shared_ptr<Renderer>>;
 
 public:
-    static Tuple ThreeSpheresTest() { return ThreeSpheres(20, 10, 1000, 100); }
+    static SetupTuple ThreeSpheresTest() { return ThreeSpheres(20, 10, 1000, 100); }
 
-    static Tuple RandomSpheresTest() { return RandomSpheres(20, 10, 1000, 100); }
+    static SetupTuple RandomSpheresTest() { return RandomSpheres(20, 10, 1000, 100); }
 
-    static Tuple RandomSpheresFinal() { return RandomSpheres(500, 50, 1200, 1); }
+    static SetupTuple RandomSpheresFinal() { return RandomSpheres(500, 50, 1200, 1); }
 
 private:
-    static Tuple ThreeSpheres(uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
+    static SetupTuple ThreeSpheres(uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
     {
         constexpr float aspectRatio = 16.0f / 9.0f;
         constexpr uint32_t width = 1200;
@@ -68,7 +68,7 @@ private:
         return std::make_tuple(image, camera, scene, renderer);
     }
 
-    static Tuple RandomSpheres(uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
+    static SetupTuple RandomSpheres(uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
     {
         constexpr float aspectRatio = 16.0f / 9.0f;
         constexpr uint32_t width = 1200;
