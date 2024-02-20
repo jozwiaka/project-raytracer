@@ -79,14 +79,16 @@ void Image::Resize(uint32_t width, uint32_t height)
 
 void Image::Save() const
 {
-  if (Data.empty())
+  static size_t frameIndex = 0;
+
+  if (Data.empty() || frameIndex > 100)
   {
     return;
   }
 
   std::vector<unsigned char> imageData(m_Width * m_Height * m_Channels);
 
-  uint32_t i = 0;
+    uint32_t i = 0;
   for (const auto &row : Data)
   {
     for (const auto &pixel : row)
@@ -98,7 +100,6 @@ void Image::Save() const
     }
   }
 
-  static size_t frameIndex = 0;
   std::stringstream ss;
   ss << m_TmpDir << "frame_" << ++frameIndex << ".png";
   if (!stbi_write_png(ss.str().c_str(), m_Width, m_Height, m_Channels, imageData.data(), m_Width * m_Channels))
