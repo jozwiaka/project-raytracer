@@ -25,22 +25,11 @@ public:
     using Tuple = std::tuple<std::shared_ptr<Image>, std::shared_ptr<Camera>, std::shared_ptr<Scene>, std::shared_ptr<Renderer>>;
 
 public:
-    static Tuple SetUp(int id)
-    {
-        switch (id)
-        {
-        case 1:
-            return ThreeSpheres(20, 10, 1000, 100);
-        case 2:
-            return RandomSpheres(20, 10, 1000, 100);
-        case 3:
-            return ThreeSpheres(500, 50, 1200, 1);
-        case 4:
-            return RandomSpheres(500, 50, 1200, 1);
-        default:
-            throw std::invalid_argument("Invalid scene ID.");
-        }
-    }
+    static Tuple ThreeSpheresTest() { return ThreeSpheres(20, 10, 1000, 100); }
+
+    static Tuple RandomSpheresTest() { return RandomSpheres(20, 10, 1000, 100); }
+
+    static Tuple RandomSpheresFinal() { return RandomSpheres(500, 50, 1200, 1); }
 
 private:
     static Tuple ThreeSpheres(uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
