@@ -26,7 +26,7 @@ callgrind:
 	cd build && valgrind --tool=callgrind ./exe && kcachegrin callgrind.out.*
 all: prepare conan configure build test run
 
-package:
+package: build
 	cd build && cpack
 install:
 	dpkg -i build/raytracer-1.0.0-Linux.deb
