@@ -18,7 +18,7 @@ build: configure
 test: build
 	# cd build && make test
 run:
-	cd build && ./src/gui_less/exe
+	cd build && ./src/nogui/exe
 run_gui:
 	cd build && ./src/gui/exe_gui
 callgrind:
