@@ -1,6 +1,6 @@
 #include "TextureSolidColor.h"
 
-TextureSolidColor::TextureSolidColor(Color c) : m_Col(c)
+TextureSolidColor::TextureSolidColor(const Color& c) : m_Col(c)
 {
 }
 

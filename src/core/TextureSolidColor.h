@@ -7,7 +7,7 @@ class TextureSolidColor : public Texture
 {
 public:
     TextureSolidColor() = default;
-    TextureSolidColor(Color c);
+    TextureSolidColor(const Color &c);
     Color Value(float u, float v, const Vec3 &p) const override;
 
 private:
