@@ -100,7 +100,7 @@ void Renderer::Display(bool save)
 
 void Renderer::Render()
 {
-    std::cout << "Rendering...\n";
+    std::cout << "Rendering image " << m_Image->GetWidth() << "x" << m_Image->GetHeight() << "...\n";
     m_Timer.Start();
 
 #define TP 1
