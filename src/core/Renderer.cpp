@@ -59,7 +59,7 @@ void Renderer::ConfigureViewport()
     glViewport(0, 0, m_Image->GetWidth(), m_Image->GetHeight());
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, m_Image->GetWidth(), 0, m_Image->GetHeight(), -1.0, 1.0);
+    glOrtho(0, m_Image->GetWidth(), m_Image->GetHeight(), 0, -1.0, 1.0); //(0,0) - top left corner
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
@@ -87,7 +87,7 @@ void Renderer::Display(bool save)
         for (uint32_t x = 0; x < m_Image->GetWidth(); ++x)
         {
             glColor3f(m_Image->Data[y][x].x, m_Image->Data[y][x].y, m_Image->Data[y][x].z);
-            glVertex2f(x, m_Image->GetHeight() - 1 - y);
+            glVertex2f(x, y);
         }
     }
     glEnd();
