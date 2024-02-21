@@ -27,7 +27,7 @@
 *.lib
 
 # Executables
-*.exe
+*.exe_nogui
 *.out
 *.app
 

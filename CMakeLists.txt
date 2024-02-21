@@ -25,4 +25,4 @@ set(CPACK_PACKAGE_DESCRIPTION "Project Description")
 
 include(CPack)
 
-install(TARGETS exe DESTINATION bin)
+install(TARGETS exe_nogui DESTINATION bin)
