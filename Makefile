@@ -14,7 +14,7 @@ conan: prepare
 configure: conan
 	cd build && cmake ..
 build: configure
-	cd build && cmake --build . -j16
+	cd build && cmake --build . -j$(nproc)
 test: build
 	# cd build && make test
 run:
