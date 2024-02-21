@@ -1,11 +1,10 @@
 #include "core.h"
+#include "MainWindow.h"
 
 int main()
 {
     auto [image, camera, scene, renderer] = Initializer::ThreeSpheresTest();
 
-    if (!renderer->CreateWindowAndDisplayInLoop())
-    {
-        return -1;
-    }
+    auto window = MainWindow(image, renderer);
+    window.Show();
 }

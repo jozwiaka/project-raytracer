@@ -14,46 +14,6 @@ Renderer::Renderer(std::shared_ptr<Image> image, std::shared_ptr<Camera> camera,
 {
 }
 
-bool Renderer::CreateWindowAndDisplayInLoop(bool save)
-{
-    if (!glfwInit())
-    {
-        return false;
-    }
-
-    GLFWwindow *window = glfwCreateWindow(m_Image->GetWidth(), m_Image->GetHeight(), "Raytracer", NULL, NULL);
-
-    if (!window)
-    {
-        glfwTerminate();
-        return false;
-    }
-
-    glfwMakeContextCurrent(window);
-
-    glfwSetWindowUserPointer(window, this);
-
-    glfwSetFramebufferSizeCallback(window, WindowSizeChangedCallback);
-
-    ConfigureViewport();
-
-    while (!glfwWindowShouldClose(window))
-    {
-        Display(save);
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
-    return true;
-}
-
-void Renderer::WindowSizeChangedCallback(GLFWwindow *window, int width, int height)
-{
-    Renderer *renderer = static_cast<Renderer *>(glfwGetWindowUserPointer(window));
-    renderer->ResizeViewport(width, height);
-}
-
 void Renderer::ConfigureViewport()
 {
     glViewport(0, 0, m_Image->GetWidth(), m_Image->GetHeight());
@@ -71,7 +31,7 @@ void Renderer::ResizeViewport(uint32_t width, uint32_t height)
     ConfigureViewport();
 }
 
-void Renderer::Display(bool save)
+void Renderer::Display()
 {
     Render();
     glClear(GL_COLOR_BUFFER_BIT);
@@ -86,10 +46,6 @@ void Renderer::Display(bool save)
     }
     glEnd();
     glFlush();
-    if (save)
-    {
-        m_Image->Save();
-    }
 }
 
 void Renderer::Render()
@@ -134,6 +90,8 @@ void Renderer::Render()
 
     std::string timeEllapsedStr = m_Timer.Stop();
     std::cout << "Done. Time = " << timeEllapsedStr << std::endl;
+
+    m_Image->Save();
 }
 
 void Renderer::PerPixel(uint32_t x, uint32_t y)

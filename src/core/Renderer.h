@@ -1,6 +1,5 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include "utils.h"
 #include "Material.h"
 #include "Scene.h"
@@ -17,17 +16,17 @@
 #include <future>
 #include <thread>
 #include <memory>
+#include <GLFW/glfw3.h>
+
 class Renderer
 {
 public:
     Renderer(std::shared_ptr<Image> image, std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize);
-    bool CreateWindowAndDisplayInLoop(bool save = true);
-    void Display(bool save = true);
+    void Display();
     void ConfigureViewport();
     void ResizeViewport(uint32_t width, uint32_t height);
 
 private:
-    static void WindowSizeChangedCallback(GLFWwindow *window, int width, int height);
     void Render();
     void PerPixel(uint32_t x, uint32_t y);
     Color RayColor(const Ray &ray, uint32_t depth) const;

@@ -5,7 +5,6 @@ add_library(core STATIC ${SOURCES})
 target_link_libraries(core PUBLIC
     exe_flags
     pthread
-    glfw
     ${OPENGL_LIBRARIES}
     external
     utils
