@@ -13,7 +13,7 @@ RUN apt-get update && \
     libglm-dev \
     libassimp-dev \
     libgtest-dev \
-    apt install libtbb-dev \
+    libtbb-dev \
     && apt-get clean
 
 ENV PATH /root/.local/bin:$PATH
