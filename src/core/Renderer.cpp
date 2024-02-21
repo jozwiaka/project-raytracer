@@ -51,7 +51,17 @@ bool Renderer::InitWindow()
 
     glfwMakeContextCurrent(m_Window);
 
+    glfwSetWindowUserPointer(m_Window, this);
+
+    glfwSetFramebufferSizeCallback(m_Window, WindowSizeChangedCallback);
+
     return true;
+}
+
+void Renderer::WindowSizeChangedCallback(GLFWwindow *window, int width, int height)
+{
+    Renderer *renderer = static_cast<Renderer *>(glfwGetWindowUserPointer(window));
+    renderer->ResizeViewport(width, height);
 }
 
 void Renderer::ConfigureViewport()

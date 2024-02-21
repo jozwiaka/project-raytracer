@@ -28,6 +28,7 @@ public:
     void ResizeWindow(uint32_t width, uint32_t height);
 
 private:
+    static void WindowSizeChangedCallback(GLFWwindow *window, int width, int height);
     bool InitWindow();
     void Render();
     void PerPixel(uint32_t x, uint32_t y);
