@@ -10,51 +10,41 @@ Renderer::Renderer(std::shared_ptr<Image> image, std::shared_ptr<Camera> camera,
       m_MaxDepth(maxDepth),
       m_ThreadPool(numThreads),
       m_TileSize(tileSize),
-      m_Timer(),
-      m_Window(nullptr)
+      m_Timer()
 {
 }
 
 bool Renderer::CreateWindowAndDisplayInLoop(bool save)
-{
-    if (!InitWindow())
-    {
-        return false;
-    }
-
-    ConfigureViewport();
-
-    while (!glfwWindowShouldClose(m_Window))
-    {
-        Display(save);
-        glfwSwapBuffers(m_Window);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
-    return true;
-}
-
-bool Renderer::InitWindow()
 {
     if (!glfwInit())
     {
         return false;
     }
 
-    m_Window = glfwCreateWindow(m_Image->GetWidth(), m_Image->GetHeight(), "Raytracer", NULL, NULL);
-    if (!m_Window)
+    GLFWwindow *window = glfwCreateWindow(m_Image->GetWidth(), m_Image->GetHeight(), "Raytracer", NULL, NULL);
+
+    if (!window)
     {
         glfwTerminate();
         return false;
     }
 
-    glfwMakeContextCurrent(m_Window);
+    glfwMakeContextCurrent(window);
 
-    glfwSetWindowUserPointer(m_Window, this);
+    glfwSetWindowUserPointer(window, this);
 
-    glfwSetFramebufferSizeCallback(m_Window, WindowSizeChangedCallback);
+    glfwSetFramebufferSizeCallback(window, WindowSizeChangedCallback);
 
+    ConfigureViewport();
+
+    while (!glfwWindowShouldClose(window))
+    {
+        Display(save);
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    glfwTerminate();
     return true;
 }
 
@@ -79,12 +69,6 @@ void Renderer::ResizeViewport(uint32_t width, uint32_t height)
     m_Image->Resize(width, height);
     m_Camera->Init();
     ConfigureViewport();
-}
-
-void Renderer::ResizeWindow(uint32_t width, uint32_t height)
-{
-    ResizeViewport(width, height);
-    InitWindow();
 }
 
 void Renderer::Display(bool save)

@@ -25,11 +25,9 @@ public:
     void Display(bool save = true);
     void ConfigureViewport();
     void ResizeViewport(uint32_t width, uint32_t height);
-    void ResizeWindow(uint32_t width, uint32_t height);
 
 private:
     static void WindowSizeChangedCallback(GLFWwindow *window, int width, int height);
-    bool InitWindow();
     void Render();
     void PerPixel(uint32_t x, uint32_t y);
     Color RayColor(const Ray &ray, uint32_t depth) const;
@@ -43,5 +41,4 @@ private:
     ThreadPool m_ThreadPool;
     uint32_t m_TileSize;
     Timer m_Timer;
-    GLFWwindow *m_Window;
 };
