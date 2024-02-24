@@ -2,12 +2,10 @@
 #include "./ui_mainwindow.h"
 #include <tuple>
 
-MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), m_Ui(std::make_shared<Ui::MainWindow>())
+MainWindow::MainWindow(std::shared_ptr<Image> &img, Camera &camera, Scene &scene, Renderer &renderer, QWidget *parent)
+    : QMainWindow(parent), m_Ui(std::make_shared<Ui::MainWindow>()), m_Img(img), m_Camera(camera), m_Scene(scene), m_Renderer(renderer)
 {
     m_Ui->setupUi(this);
-
-    std::tie(Img, m_Camera, m_Scene, m_Renderer) = Initializer::ThreeSpheresTest();
 
     // Set up the m_Layout
     m_Layout = new QVBoxLayout(m_Ui->centralwidget);
@@ -25,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_RenderButton = new QPushButton("Display", this);
     m_Layout->addWidget(m_RenderButton);
     connect(m_RenderButton, &QPushButton::clicked, this, &MainWindow::Display);
-    m_OpenGLWidget = new OpenGLWidget(m_Renderer, this);
+    m_OpenGLWidget = new OpenGLWidget(m_Img, m_Camera, m_Scene, m_Renderer, this);
     m_Layout->addWidget(m_OpenGLWidget);
 }
 

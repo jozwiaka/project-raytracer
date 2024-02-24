@@ -19,8 +19,8 @@ bool MainWindow::Show()
 
         m_Renderer.OnResize(width, height);
         m_Camera.OnResize(width, height);
-
         m_Renderer.Render(m_Camera, m_Scene);
+
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
     }

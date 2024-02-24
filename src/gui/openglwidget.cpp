@@ -2,9 +2,9 @@
 #include "OpenGLWidget.h"
 #include <QDebug>
 
-OpenGLWidget::OpenGLWidget(std::shared_ptr<Renderer> renderer, QWidget *parent)
+OpenGLWidget::OpenGLWidget(std::shared_ptr<Image> &img, Camera &camera, Scene &scene, Renderer &renderer, QWidget *parent)
     : QOpenGLWidget(parent),
-      m_Renderer(renderer)
+      m_Img(img), m_Camera(camera), m_Scene(scene), m_Renderer(renderer)
 {
 }
 
@@ -19,6 +19,7 @@ void OpenGLWidget::initializeGL()
 void OpenGLWidget::resizeGL(int width, int height)
 {
     m_Renderer.OnResize(width, height);
+    m_Camera.OnResize(width, height);
 }
 
 void OpenGLWidget::resizeEvent(QResizeEvent *event)
@@ -29,5 +30,5 @@ void OpenGLWidget::resizeEvent(QResizeEvent *event)
 
 void OpenGLWidget::paintGL()
 {
-    m_Renderer.Display();
+    m_Renderer.Render(m_Camera, m_Scene);
 }

@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    MainWindow(std::shared_ptr<Image> &img, Camera &camera, Scene &scene, Renderer &renderer, QWidget *parent = nullptr);
     ~MainWindow();
     void Display();
 
@@ -33,10 +33,10 @@ private:
     QVBoxLayout *m_Layout;
     QPushButton *m_RenderButton;
     OpenGLWidget *m_OpenGLWidget;
-    std::shared_ptr<Image> Img;
-    std::shared_ptr<Camera> m_Camera;
-    std::shared_ptr<Scene> m_Scene;
-    std::shared_ptr<Renderer> m_Renderer;
+    std::shared_ptr<Image> m_Img;
+    Camera m_Camera;
+    Scene m_Scene;
+    RendererOpenGL m_Renderer;
 
 private:
     void CreateSlider(const QString &labelText, float *value, float minValue, float maxValue);
