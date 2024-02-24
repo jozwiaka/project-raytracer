@@ -34,15 +34,15 @@ private:
         constexpr uint32_t width = 1200;
         img = std::make_shared<Image>(width, aspectRatio);
 
-        constexpr auto cameraPosition = Vec3(0.0f, 0.0f, 0.0f);
-        constexpr auto cameraTarget = Vec3(0.0f, 0.0f, -1.0f);
-        constexpr auto cameraUpVector = Vec3(0.0f, 1.0f, 0.0f);
-        constexpr float defocusAngle = 0.0f;
-        constexpr float verticalFOV = 90.0f;
-        constexpr float focusDist = 1.0f;
-        camera = Camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, img);
+        camera.Img = img;
+        camera.Pos = Vec3(0.0f, 0.0f, 0.0f);
+        camera.Target = Vec3(0.0f, 0.0f, -1.0f);
+        camera.UpVector = Vec3(0.0f, 1.0f, 0.0f);
+        camera.DefocusAngle = 0.0f;
+        camera.VerticalFOV = 90.0f;
+        camera.FocusDist = 1.0f;
+        camera.Init();
 
-        scene = Scene();
         auto materialGround = std::make_shared<MaterialLambertian>(Color(0.8f, 0.8f, 0.0f));
         auto materialCenter = std::make_shared<MaterialLambertian>(Color(0.7f, 0.3f, 0.3f));
 #define METAL 1
@@ -60,7 +60,10 @@ private:
 
         auto difflight = std::make_shared<MaterialDiffuseLight>(Color(4.0f, 4.0f, 4.0f));
         scene.Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, 5.0f, 0.0f), 2.0f, difflight));
-        renderer = Renderer(img, numSamples, maxDepth);
+
+        renderer.Img = img;
+        renderer.NumSamples = numSamples;
+        renderer.MaxDepth = maxDepth;
     }
 
     static void RandomSpheres(std::shared_ptr<Image> &img, Camera &camera, Scene &scene, Renderer &renderer, uint32_t numSamples, uint32_t maxDepth)
