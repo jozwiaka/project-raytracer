@@ -7,7 +7,7 @@
 class MainWindow
 {
 public:
-    MainWindow();
+    MainWindow(std::shared_ptr<Image> &img, Camera &camera, Scene &scene, Renderer &renderer);
     bool Show();
 
 private:
@@ -17,6 +17,6 @@ private:
     std::shared_ptr<Image> m_Img;
     Camera m_Camera;
     Scene m_Scene;
-    Renderer m_Renderer;
+    RendererOpenGL m_Renderer;
     GLFWwindow *m_Window;
 };

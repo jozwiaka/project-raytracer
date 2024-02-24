@@ -7,8 +7,8 @@
 
 Image::Image(uint32_t width, float aspectRatio)
 {
-  SetUpTmpDir();
   OnResize(width, static_cast<uint32_t>(width / aspectRatio));
+  SetUpTmpDir();
 }
 
 Image::~Image()

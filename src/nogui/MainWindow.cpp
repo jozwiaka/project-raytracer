@@ -1,8 +1,8 @@
 #include "MainWindow.h"
 
-MainWindow::MainWindow()
+MainWindow::MainWindow(std::shared_ptr<Image> &img, Camera &camera, Scene &scene, Renderer &renderer)
+    : m_Img(img), m_Camera(camera), m_Scene(scene), m_Renderer(renderer)
 {
-    Initializer::ThreeSpheresTest(m_Img, m_Camera, m_Scene, m_Renderer);
 }
 
 bool MainWindow::Show()
@@ -20,7 +20,7 @@ bool MainWindow::Show()
         m_Renderer.OnResize(width, height);
         m_Camera.OnResize(width, height);
 
-        m_Renderer.Display(m_Camera, m_Scene);
+        m_Renderer.Render(m_Camera, m_Scene);
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
     }

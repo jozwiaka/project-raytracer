@@ -9,6 +9,7 @@
 #include "Camera.h"
 #include "Scene.h"
 #include "Renderer.h"
+#include "RendererOpenGL.h"
 #include "MaterialLambertian.h"
 #include "MaterialMetal.h"
 #include "MaterialDielectric.h"
