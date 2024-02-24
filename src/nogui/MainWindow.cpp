@@ -16,7 +16,7 @@ bool MainWindow::Show()
     while (!glfwWindowShouldClose(m_Window))
     {
         glfwGetWindowSize(m_Window, &width, &height);
-        m_Img->OnResize(width, height);
+
         m_Renderer.OnResize(width, height);
         m_Camera.OnResize(width, height);
 
