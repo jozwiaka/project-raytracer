@@ -3,8 +3,6 @@
 
 int main()
 {
-    auto [image, camera, scene, renderer] = Initializer::ThreeSpheresTest();
-
-    auto window = MainWindow(image, renderer);
+    auto window = MainWindow();
     window.Show();
 }

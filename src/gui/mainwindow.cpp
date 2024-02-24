@@ -7,7 +7,7 @@ MainWindow::MainWindow(QWidget *parent)
 {
     m_Ui->setupUi(this);
 
-    std::tie(m_Image, m_Camera, m_Scene, m_Renderer) = Initializer::ThreeSpheresTest();
+    std::tie(Img, m_Camera, m_Scene, m_Renderer) = Initializer::ThreeSpheresTest();
 
     // Set up the m_Layout
     m_Layout = new QVBoxLayout(m_Ui->centralwidget);

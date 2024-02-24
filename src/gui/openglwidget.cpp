@@ -13,12 +13,12 @@ OpenGLWidget::~OpenGLWidget() {}
 void OpenGLWidget::initializeGL()
 {
     initializeOpenGLFunctions();
-    m_Renderer->ConfigureViewport();
+    m_Renderer.ConfigureViewport();
 }
 
 void OpenGLWidget::resizeGL(int width, int height)
 {
-    m_Renderer->ResizeViewport(width, height);
+    m_Renderer.ResizeViewport(width, height);
 }
 
 void OpenGLWidget::resizeEvent(QResizeEvent *event)
@@ -29,5 +29,5 @@ void OpenGLWidget::resizeEvent(QResizeEvent *event)
 
 void OpenGLWidget::paintGL()
 {
-    m_Renderer->Display();
+    m_Renderer.Display();
 }

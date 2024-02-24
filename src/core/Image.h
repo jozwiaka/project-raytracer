@@ -13,7 +13,7 @@ public:
     Image(uint32_t width, float aspectRatio);
     ~Image();
     void Resize(uint32_t width, uint32_t height);
-    void Save() const;
+    void Save();
     uint32_t GetWidth() const;
     uint32_t GetHeight() const;
     float GetAspectRatio() const;
@@ -32,4 +32,5 @@ private:
     std::vector<uint32_t> m_HorizontalIter;
     std::string m_TmpDir;
     uint32_t m_Channels = 3;
+    uint32_t m_FrameIndex = 1;
 };

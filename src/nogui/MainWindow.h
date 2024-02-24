@@ -7,7 +7,7 @@
 class MainWindow
 {
 public:
-    MainWindow(std::shared_ptr<Image> image, std::shared_ptr<Renderer> renderer);
+    MainWindow();
     bool Show();
     static void WindowSizeChangedCallback(GLFWwindow *window, int width, int height);
 
@@ -15,7 +15,9 @@ private:
     bool Init();
 
 private:
-    std::shared_ptr<Image> m_Image;
-    std::shared_ptr<Renderer> m_Renderer;
+    std::shared_ptr<Image> m_Img;
+    Camera m_Camera;
+    Scene m_Scene;
+    Renderer m_Renderer;
     GLFWwindow *m_Window;
 };

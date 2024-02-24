@@ -2,45 +2,43 @@
 #include <iostream>
 #include <execution>
 
-Renderer::Renderer(std::shared_ptr<Image> image, std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize)
-    : m_Image(image),
-      m_Camera(camera),
-      m_Scene(scene),
-      m_NumSamples(numSamples),
-      m_MaxDepth(maxDepth),
-      m_ThreadPool(numThreads),
-      m_TileSize(tileSize),
-      m_Timer()
+Renderer::Renderer(std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth)
+    : Img(image),
+      NumSamples(numSamples),
+      MaxDepth(maxDepth)
 {
 }
 
 void Renderer::ConfigureViewport()
 {
-    glViewport(0, 0, m_Image->GetWidth(), m_Image->GetHeight());
+    glViewport(0, 0, Img->GetWidth(), Img->GetHeight());
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, m_Image->GetWidth(), m_Image->GetHeight(), 0, -1.0, 1.0); //(0,0) - top left corner
+    glOrtho(0, Img->GetWidth(), Img->GetHeight(), 0, -1.0, 1.0); //(0,0) - top left corner
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 
 void Renderer::ResizeViewport(uint32_t width, uint32_t height)
 {
-    m_Image->Resize(width, height);
-    m_Camera->Init();
+    Img->Resize(width, height);
+    if (m_ActiveCamera)
+    {
+        // m_ActiveCamera->Init();
+    }
     ConfigureViewport();
 }
 
-void Renderer::Display()
+void Renderer::Display(const Camera &camera, const Scene &scene)
 {
-    Render();
+    Render(camera, scene);
     glClear(GL_COLOR_BUFFER_BIT);
     glBegin(GL_POINTS);
-    for (uint32_t y = 0; y < m_Image->GetHeight(); ++y)
+    for (uint32_t y = 0; y < Img->GetHeight(); ++y)
     {
-        for (uint32_t x = 0; x < m_Image->GetWidth(); ++x)
+        for (uint32_t x = 0; x < Img->GetWidth(); ++x)
         {
-            glColor3f(m_Image->Data[y][x].x, m_Image->Data[y][x].y, m_Image->Data[y][x].z);
+            glColor3f(Img->Data[y][x].x, Img->Data[y][x].y, Img->Data[y][x].z);
             glVertex2f(x, y);
         }
     }
@@ -48,24 +46,26 @@ void Renderer::Display()
     glFlush();
 }
 
-void Renderer::Render()
+void Renderer::Render(const Camera &camera, const Scene &scene)
 {
-    std::cout << "Rendering image " << m_Image->GetWidth() << "x" << m_Image->GetHeight() << "...\n";
+    m_ActiveCamera = &camera;
+    m_ActiveScene = &scene;
+    std::cout << "Rendering image " << Img->GetWidth() << "x" << Img->GetHeight() << "...\n";
     m_Timer.Start();
 
-#define TP 1
+#define TP 0
 #if TP
     std::vector<std::future<void>> futures;
-    for (uint32_t y = 0; y < m_Image->GetHeight(); y += m_TileSize)
+    for (uint32_t y = 0; y < Img->GetHeight(); y += m_TileSize)
     {
-        for (uint32_t x = 0; x < m_Image->GetWidth(); x += m_TileSize)
+        for (uint32_t x = 0; x < Img->GetWidth(); x += m_TileSize)
         {
             futures.emplace_back(m_ThreadPool.Enqueue(
                 [this](uint32_t startX, uint32_t startY)
                 {
-                    for (uint32_t y = startY; y < startY + m_TileSize && y < m_Image->GetHeight(); ++y)
+                    for (uint32_t y = startY; y < startY + m_TileSize && y < Img->GetHeight(); ++y)
                     {
-                        for (uint32_t x = startX; x < startX + m_TileSize && x < m_Image->GetWidth(); ++x)
+                        for (uint32_t x = startX; x < startX + m_TileSize && x < Img->GetWidth(); ++x)
                         {
                             PerPixel(x, y);
                         }
@@ -80,10 +80,10 @@ void Renderer::Render()
         future.get();
     }
 #else
-    std::for_each(std::execution::par, m_Image->GetVerticalIter().begin(), m_Image->GetVerticalIter().end(),
+    std::for_each(std::execution::par, Img->GetVerticalIter().begin(), Img->GetVerticalIter().end(),
                   [this](uint32_t y)
                   {
-                      std::for_each(std::execution::par, m_Image->GetHorizontalIter().begin(), m_Image->GetHorizontalIter().end(), [this, y](uint32_t x)
+                      std::for_each(std::execution::par, Img->GetHorizontalIter().begin(), Img->GetHorizontalIter().end(), [this, y](uint32_t x)
                                     { PerPixel(x, y); });
                   });
 #endif
@@ -91,20 +91,20 @@ void Renderer::Render()
     std::string timeEllapsedStr = m_Timer.Stop();
     std::cout << "Done. Time = " << timeEllapsedStr << std::endl;
 
-    m_Image->Save();
+    Img->Save();
 }
 
 void Renderer::PerPixel(uint32_t x, uint32_t y)
 {
     Color pixelColor = Color();
-    for (uint32_t sample = 0; sample < m_NumSamples; ++sample)
+    for (uint32_t sample = 0; sample < NumSamples; ++sample)
     {
-        Ray ray = m_Camera->GenerateRay(x, y);
-        pixelColor += RayColor(ray, m_MaxDepth);
+        Ray ray = m_ActiveCamera->GenerateRay(x, y);
+        pixelColor += RayColor(ray, MaxDepth);
     }
-    pixelColor /= m_NumSamples;
+    pixelColor /= NumSamples;
     pixelColor = ColorManipulator::GammaCorrection(pixelColor);
-    m_Image->Data[y][x] = pixelColor;
+    Img->Data[y][x] = pixelColor;
 }
 
 Color Renderer::RayColor(const Ray &ray, uint32_t depth) const
@@ -115,7 +115,7 @@ Color Renderer::RayColor(const Ray &ray, uint32_t depth) const
     }
 
     HitRecord rec;
-    if (m_Scene->Intersect(ray, Interval(0.001f, Math::Infinity()), rec))
+    if (m_ActiveScene->Intersect(ray, Interval(0.001f, Math::Infinity()), rec))
     {
         Ray scattered;
         Color attenuation;

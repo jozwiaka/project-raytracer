@@ -21,23 +21,24 @@
 class Renderer
 {
 public:
-    Renderer(std::shared_ptr<Image> image, std::shared_ptr<Camera> camera, std::shared_ptr<Scene> scene, uint32_t numSamples, uint32_t maxDepth, uint32_t numThreads, uint32_t tileSize);
-    void Display();
+    std::shared_ptr<Image> Img;
+    uint32_t NumSamples;
+    uint32_t MaxDepth;
+
+public:
+    Renderer() = default;
+    Renderer(std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth);
+    void Render(const Camera &camera, const Scene &scene);
+    void Display(const Camera &camera, const Scene &scene);
     void ConfigureViewport();
     void ResizeViewport(uint32_t width, uint32_t height);
 
 private:
-    void Render();
     void PerPixel(uint32_t x, uint32_t y);
     Color RayColor(const Ray &ray, uint32_t depth) const;
 
 private:
-    std::shared_ptr<Image> m_Image;
-    std::shared_ptr<Camera> m_Camera;
-    std::shared_ptr<Scene> m_Scene;
-    uint32_t m_NumSamples;
-    uint32_t m_MaxDepth;
-    ThreadPool m_ThreadPool;
-    uint32_t m_TileSize;
     Timer m_Timer;
+    const Camera *m_ActiveCamera = nullptr;
+    const Scene *m_ActiveScene = nullptr;
 };

@@ -1,8 +1,8 @@
 #include "MainWindow.h"
 
-MainWindow::MainWindow(std::shared_ptr<Image> image, std::shared_ptr<Renderer> renderer)
-    : m_Image(image), m_Renderer(renderer)
+MainWindow::MainWindow()
 {
+    Initializer::ThreeSpheresTest(m_Img, m_Camera, m_Scene, m_Renderer);
 }
 
 bool MainWindow::Show()
@@ -14,7 +14,7 @@ bool MainWindow::Show()
 
     while (!glfwWindowShouldClose(m_Window))
     {
-        m_Renderer->Display();
+        m_Renderer.Display(m_Camera, m_Scene);
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
     }
@@ -31,22 +31,21 @@ bool MainWindow::Init()
         return false;
     }
 
-    m_Window = glfwCreateWindow(m_Image->GetWidth(), m_Image->GetHeight(), "Raytracer", NULL, NULL);
+    m_Window = glfwCreateWindow(m_Img->GetWidth(), m_Img->GetHeight(), "Raytracer", NULL, NULL);
 
     if (!m_Window)
     {
         glfwTerminate();
         return false;
-        ;
     }
 
     glfwMakeContextCurrent(m_Window);
 
-    glfwSetWindowUserPointer(m_Window, m_Renderer.get());
+    glfwSetWindowUserPointer(m_Window, &m_Renderer);
 
     glfwSetFramebufferSizeCallback(m_Window, WindowSizeChangedCallback);
 
-    m_Renderer->ConfigureViewport();
+    m_Renderer.ConfigureViewport();
 
     return true;
 }

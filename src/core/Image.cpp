@@ -77,11 +77,9 @@ void Image::Resize(uint32_t width, uint32_t height)
   Init();
 }
 
-void Image::Save() const
+void Image::Save()
 {
-  static size_t frameIndex = 0;
-
-  if (Data.empty() || frameIndex > 100)
+  if (Data.empty() || m_FrameIndex > 100)
   {
     return;
   }
@@ -101,11 +99,12 @@ void Image::Save() const
   }
 
   std::stringstream ss;
-  ss << m_TmpDir << "frame_" << ++frameIndex << ".png";
+  ss << m_TmpDir << "frame_" << m_FrameIndex << ".png";
   if (!stbi_write_png(ss.str().c_str(), m_Width, m_Height, m_Channels, imageData.data(), m_Width * m_Channels))
   {
     return;
   }
+  m_FrameIndex += 1;
 }
 
 void Image::SetUpTmpDir()
