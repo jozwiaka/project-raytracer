@@ -2,13 +2,6 @@
 #include <iostream>
 #include <execution>
 
-Renderer::Renderer(std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth)
-    : Img(image),
-      NumSamples(numSamples),
-      MaxDepth(maxDepth)
-{
-}
-
 void Renderer::OnResize(uint32_t width, uint32_t height)
 {
     Img->OnResize(width, height);

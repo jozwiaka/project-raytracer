@@ -27,7 +27,6 @@ public:
 
 public:
     Renderer() = default;
-    Renderer(std::shared_ptr<Image> image, uint32_t numSamples, uint32_t maxDepth);
     virtual void Render(const Camera &camera, const Scene &scene);
     virtual void OnResize(uint32_t width, uint32_t height);
 
