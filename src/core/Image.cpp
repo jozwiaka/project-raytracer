@@ -6,11 +6,9 @@
 #include <sstream>
 
 Image::Image(uint32_t width, float aspectRatio)
-    : m_Width(width),
-      m_Height(static_cast<uint32_t>(m_Width / aspectRatio))
 {
   SetUpTmpDir();
-  Init();
+  OnResize(width, static_cast<uint32_t>(width / aspectRatio));
 }
 
 Image::~Image()
@@ -41,8 +39,14 @@ std::vector<uint32_t> &Image::GetHorizontalIter()
   return m_HorizontalIter;
 }
 
-void Image::Init()
+void Image::OnResize(uint32_t width, uint32_t height)
 {
+  if (m_Width == width && m_Height == height)
+  {
+    return;
+  }
+  m_Width = width;
+  m_Height = height;
   Data.resize(m_Height);
   for (auto &row : Data)
   {
@@ -58,17 +62,6 @@ void Image::Init()
   {
     m_VerticalIter[i] = i;
   }
-}
-
-void Image::OnResize(uint32_t width, uint32_t height)
-{
-  if (m_Width == width && m_Height == height)
-  {
-    return;
-  }
-  m_Width = width;
-  m_Height = height;
-  Init();
 }
 
 void Image::Save()

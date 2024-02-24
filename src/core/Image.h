@@ -12,7 +12,6 @@ public:
 public:
     Image(uint32_t width, float aspectRatio);
     ~Image();
-    void Init();
     void Save();
     void OnResize(uint32_t width, uint32_t height);
     uint32_t GetWidth() const;
