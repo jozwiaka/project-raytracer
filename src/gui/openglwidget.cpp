@@ -16,19 +16,9 @@ void OpenGLWidget::initializeGL()
     m_Renderer.ConfigureViewport();
 }
 
-void OpenGLWidget::resizeGL(int width, int height)
-{
-    m_Renderer.OnResize(width, height);
-    m_Camera.OnResize(width, height);
-}
-
-void OpenGLWidget::resizeEvent(QResizeEvent *event)
-{
-    QWidget::resizeEvent(event);
-    resizeGL(event->size().width(), event->size().height());
-}
-
 void OpenGLWidget::paintGL()
 {
+    m_Renderer.OnResize(width(), height());
+    m_Camera.OnResize(width(), height());
     m_Renderer.Render(m_Camera, m_Scene);
 }
