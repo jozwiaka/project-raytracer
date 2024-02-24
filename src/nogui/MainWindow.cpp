@@ -12,15 +12,20 @@ bool MainWindow::Show()
         return false;
     }
 
+    int width, height;
     while (!glfwWindowShouldClose(m_Window))
     {
+        glfwGetWindowSize(m_Window, &width, &height);
+        m_Img->OnResize(width, height);
+        m_Renderer.OnResize(width, height);
+        m_Camera.OnResize(width, height);
+
         m_Renderer.Display(m_Camera, m_Scene);
         glfwSwapBuffers(m_Window);
         glfwPollEvents();
     }
 
     glfwTerminate();
-
     return true;
 }
 
@@ -40,18 +45,5 @@ bool MainWindow::Init()
     }
 
     glfwMakeContextCurrent(m_Window);
-
-    glfwSetWindowUserPointer(m_Window, &m_Renderer);
-
-    glfwSetFramebufferSizeCallback(m_Window, WindowSizeChangedCallback);
-
-    m_Renderer.ConfigureViewport();
-
     return true;
-}
-
-void MainWindow::WindowSizeChangedCallback(GLFWwindow *window, int width, int height)
-{
-    Renderer *renderer = static_cast<Renderer *>(glfwGetWindowUserPointer(window));
-    renderer->ResizeViewport(width, height);
 }

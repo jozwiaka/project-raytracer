@@ -31,7 +31,7 @@ public:
     void Render(const Camera &camera, const Scene &scene);
     void Display(const Camera &camera, const Scene &scene);
     void ConfigureViewport();
-    void ResizeViewport(uint32_t width, uint32_t height);
+    void OnResize(uint32_t width, uint32_t height);
 
 private:
     void PerPixel(uint32_t x, uint32_t y);

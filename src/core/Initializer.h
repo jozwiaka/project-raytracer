@@ -34,14 +34,12 @@ private:
         constexpr uint32_t width = 1200;
         img = std::make_shared<Image>(width, aspectRatio);
 
-        camera.Img = img;
         camera.Pos = Vec3(0.0f, 0.0f, 0.0f);
         camera.Target = Vec3(0.0f, 0.0f, -1.0f);
         camera.UpVector = Vec3(0.0f, 1.0f, 0.0f);
         camera.DefocusAngle = 0.0f;
         camera.VerticalFOV = 90.0f;
         camera.FocusDist = 1.0f;
-        camera.Init();
 
         auto materialGround = std::make_shared<MaterialLambertian>(Color(0.8f, 0.8f, 0.0f));
         auto materialCenter = std::make_shared<MaterialLambertian>(Color(0.7f, 0.3f, 0.3f));
@@ -72,15 +70,13 @@ private:
         constexpr uint32_t width = 1200;
         img = std::make_shared<Image>(width, aspectRatio);
 
-        constexpr auto cameraPosition = Vec3(13.0f, 2.0f, 3.0f);
-        constexpr auto cameraTarget = Vec3(0.0f, 0.0f, 0.0f);
-        constexpr auto cameraUpVector = Vec3(0.0f, 1.0f, 0.0f);
-        constexpr float defocusAngle = 0.6f;
-        constexpr float verticalFOV = 20.0f;
-        constexpr float focusDist = 10.0f;
-        camera = Camera(cameraPosition, cameraTarget, cameraUpVector, defocusAngle, verticalFOV, focusDist, img);
+        camera.Pos = Vec3(13.0f, 2.0f, 3.0f);
+        camera.Target = Vec3(0.0f, 0.0f, 0.0f);
+        camera.UpVector = Vec3(0.0f, 1.0f, 0.0f);
+        camera.DefocusAngle = 0.6f;
+        camera.VerticalFOV = 20.0f;
+        camera.FocusDist = 10.0f;
 
-        scene = Scene();
         auto groundMat = std::make_shared<MaterialLambertian>(Color(0.5f, 0.5f, 0.5f));
         scene.Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(0.0f, -1000, 0.0f), 1000, groundMat));
         for (int a = -11; a < 11; a++)
@@ -124,6 +120,9 @@ private:
         scene.Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(-4.0f, 1.0f, 0.0f), 1.0f, material2));
         auto material3 = std::make_shared<MaterialMetal>(Color(0.7f, 0.6f, 0.5f), 0.0f);
         scene.Objects.emplace_back(std::make_unique<ObjectSphere>(Vec3(4.0f, 1.0f, 0.0f), 1.0f, material3));
-        renderer = Renderer(img, numSamples, maxDepth);
+
+        renderer.Img = img;
+        renderer.NumSamples = numSamples;
+        renderer.MaxDepth = maxDepth;
     }
 };

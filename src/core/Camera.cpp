@@ -1,19 +1,7 @@
 #include "Camera.h"
 #include <cmath>
 
-Camera::Camera(const Vec3 &position, const Vec3 &target, const Vec3 &upVector, float defocusAngle, float verticalFOV, float focusDist, std::shared_ptr<Image> image)
-    : Pos(position),
-      Target(target),
-      UpVector(upVector),
-      DefocusAngle(defocusAngle),
-      VerticalFOV(verticalFOV),
-      FocusDist(focusDist <= 0 ? Math::Length(target - Pos) : focusDist),
-      Img(image)
-{
-    Init();
-}
-
-void Camera::Init()
+void Camera::OnResize(uint32_t width, uint32_t height)
 {
     m_W = Math::Normalize(Pos - Target);
     m_U = Math::Normalize(Math::Cross(UpVector, m_W));
@@ -22,13 +10,13 @@ void Camera::Init()
     auto theta = Math::Radians(VerticalFOV);
     auto h = std::tan(theta / 2.0f);
     auto viewportHeight = 2.0f * h * FocusDist;
-    auto viewportWidth = viewportHeight * Img->GetAspectRatio();
+    auto viewportWidth = viewportHeight * static_cast<float>(width) / static_cast<float>(height);
 
     Vec3 viewportU = viewportWidth * m_U;
     Vec3 viewportV = viewportHeight * -m_V;
 
-    m_PixelDeltaU = viewportU / static_cast<float>(Img->GetWidth());
-    m_PixelDeltaV = viewportV / static_cast<float>(Img->GetHeight());
+    m_PixelDeltaU = viewportU / static_cast<float>(width);
+    m_PixelDeltaV = viewportV / static_cast<float>(height);
 
     auto viewportVperLeft = Pos - (FocusDist * m_W) - viewportU / 2.0f - viewportV / 2.0f;
     m_Pixel00Loc = viewportVperLeft + 0.5f * (m_PixelDeltaU + m_PixelDeltaV);

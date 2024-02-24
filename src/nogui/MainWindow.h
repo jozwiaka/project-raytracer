@@ -9,7 +9,6 @@ class MainWindow
 public:
     MainWindow();
     bool Show();
-    static void WindowSizeChangedCallback(GLFWwindow *window, int width, int height);
 
 private:
     bool Init();

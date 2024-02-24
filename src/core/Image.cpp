@@ -9,8 +9,8 @@ Image::Image(uint32_t width, float aspectRatio)
     : m_Width(width),
       m_Height(static_cast<uint32_t>(m_Width / aspectRatio))
 {
-  Init();
   SetUpTmpDir();
+  Init();
 }
 
 Image::~Image()
@@ -29,11 +29,6 @@ uint32_t Image::GetWidth() const
 uint32_t Image::GetHeight() const
 {
   return m_Height;
-}
-
-float Image::GetAspectRatio() const
-{
-  return m_AspectRatio;
 }
 
 std::vector<uint32_t> &Image::GetVerticalIter()
@@ -63,10 +58,9 @@ void Image::Init()
   {
     m_VerticalIter[i] = i;
   }
-  m_AspectRatio = static_cast<float>(m_Width) / static_cast<float>(m_Height);
 }
 
-void Image::Resize(uint32_t width, uint32_t height)
+void Image::OnResize(uint32_t width, uint32_t height)
 {
   if (m_Width == width && m_Height == height)
   {

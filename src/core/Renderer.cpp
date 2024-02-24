@@ -19,13 +19,9 @@ void Renderer::ConfigureViewport()
     glLoadIdentity();
 }
 
-void Renderer::ResizeViewport(uint32_t width, uint32_t height)
+void Renderer::OnResize(uint32_t width, uint32_t height)
 {
-    Img->Resize(width, height);
-    if (m_ActiveCamera)
-    {
-        // m_ActiveCamera->Init();
-    }
+    Img->OnResize(width, height);
     ConfigureViewport();
 }
 

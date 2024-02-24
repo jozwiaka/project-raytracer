@@ -18,7 +18,7 @@ void OpenGLWidget::initializeGL()
 
 void OpenGLWidget::resizeGL(int width, int height)
 {
-    m_Renderer.ResizeViewport(width, height);
+    m_Renderer.OnResize(width, height);
 }
 
 void OpenGLWidget::resizeEvent(QResizeEvent *event)
