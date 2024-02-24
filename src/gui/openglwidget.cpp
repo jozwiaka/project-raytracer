@@ -10,12 +10,6 @@ OpenGLWidget::OpenGLWidget(std::shared_ptr<Image> &img, Camera &camera, Scene &s
 
 OpenGLWidget::~OpenGLWidget() {}
 
-void OpenGLWidget::initializeGL()
-{
-    initializeOpenGLFunctions();
-    m_Renderer.ConfigureViewport();
-}
-
 void OpenGLWidget::paintGL()
 {
     m_Renderer.OnResize(width(), height());

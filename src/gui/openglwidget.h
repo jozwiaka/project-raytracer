@@ -15,7 +15,6 @@ public:
     ~OpenGLWidget();
 
 protected:
-    void initializeGL() override;
     void paintGL() override;
 
 private:
