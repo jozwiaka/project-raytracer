@@ -3,7 +3,7 @@
 #include <tuple>
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), m_Ui(std::make_unique<Ui::MainWindow>())
+    : QMainWindow(parent), m_Ui(std::make_shared<Ui::MainWindow>())
 {
     m_Ui->setupUi(this);
 

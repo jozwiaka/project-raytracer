@@ -29,7 +29,7 @@ public:
     void Display();
 
 private:
-    std::unique_ptr<Ui::MainWindow> m_Ui;
+    std::shared_ptr<Ui::MainWindow> m_Ui;
     QVBoxLayout *m_Layout;
     QPushButton *m_RenderButton;
     OpenGLWidget *m_OpenGLWidget;

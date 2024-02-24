@@ -12,7 +12,7 @@
 class Scene
 {
 public:
-    std::vector<std::unique_ptr<Object>> Objects;
+    std::vector<std::shared_ptr<Object>> Objects;
 
 public:
     bool Intersect(const Ray &ray, Interval ray_t, HitRecord &rec) const;
