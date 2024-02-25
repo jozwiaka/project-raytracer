@@ -20,9 +20,9 @@ MainWindow::MainWindow(std::shared_ptr<Image> &img, Camera &camera, Scene &scene
     // CreateSlider("Camera Target Z", &m_Camera->Target.z, -20.0f, 20.0f);
 
     // Create button to trigger rendering
-    m_RenderButton = new QPushButton("Display", this);
-    m_Layout->addWidget(m_RenderButton);
-    connect(m_RenderButton, &QPushButton::clicked, this, &MainWindow::Display);
+    // m_RenderButton = new QPushButton("Display", this);
+    // m_Layout->addWidget(m_RenderButton);
+    // connect(m_RenderButton, &QPushButton::clicked, this, &MainWindow::Display);
     m_OpenGLWidget = new OpenGLWidget(m_Img, m_Camera, m_Scene, m_Renderer, this);
     m_Layout->addWidget(m_OpenGLWidget);
 }
