@@ -13,10 +13,10 @@ void Renderer::Render(const Camera &camera, const Scene &scene)
     m_ActiveScene = &scene;
     std::cout << "Rendering image " << Img->GetWidth() << "x" << Img->GetHeight() << "...\n";
     m_Timer.Start();
-    std::for_each(std::execution::par, Img->GetVerticalIter().begin(), Img->GetVerticalIter().end(),
+    std::for_each(std::execution::seq, Img->GetVerticalIter().begin(), Img->GetVerticalIter().end(),
                   [this](uint32_t y)
                   {
-                      std::for_each(std::execution::par, Img->GetHorizontalIter().begin(), Img->GetHorizontalIter().end(), [this, y](uint32_t x)
+                      std::for_each(std::execution::seq, Img->GetHorizontalIter().begin(), Img->GetHorizontalIter().end(), [this, y](uint32_t x)
                                     { PerPixel(x, y); });
                   });
     std::string timeEllapsedStr = m_Timer.Stop();

@@ -1,5 +1,5 @@
 
-#include "OpenGLWidget.h"
+#include "openglwidget.h"
 #include <QDebug>
 
 OpenGLWidget::OpenGLWidget(std::shared_ptr<Image> &img, Camera &camera, Scene &scene, Renderer &renderer, QWidget *parent)
