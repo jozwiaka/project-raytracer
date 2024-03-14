@@ -24,8 +24,8 @@ function Invoke-DockerClean {
 
 function Invoke-KubernetesClean {
     Log-Message "Cleaning Kubernetes resources..."
-    kubectl delete deployment raytracer-deployment
-    kubectl delete service raytracer-service
+    kubectl delete deployment --all
+    kubectl delete service --all
 }
 function Invoke-DockerCleanBuildStart {
     Log-Message "Cleaning resources, building and starting Docker containers..."
@@ -59,7 +59,7 @@ function Invoke-KubernetesCleanBuildStart {
     Log-Message "Cleaning resources, building Docker images, and starting Kubernetes resources..."
     Invoke-Clean
     Invoke-DockerBuild
-    kubectl apply -f kubernetes/raytracer-deployment.yaml
+    kubectl apply -f kubernetes
     kubectl get deployments
     kubectl get pods
     kubectl get services
