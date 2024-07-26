@@ -1,3 +1,3 @@
-# raytracer-project
+# project-raytracer
 
-make run_nogui
+![alt text](images/rendered/random_spheres.png)
